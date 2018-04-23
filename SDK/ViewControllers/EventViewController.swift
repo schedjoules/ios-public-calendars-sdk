@@ -25,12 +25,20 @@
 
 import UIKit
 
-class EventViewController: UIViewController {
+final class EventViewController: UIViewController {
+    
+    // - MARK: Public Properties
+    
+    /// The event to show
     var event: Event!
+    
+    // IBOutlets
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var locationLabel: UILabel!
+    
+    // - MARK: ViewController Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +49,7 @@ class EventViewController: UIViewController {
             navigationItem.largeTitleDisplayMode = .never
         }
         
-        // Set colors
+        // Set the colors
         textView.tintColor = navigationController?.navigationBar.tintColor
         timeLabel.textColor = navigationController?.navigationBar.tintColor
         
@@ -76,6 +84,8 @@ class EventViewController: UIViewController {
         }
 
     }
+    
+    // - MARK: Helper Methods
     
     // Called when there is no description to show
     func showNoDescription(){
