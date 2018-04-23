@@ -214,10 +214,12 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             tableView.refreshControl = refreshControl
             
             // Add the search controller
-            if #available(iOS 11.0, *) {
-                navigationItem.searchController = searchController
-            } else {
-                tableView.tableHeaderView = searchController.searchBar
+            if isSearchEnabled {
+                if #available(iOS 11.0, *) {
+                    navigationItem.searchController = searchController
+                } else {
+                    tableView.tableHeaderView = searchController.searchBar
+                }
             }
         }
     }
