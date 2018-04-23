@@ -25,19 +25,26 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
+final class SettingsViewController: UIViewController {
     
-    // The API Key
+    // - MARK: Public Properties
+    
+    /// The table view
+    @IBOutlet weak var tableView: UITableView!
+
+    /// The API Key.
     var accessToken: String!
     
-    // Contact menu items
-    let contactItems = ["FAQ", "Twitter", "Facebook", "Website"]
-    // Contact menu item details
-    let contactItemsDetail = [nil, "@schedjoules", "SchedJoules", "http://www.schedjoules.com"]
-    // Contact menu item links to open
-    let contactLinks = [URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"), URL(string:"https://twitter.com/SchedJoules"), URL(string:"https://www.facebook.com/SchedJoules/"), URL(string:"http://www.schedjoules.com")]
+    // - MARK: Private Properties
+    
+    /// Contact menu items.
+    private let contactItems = ["FAQ", "Twitter", "Facebook", "Website"]
+    
+    /// Contact menu item details.
+    private let contactItemsDetail = [nil, "@schedjoules", "SchedJoules", "http://www.schedjoules.com"]
+    
+    /// Contact menu item links to open.
+    private let contactLinks = [URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"), URL(string:"https://twitter.com/SchedJoules"), URL(string:"https://www.facebook.com/SchedJoules/"), URL(string:"http://www.schedjoules.com")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +62,7 @@ class SettingsViewController: UIViewController {
     }
 }
 
-// MARK: - Table View Delegate and Data Source
+// MARK: - Table View Delegate and Data Source Methods
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3

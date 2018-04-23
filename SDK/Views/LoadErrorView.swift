@@ -26,16 +26,20 @@
 import UIKit
 
 protocol LoadErrorViewDelegate: class {
+    /// Refresh button was pressed.
     func refreshPressed()
 }
 
-class LoadErrorView: UIView {
+final class LoadErrorView: UIView {
+    /// Reference to the delegate implementing LoadErrorViewDelegate.
     weak var delegate: LoadErrorViewDelegate?
     
+    // Notify the delegate that the refresh button was pressed.
     @IBAction func refresPressed(_ sender: UIButton) {
         delegate?.refreshPressed()
     }
     
+    // Customize the refresh button.
     @IBOutlet weak var refreshButton: UIButton!{
         didSet{
             refreshButton.layer.borderColor = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1).cgColor

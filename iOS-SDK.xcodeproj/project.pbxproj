@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11E13311B6F934DED2B16326 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */; };
+		B69268872089F32A003456FB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69268862089F32A003456FB /* PageViewController.swift */; };
 		B6D3E03B204D97570044C800 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E03A204D97570044C800 /* AppDelegate.swift */; };
 		B6D3E03D204D97570044C800 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E03C204D97570044C800 /* ViewController.swift */; };
 		B6D3E040204D97570044C800 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D3E03E204D97570044C800 /* Main.storyboard */; };
@@ -29,10 +30,9 @@
 		B6EF1C5E20780879003E0095 /* SettingsLocalizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */; };
 		B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */; };
 		B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3C20780879003E0095 /* SettingsViewController.swift */; };
-		B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */; };
+		B6EF1C6120780879003E0095 /* CalendarStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3D20780879003E0095 /* CalendarStoreController.swift */; };
 		B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3E20780879003E0095 /* EventViewController.swift */; };
 		B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */; };
-		B6EF1C6420780879003E0095 /* PagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C4020780879003E0095 /* PagesViewController.swift */; };
 		B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C4220780879003E0095 /* LoadErrorView.swift */; };
 		B6EF1C6620780879003E0095 /* LoadErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6EF1C4320780879003E0095 /* LoadErrorView.xib */; };
 /* End PBXBuildFile section */
@@ -51,6 +51,7 @@
 		116E5228BC3B1C0076C7D9CB /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
+		B69268862089F32A003456FB /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		B6D3E037204D97570044C800 /* iOS-SDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-SDK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D3E03A204D97570044C800 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6D3E03C204D97570044C800 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,10 +77,9 @@
 		B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocalizationViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWebViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3C20780879003E0095 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStoreViewController.swift; sourceTree = "<group>"; };
+		B6EF1C3D20780879003E0095 /* CalendarStoreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStoreController.swift; sourceTree = "<group>"; };
 		B6EF1C3E20780879003E0095 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarItemViewController.swift; sourceTree = "<group>"; };
-		B6EF1C4020780879003E0095 /* PagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagesViewController.swift; sourceTree = "<group>"; };
 		B6EF1C4220780879003E0095 /* LoadErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadErrorView.swift; sourceTree = "<group>"; };
 		B6EF1C4320780879003E0095 /* LoadErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadErrorView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +160,7 @@
 				B6EF1C1320780879003E0095 /* ApiClient Additions */,
 				B6EF1C1120780878003E0095 /* SDK.storyboard */,
 				B6EF1C1220780879003E0095 /* SDK.xcassets */,
+				B6EF1C3D20780879003E0095 /* CalendarStoreController.swift */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
 			);
@@ -242,10 +243,9 @@
 		B6EF1C3820780879003E0095 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
-				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
+				B69268862089F32A003456FB /* PageViewController.swift */,
 				B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */,
-				B6EF1C4020780879003E0095 /* PagesViewController.swift */,
+				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
 				B6EF1C3920780879003E0095 /* Settings */,
 			);
 			path = ViewControllers;
@@ -254,9 +254,9 @@
 		B6EF1C3920780879003E0095 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
 				B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */,
 				B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */,
-				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -450,16 +450,16 @@
 			files = (
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				B6D3E03D204D97570044C800 /* ViewController.swift in Sources */,
-				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
+				B6EF1C6120780879003E0095 /* CalendarStoreController.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C5B20780879003E0095 /* JSONLanguage.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
-				B6EF1C6420780879003E0095 /* PagesViewController.swift in Sources */,
 				B6EF1C5A20780879003E0095 /* CountryQuery.swift in Sources */,
 				B6EF1C4B20780879003E0095 /* Calendar.swift in Sources */,
 				B6D3E03B204D97570044C800 /* AppDelegate.swift in Sources */,
 				B6EF1C4920780879003E0095 /* ParsedLine.swift in Sources */,
 				B6EF1C4820780879003E0095 /* Event.swift in Sources */,
+				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsLocalizationViewController.swift in Sources */,
 				B6EF1C5C20780879003E0095 /* JSONCountry.swift in Sources */,
 				B6EF1C4A20780879003E0095 /* Parser.swift in Sources */,
