@@ -75,37 +75,8 @@ public final class CalendarStoreController: UITabBarController {
         // Set tab bar tint color
         tabBar.tintColor = tintColor
 
-        // Array to hold the view controllers
-        var tabViewControllers = [UIViewController]()
-    
-        // Create home page with a specific page identifier
-        if pageIdentifier != nil {
-            let homeVC = PageViewController.init(apiKey: apiKey, pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
-            homeVC.title = title
-            tabViewControllers.append(homeVC)
-        // Create home page with juts localization parameters
-        } else {
-            let homeVC = PageViewController(apiKey: apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
-            homeVC.title = title
-            tabViewControllers.append(homeVC)
-        }
-        
-        // Create settings page
-        let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
-        let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        settingsVC.accessToken = apiKey
-        settingsVC.title = "Settings"
-        tabViewControllers.append(contentsOf: [homeVC,settingsVC])
-        
-        // Embed all view controllers in a UINavigationController
-        viewControllers = tabViewControllers.map {
-            let navigationController = UINavigationController(rootViewController: $0)
-            navigationController.navigationBar.tintColor = tintColor
-            if #available(iOS 11.0, *) {
-                navigationController.navigationBar.prefersLargeTitles = largeTitle
-            }
-            return navigationController
-        }
+        // Add the view controllers to the tab bar controller
+        addViewControllers()
     }
     
     /**
@@ -135,6 +106,56 @@ public final class CalendarStoreController: UITabBarController {
     }
     
     // - MARK: Helper Methods
+    
+    // Add the view controllers to the tab bar controller
+    public func addViewControllers () {
+        // Array to hold the view controllers
+        var tabViewControllers = [UIViewController]()
+        
+        // Create home page with a specific page identifier
+        if pageIdentifier != nil {
+            let homeVC = PageViewController.init(apiKey: apiKey, pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
+            homeVC.title = homePageTitle
+            tabViewControllers.append(homeVC)
+        // Create home page with juts localization parameters
+        } else {
+            let homeVC = PageViewController(apiKey: apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
+            homeVC.title = homePageTitle
+            tabViewControllers.append(homeVC)
+        }
+        
+        // Create top page
+        let topVC = PageViewController(apiKey: apiKey, pageQuery: TopPageQuery(numberOfItems: 12, locale: readSettings().first!, location: readSettings().last!))
+        topVC.title = "Top"
+        tabViewControllers.append(topVC)
+        
+        // Create new page
+        let newVC = PageViewController(apiKey: apiKey, pageQuery: NewPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        newVC.title = "New"
+        tabViewControllers.append(newVC)
+        
+        // Create next page
+        let nextVC = PageViewController(apiKey: apiKey, pageQuery: NextPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        nextVC.title = "Next"
+        tabViewControllers.append(nextVC)
+        
+        // Create settings page
+        let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
+        let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        settingsVC.accessToken = apiKey
+        settingsVC.title = "Settings"
+        tabViewControllers.append(settingsVC)
+        
+        // Embed all view controllers in a UINavigationController
+        viewControllers = tabViewControllers.map {
+            let navigationController = UINavigationController(rootViewController: $0)
+            navigationController.navigationBar.tintColor = tintColor
+            if #available(iOS 11.0, *) {
+                navigationController.navigationBar.prefersLargeTitles = largeTitle
+            }
+            return navigationController
+        }
+    }
     
     /// Read localization settings, use device defaults otherwise
     func readSettings() -> [String] {

@@ -214,23 +214,9 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
             UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code], forKey: "\(type.rawValue)_settings")
         }
         
-        // Create a new home page view controller (embeded inside a UINavigationController, of course) and set it as the first item in the tab bar
-        let homePageViewController = PageViewController(apiKey: calendarStoreController.apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
-        let homePageNavigationController = UINavigationController(rootViewController: homePageViewController)
-        homePageNavigationController.navigationBar.tintColor = calendarStoreController.tintColor
-        if #available(iOS 11.0, *) {
-            homePageNavigationController.navigationBar.prefersLargeTitles = calendarStoreController.largeTitle
-        }
-        homePageViewController.title = calendarStoreController.homePageTitle
-        calendarStoreController.viewControllers?[0] = homePageNavigationController
-        
-        // Move back to the main settings page
-        navigationController?.popViewController(animated: false)
-        
-        // Switch to the home page in the tab bar controller
-        calendarStoreController.selectedIndex = 0
+        // Readd the view controllers to the tab bar controller to make sure they are using the new settings
+        calendarStoreController.addViewControllers()
     }
-    
 }
 
 // MARK: - Load Error View Delegate Mehods
