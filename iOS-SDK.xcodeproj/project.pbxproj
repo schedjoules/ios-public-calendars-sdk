@@ -30,7 +30,7 @@
 		B6EF1C5E20780879003E0095 /* SettingsLocalizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */; };
 		B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */; };
 		B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3C20780879003E0095 /* SettingsViewController.swift */; };
-		B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */; };
+		B6EF1C6120780879003E0095 /* CalendarStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3D20780879003E0095 /* CalendarStoreController.swift */; };
 		B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3E20780879003E0095 /* EventViewController.swift */; };
 		B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */; };
 		B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C4220780879003E0095 /* LoadErrorView.swift */; };
@@ -77,7 +77,7 @@
 		B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocalizationViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWebViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3C20780879003E0095 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStoreViewController.swift; sourceTree = "<group>"; };
+		B6EF1C3D20780879003E0095 /* CalendarStoreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStoreController.swift; sourceTree = "<group>"; };
 		B6EF1C3E20780879003E0095 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarItemViewController.swift; sourceTree = "<group>"; };
 		B6EF1C4220780879003E0095 /* LoadErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadErrorView.swift; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 			files = (
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				B6D3E03D204D97570044C800 /* ViewController.swift in Sources */,
-				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
+				B6EF1C6120780879003E0095 /* CalendarStoreController.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C5B20780879003E0095 /* JSONLanguage.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
