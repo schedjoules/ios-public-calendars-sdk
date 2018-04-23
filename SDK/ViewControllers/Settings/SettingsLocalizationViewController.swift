@@ -27,7 +27,7 @@ import UIKit
 import SchedJoulesApiClient
 import SDWebImage
 
-final class SettingsLocalizationViewController: UIViewController {
+final class SettingsLocalizationViewController: UIViewController, UINavigationControllerDelegate{
     enum DetailType: String {
         case language
         case country
@@ -81,6 +81,16 @@ final class SettingsLocalizationViewController: UIViewController {
 
         // Load the items based on the set type
         loadItems()
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        if viewController is SettingsViewController {
+            // Reference to the CalendarStoreController
+            let calendarStoreController = navigationController.parent as! CalendarStoreController
+            
+            // Readd the view controllers to the tab bar controller to make sure they are using the new settings
+            calendarStoreController.addViewControllers()
+        }
     }
     
     // MARK: - Helper Methods
@@ -201,9 +211,6 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
         // Deselect the table cell
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // Reference to the CalendarStoreController
-        let calendarStoreController = parent?.parent as! CalendarStoreController
-        
         // Default was selected
         if indexPath.section == 0 {
             // Remove user settings to revert back to using the device defaults
@@ -214,8 +221,8 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
             UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code], forKey: "\(type.rawValue)_settings")
         }
         
-        // Readd the view controllers to the tab bar controller to make sure they are using the new settings
-        calendarStoreController.addViewControllers()
+        // Move back to main settings page
+        navigationController?.popViewController(animated: true)
     }
 }
 

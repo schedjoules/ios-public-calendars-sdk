@@ -148,6 +148,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
             let detailVC = storyBoard.instantiateViewController(withIdentifier: "SettingsLocalizationViewController") as! SettingsLocalizationViewController
             detailVC.accessToken = accessToken
+            navigationController?.delegate = detailVC
             let rawValue = tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased()
             detailVC.type = SettingsLocalizationViewController.DetailType(rawValue: rawValue)
             navigationController?.pushViewController(detailVC, animated: true)

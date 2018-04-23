@@ -116,27 +116,32 @@ public final class CalendarStoreController: UITabBarController {
         if pageIdentifier != nil {
             let homeVC = PageViewController.init(apiKey: apiKey, pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
+            homeVC.tabBarItem.image = UIImage(named: "Featured")
             tabViewControllers.append(homeVC)
         // Create home page with juts localization parameters
         } else {
             let homeVC = PageViewController(apiKey: apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
+            homeVC.tabBarItem.image = UIImage(named: "Featured")
             tabViewControllers.append(homeVC)
         }
         
         // Create top page
         let topVC = PageViewController(apiKey: apiKey, pageQuery: TopPageQuery(numberOfItems: 12, locale: readSettings().first!, location: readSettings().last!))
         topVC.title = "Top"
+        topVC.tabBarItem.image = UIImage(named: "Top")
         tabViewControllers.append(topVC)
         
         // Create new page
         let newVC = PageViewController(apiKey: apiKey, pageQuery: NewPageQuery(numberOfItems: 12, locale: readSettings().first!))
         newVC.title = "New"
+        newVC.tabBarItem.image = UIImage(named: "New")
         tabViewControllers.append(newVC)
         
         // Create next page
         let nextVC = PageViewController(apiKey: apiKey, pageQuery: NextPageQuery(numberOfItems: 12, locale: readSettings().first!))
         nextVC.title = "Next"
+        nextVC.tabBarItem.image = UIImage(named: "Next")
         tabViewControllers.append(nextVC)
         
         // Create settings page
@@ -144,6 +149,7 @@ public final class CalendarStoreController: UITabBarController {
         let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
         settingsVC.accessToken = apiKey
         settingsVC.title = "Settings"
+        settingsVC.tabBarItem.image = UIImage(named: "Settings")
         tabViewControllers.append(settingsVC)
         
         // Embed all view controllers in a UINavigationController
