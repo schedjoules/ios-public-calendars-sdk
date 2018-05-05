@@ -202,7 +202,7 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
         tableView.deselectRow(at: indexPath, animated: true)
         
         // Reference to the CalendarStoreController
-        let calendarStoreController = parent?.parent as! CalendarStoreController
+        let calendarStoreController = parent?.parent as! CalendarStoreViewController
         
         // Default was selected
         if indexPath.section == 0 {

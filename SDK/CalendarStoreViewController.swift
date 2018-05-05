@@ -1,5 +1,5 @@
 //
-//  CalendarStoreController.swift
+//  CalendarStoreViewController.swift
 //  iOS-SDK
 //
 //  Created by Balazs Vincze on 2018. 02. 20..
@@ -26,7 +26,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-public final class CalendarStoreController: UITabBarController {
+public final class CalendarStoreViewController: UITabBarController {
     /// Colors used by the SDK.
     public struct ColorPalette {
         public static let red = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1)
@@ -51,9 +51,9 @@ public final class CalendarStoreController: UITabBarController {
     
     // - MARK: Initialization
     
-    // This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `CalendarStoreController` must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`.
+    // This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `CalendarStoreViewController` must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`.
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("CalendarStoreController must only be initialized programatically.")
+        fatalError("CalendarStoreViewController must only be initialized programatically.")
     }
     
     /**
@@ -77,10 +77,10 @@ public final class CalendarStoreController: UITabBarController {
 
         // Array to hold the view controllers
         var tabViewControllers = [UIViewController]()
-    
+        
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
-            let homeVC = PageViewController.init(apiKey: apiKey, pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
+            let homeVC = PageViewController(apiKey: apiKey, pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
             homeVC.title = title
             tabViewControllers.append(homeVC)
         // Create home page with juts localization parameters
@@ -91,11 +91,11 @@ public final class CalendarStoreController: UITabBarController {
         }
         
         // Create settings page
-        let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
+        let storyBoard = UIStoryboard(name: "SDK", bundle: nil)
         let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
         settingsVC.accessToken = apiKey
         settingsVC.title = "Settings"
-        tabViewControllers.append(contentsOf: [homeVC,settingsVC])
+        tabViewControllers.append(settingsVC)
         
         // Embed all view controllers in a UINavigationController
         viewControllers = tabViewControllers.map {
@@ -113,7 +113,7 @@ public final class CalendarStoreController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      */
-    public convenience init(apiKey: String, pageIdentifier: String?) {
+    public convenience init(apiKey: String, pageIdentifier: String) {
         self.init(apiKey: apiKey, pageIdentifier: pageIdentifier, title: nil)
     }
     
