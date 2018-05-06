@@ -27,32 +27,38 @@ import UIKit
 import SchedJoulesApiClient
 import SDWebImage
 
-class SettingsLocalizationViewController: UIViewController {
+final class SettingsLocalizationViewController: UIViewController {
     enum DetailType: String {
         case language
         case country
     }
     
-    // Table view outlet
+    // - MARK: Public Properties
+    
+    /// Table view outlet.
     @IBOutlet weak var tableView: UITableView!
     
-    // Type of data to show
+    /// Type of data to show.
     var type: DetailType!
     
-    // Items
-    var items: [Localization] = []
-    
-    // The API Key
+    /// The API Key.
     var accessToken: String!
     
-    // Reference to the API Client
-    var apiClient: SchedJoulesApi!
+    // - MARK: Private Properties
     
-    // Acitivity indicator reference
-    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    /// The items in to show.
+    private var items: [Localization] = []
+
+    /// The API Client.
+    private var apiClient: SchedJoulesApi!
     
-    // Load error view
-    let loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    /// Acitivity indicator reference.
+    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    
+    /// Load error view reference.
+    private let loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    
+    // - MARK: ViewController Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +82,8 @@ class SettingsLocalizationViewController: UIViewController {
         // Load the items based on the set type
         loadItems()
     }
+    
+    // MARK: - Helper Methods
     
     // Load the items based on the set type
     func loadItems() {
@@ -112,8 +120,6 @@ class SettingsLocalizationViewController: UIViewController {
             })
         }
     }
-        
-    // MARK: - Activity Indicator
     
     // Show network indicator and activity indicator
     func setUpActivityIndicator(){
@@ -126,6 +132,10 @@ class SettingsLocalizationViewController: UIViewController {
     
     // Show network indicator and activity indicator
     func startLoading(){
+        // Remove the load error view, if present
+        if view.subviews.contains(loadErrorView) {
+            loadErrorView.removeFromSuperview()
+        }
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
     }
@@ -147,9 +157,18 @@ class SettingsLocalizationViewController: UIViewController {
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
     }
+    
+    /// Read localization settings, use device defaults otherwise
+    func readSettings() -> [String] {
+        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
+        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
+        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
+        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
+        return [locale!,location!]
+    }
 }
 
-// MARK: - Table View Delegate and Data Source
+// MARK: - Table View Delegate and Data Source Methods
 extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -179,22 +198,45 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Save selection to the user defaults
+        // Deselect the table cell
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Reference to the CalendarStoreController
+        let calendarStoreController = parent?.parent as! CalendarStoreViewController
+        
+        // Default was selected
         if indexPath.section == 0 {
+            // Remove user settings to revert back to using the device defaults
             UserDefaults.standard.removeObject(forKey: "\(type.rawValue)_settings")
+        // Something other than default was selected
         } else {
+            // Save selection to the user defaults
             UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code], forKey: "\(type.rawValue)_settings")
         }
-        // Move back to the main view controller and refresh
-        let mainPageVC = navigationController?.viewControllers.first as! PagesViewController
-        mainPageVC.shouldReload = true
-        navigationController?.popToRootViewController(animated: true)
+        
+        // Create a new home page view controller (embeded inside a UINavigationController, of course) and set it as the first item in the tab bar
+        let homePageViewController = PageViewController(apiKey: calendarStoreController.apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
+        let homePageNavigationController = UINavigationController(rootViewController: homePageViewController)
+        homePageNavigationController.navigationBar.tintColor = calendarStoreController.tintColor
+        if #available(iOS 11.0, *) {
+            homePageNavigationController.navigationBar.prefersLargeTitles = calendarStoreController.largeTitle
+        }
+        homePageViewController.title = calendarStoreController.homePageTitle
+        calendarStoreController.viewControllers?[0] = homePageNavigationController
+        
+        // Move back to the main settings page
+        navigationController?.popViewController(animated: false)
+        
+        // Switch to the home page in the tab bar controller
+        calendarStoreController.selectedIndex = 0
     }
+    
 }
 
-// MARK: - Load Error View Delegate
+// MARK: - Load Error View Delegate Mehods
 extension SettingsLocalizationViewController: LoadErrorViewDelegate{
     func refreshPressed() {
+        startLoading()
         loadItems()
     }
 }

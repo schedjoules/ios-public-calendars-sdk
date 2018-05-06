@@ -26,21 +26,25 @@
 import UIKit
 import WebKit
 
-class SettingsWebViewController: UIViewController {
+final class SettingsWebViewController: UIViewController {
     
-    // The URL to open
+    // - MARK: Public Properties
+    
+    /// The URL to open.
     var url: URL!
     
-    // Webview
-    var webView = WKWebView()
+    // - MARK: Private Properties
+
+    /// The webview.
+    private var webView = WKWebView()
     
-    // Acitivity indicator reference
-    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    /// Acitivity indicator reference.
+    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Configure webview
+        
+        // Configure the webview
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.navigationDelegate = self
@@ -53,7 +57,7 @@ class SettingsWebViewController: UIViewController {
     
     }
     
-    // MARK: - Activity Indicator
+    // MARK: - Activity Indicator Methods
     
     // Show network indicator and activity indicator
     func setUpActivityIndicator(){
@@ -78,6 +82,7 @@ class SettingsWebViewController: UIViewController {
     
 }
 
+// - MARK: WKNavigation Delegate Methods
 extension SettingsWebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         stopLoading()

@@ -11,51 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Featured-->
-        <scene sceneID="D11-Dw-hCT">
-            <objects>
-                <tableViewController storyboardIdentifier="PagesViewController" id="AfR-Dv-2Gi" customClass="PagesViewController" customModule="iOS_SDK" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="35" sectionFooterHeight="100" id="Adg-9s-yoY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="dT2-cf-7JM" style="IBUITableViewCellStyleDefault" id="ICw-DX-P5L">
-                                <rect key="frame" x="0.0" y="35" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ICw-DX-P5L" id="9ni-cz-RIM">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dT2-cf-7JM">
-                                            <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="AfR-Dv-2Gi" id="ZUZ-dt-HqU"/>
-                            <outlet property="delegate" destination="AfR-Dv-2Gi" id="Oq7-Eg-vMx"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Featured" largeTitleDisplayMode="always" id="3Ol-IT-wBh"/>
-                    <connections>
-                        <segue destination="4c8-sA-aeW" kind="show" identifier="showCalendar" id="Mt2-Yd-t3j"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zwZ-SF-xb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1132" y="81"/>
-        </scene>
         <!--Title-->
         <scene sceneID="4nK-sG-iJv">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4c8-sA-aeW" customClass="CalendarItemViewController" customModule="iOS_SDK" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalendarItemViewController" automaticallyAdjustsScrollViewInsets="NO" id="4c8-sA-aeW" customClass="CalendarItemViewController" customModule="iOS_SDK" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7UC-K1-Wbz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,7 +54,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCa-XR-x38">
-                                <rect key="frame" x="16" y="585" width="343" height="50"/>
+                                <rect key="frame" x="16" y="593" width="343" height="50"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.40000000000000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="343" id="QbN-at-HOu"/>
@@ -128,7 +87,7 @@
                         <constraints>
                             <constraint firstItem="3Sw-fu-lj5" firstAttribute="top" secondItem="IPK-CH-k7m" secondAttribute="top" id="1Te-Bk-VPb"/>
                             <constraint firstItem="qCa-XR-x38" firstAttribute="leading" secondItem="IPK-CH-k7m" secondAttribute="leading" priority="750" constant="16" id="3FW-UD-UWC"/>
-                            <constraint firstItem="IPK-CH-k7m" firstAttribute="bottom" secondItem="qCa-XR-x38" secondAttribute="bottom" constant="32" id="AXr-ng-Few"/>
+                            <constraint firstItem="IPK-CH-k7m" firstAttribute="bottom" secondItem="qCa-XR-x38" secondAttribute="bottom" constant="24" id="AXr-ng-Few"/>
                             <constraint firstItem="IPK-CH-k7m" firstAttribute="trailing" secondItem="qCa-XR-x38" secondAttribute="trailing" priority="750" constant="16" id="EAx-Dg-JfE"/>
                             <constraint firstItem="3Sw-fu-lj5" firstAttribute="bottom" secondItem="IPK-CH-k7m" secondAttribute="bottom" id="U25-e6-u4B"/>
                             <constraint firstItem="3Sw-fu-lj5" firstAttribute="leading" secondItem="IPK-CH-k7m" secondAttribute="leading" id="UCV-lA-a7t"/>

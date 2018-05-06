@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SchedJoulesApiClient
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -26,28 +26,41 @@
 import UIKit
 import SchedJoulesApiClient
 
-class CalendarItemViewController: UIViewController {
-    // URL to the .ics file
-    var icsURL: URL!
+final class CalendarItemViewController: UIViewController {
     
-    // The parsed events
-    var calendar: Calendar?
+    // - MARK: Public Properties
     
-    // The Api Client
-    var apiClient: SchedJoulesApi!
-    
-    // Acitivity indicator reference
-    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-    
-    // Load error view
-    lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
-
     // IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var subscribeButton: UIButton!
     
+    /// URL to the .ics file.
+    var icsURL: URL!
+    
+    /// The Api key.
+    var apiKey: String!
+    
+    // - MARK: Private Properties
+    
+    /// The parsed events.
+    private var calendar: Calendar?
+    
+    /// The Api client.
+    private var apiClient: SchedJoulesApi!
+    
+    // Acitivity indicator reference
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    
+    // Load error view
+    private lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+
+    // - MARK: ViewController Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialize the Api Client
+        apiClient = SchedJoulesApi(accessToken: apiKey)
         
         // Set subscribe button image
         subscribeButton.setImage(UIImage(named: "Add_White"), for: .normal)
@@ -69,6 +82,17 @@ class CalendarItemViewController: UIViewController {
         
     }
     
+    // Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEvent" {
+            let eventVC = segue.destination as! EventViewController
+            let event = sender as! Event
+            eventVC.event = event
+        }
+    }
+    
+    // - MARK: Helper Methods
+
     // Fetch and parse the ics file
     func loadICS(){
         apiClient.execute(query: CalendarQuery(url: icsURL), completion: { result in
@@ -89,15 +113,6 @@ class CalendarItemViewController: UIViewController {
         })
     }
     
-    // Prepare for segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEventDetail" {
-            let eventVC = segue.destination as! EventViewController
-            let event = sender as! Event
-            eventVC.event = event
-        }
-    }
-    
     // Subscribe button pressed
     @IBAction func subscribeButtonPressed(_ sender: UIButton) {
         let urlBegin = icsURL.absoluteString.range(of: "://")?.upperBound
@@ -106,22 +121,21 @@ class CalendarItemViewController: UIViewController {
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
-    // MARK: - Loading Indicators
-    
     // Show network indicator and activity indicator
     func setUpActivityIndicator(){
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = navigationController?.navigationBar.tintColor
-        // Center the activity view
-        var center = view.center
-        center.y = center.y - (navigationController?.navigationBar.frame.height)!
-        activityIndicator.center = center
-        tableView.addSubview(activityIndicator)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
         startLoading()
     }
     
     // Show network indicator and activity indicator, also hide subscribe button
     func startLoading(){
+        // Remove the load error view, if present
+        if view.subviews.contains(loadErrorView) {
+            loadErrorView.removeFromSuperview()
+        }
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
         subscribeButton.isHidden = true
@@ -136,10 +150,19 @@ class CalendarItemViewController: UIViewController {
             loadErrorView.removeFromSuperview()
         }
     }
+    
+    // Show load error view
+    func showLoadErrorView(){
+        loadErrorView.delegate = self
+        loadErrorView.refreshButton.setTitleColor(navigationController?.navigationBar.tintColor, for: .normal)
+        loadErrorView.refreshButton.layer.borderColor = navigationController?.navigationBar.tintColor.cgColor
+        loadErrorView.center = view.center
+        view.addSubview(loadErrorView)
+    }
 }
 
 
-// MARK: - TableView Delegate
+// MARK: - TableView Delegate Methods
 
 extension CalendarItemViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -151,10 +174,12 @@ extension CalendarItemViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Dequeue the table cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         // Get event at the row index
         let event = calendar?.events[indexPath.row]
+        
         // Set cell title to the event summary
         cell.textLabel?.text = event?.summary
         
@@ -162,6 +187,7 @@ extension CalendarItemViewController: UITableViewDataSource {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
         var timeString: String!
+        
         // Set it to "All day" if event is all day
         if event!.isAllDay{
             timeString = "All day"
@@ -190,33 +216,26 @@ extension CalendarItemViewController: UITableViewDataSource {
         return cell
     }
     
-    // Show load error view
-    func showLoadErrorView(){
-        loadErrorView.delegate = self
-        loadErrorView.refreshButton.setTitleColor(navigationController?.navigationBar.tintColor, for: .normal)
-        loadErrorView.refreshButton.layer.borderColor = navigationController?.navigationBar.tintColor.cgColor
-        loadErrorView.center = view.center
-        view.addSubview(loadErrorView)
-    }
-    
 }
 
-// MARK: - TableView Delegate
+// MARK: - TableView Delegate Methods
 
 extension CalendarItemViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect the selected row
         tableView.deselectRow(at: indexPath, animated: true)
+        
         // Show the event detail view with the selected event
-        let event = calendar?.events[indexPath.row]
-        performSegue(withIdentifier: "showEvent", sender: event)
+        performSegue(withIdentifier: "showEvent", sender: calendar?.events[indexPath.row])
     }
 }
 
-// MARK: - Load Error View Delegate
+// MARK: - Load Error View Delegate Methods
+
 extension CalendarItemViewController: LoadErrorViewDelegate{
     // Reload the ics file
     func refreshPressed() {
+        startLoading()
         loadICS()
     }
 }
