@@ -27,7 +27,7 @@ import UIKit
 import SchedJoulesApiClient
 import SDWebImage
 
-final class SettingsLocalizationViewController: UIViewController {
+final class SettingsDetailViewController: UIViewController {
     enum DetailType: String {
         case language
         case country
@@ -80,45 +80,30 @@ final class SettingsLocalizationViewController: UIViewController {
         setUpActivityIndicator()
 
         // Load the items based on the set type
-        loadItems()
+        switch type {
+        case .language:
+            loadItems(query: SupportedLanguagesQuery())
+        default:
+            loadItems(query: SupportedCountriesQuery())
+        }
     }
     
     // MARK: - Helper Methods
     
-    // Load the items based on the set type
-    func loadItems() {
-        switch type {
-        case .language:
-            // Load the languages
-            let languageQuery = LanguageQuery()
-            apiClient.execute(query: languageQuery, completion: { result in
-                self.stopLoading()
-                switch result {
-                case let .success(languages):
-                    self.items = languages
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                case .failure:
-                    self.showLoadErrorView()
+    // Load the items and refresh the UI
+    func loadItems<LocalizationQuery: Query>(query: LocalizationQuery) {
+        apiClient.execute(query: query, completion: { result in
+            self.stopLoading()
+            switch result {
+            case let .success(loadedItems):
+                self.items = loadedItems
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
-            })
-        default:
-            // Load the countries
-            let countryQuery = CountryQuery()
-            apiClient.execute(query: countryQuery, completion: { result in
-                self.stopLoading()
-                switch result {
-                case let .success(countries):
-                    self.items = countries
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                case .failure:
-                    self.showLoadErrorView()
-                }
-            })
-        }
+            case .failure:
+                self.showLoadErrorView()
+            }
+        })
     }
     
     // Show network indicator and activity indicator
@@ -169,7 +154,7 @@ final class SettingsLocalizationViewController: UIViewController {
 }
 
 // MARK: - Table View Delegate and Data Source Methods
-extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingsDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -214,29 +199,20 @@ extension SettingsLocalizationViewController: UITableViewDelegate, UITableViewDa
             UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code], forKey: "\(type.rawValue)_settings")
         }
         
-        // Create a new home page view controller (embeded inside a UINavigationController, of course) and set it as the first item in the tab bar
-        let homePageViewController = PageViewController(apiKey: calendarStoreController.apiKey, pageQuery: HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
-        let homePageNavigationController = UINavigationController(rootViewController: homePageViewController)
-        homePageNavigationController.navigationBar.tintColor = calendarStoreController.tintColor
-        if #available(iOS 11.0, *) {
-            homePageNavigationController.navigationBar.prefersLargeTitles = calendarStoreController.largeTitle
-        }
-        homePageViewController.title = calendarStoreController.homePageTitle
-        calendarStoreController.viewControllers?[0] = homePageNavigationController
-        
-        // Move back to the main settings page
-        navigationController?.popViewController(animated: false)
-        
-        // Switch to the home page in the tab bar controller
-        calendarStoreController.selectedIndex = 0
+        // Readd the view controllers to the tab bar controller to make sure they are using the new settings
+        calendarStoreController.addViewControllers()
     }
-    
 }
 
 // MARK: - Load Error View Delegate Mehods
-extension SettingsLocalizationViewController: LoadErrorViewDelegate{
+extension SettingsDetailViewController: LoadErrorViewDelegate{
     func refreshPressed() {
         startLoading()
-        loadItems()
+        switch type {
+        case .language:
+            loadItems(query: SupportedLanguagesQuery())
+        default:
+            loadItems(query: SupportedCountriesQuery())
+        }
     }
 }

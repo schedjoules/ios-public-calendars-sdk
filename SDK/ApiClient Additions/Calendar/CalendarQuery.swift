@@ -32,6 +32,7 @@ public final class CalendarQuery: Query {
 
     public let url: URL
     public let method: HTTPMethod = .get
+    public let encoding: ParameterEncoding = URLEncoding.default
     public let parameters: Parameters = [:]
     public let headers: HTTPHeaders = ["Accept" : "text/calendar", "Content-Type" : "text/calendar"]
     
