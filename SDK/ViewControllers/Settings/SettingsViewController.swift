@@ -146,10 +146,10 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         // Country & Language
         case 1:
             let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
-            let detailVC = storyBoard.instantiateViewController(withIdentifier: "SettingsLocalizationViewController") as! SettingsLocalizationViewController
+            let detailVC = storyBoard.instantiateViewController(withIdentifier: "SettingsLocalizationViewController") as! SettingsDetailViewController
             detailVC.accessToken = accessToken
             let rawValue = tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased()
-            detailVC.type = SettingsLocalizationViewController.DetailType(rawValue: rawValue)
+            detailVC.type = SettingsDetailViewController.DetailType(rawValue: rawValue)
             navigationController?.pushViewController(detailVC, animated: true)
         // FAQ & Social
         default:
