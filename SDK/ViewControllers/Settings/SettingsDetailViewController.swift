@@ -5,99 +5,134 @@
 //  Created by Balazs Vincze on 2018. 03. 29..
 //  Copyright © 2018. SchedJoules. All rights reserved.
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 import UIKit
 import SchedJoulesApiClient
 import SDWebImage
 
-final class SettingsDetailViewController: UIViewController {
-    enum DetailType: String {
-        case language
-        case country
-    }
-    
-    // - MARK: Public Properties
-    
-    /// Table view outlet.
-    @IBOutlet weak var tableView: UITableView!
-    
-    /// Type of data to show.
-    var type: DetailType!
-    
-    /// The API Key.
-    var accessToken: String!
-    
+enum SettingsDetailType: String {
+    case language
+    case country
+}
+
+final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate,
+    LoadErrorViewDelegate where SettingsQuery.Result: Sequence, SettingsQuery.Result.Element: CodedOption {
+
     // - MARK: Private Properties
     
+    /// The table view for presenting the items.
+    private var tableView: UITableView!
+
+    /// The query used to load the items that will be shown.
+    private let settingsQuery: SettingsQuery
+
     /// The items to show.
-    private var items = [SettingsDetail]()
-    
+    private var items = [CodedOption]()
+
+    /// Type of data to show.
+    private let settingsType: SettingsDetailType!
+
     /// The API Client.
-    private var apiClient: SchedJoulesApi!
+    private let apiClient: SchedJoulesApi
     
+    /// Reference to the CalendarStoreViewController (used for reloading)
+    private var calendarStoreViewController: CalendarStoreViewController?
+
     /// Acitivity indicator reference.
-    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-    
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+
     /// Load error view reference.
-    private let loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    private lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
     
+    // Refresh control
+    private var refreshControl = UIRefreshControl()
+
+    /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `SettingsDetailViewController`
+    must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("SettingsDetailViewController must only be initialized programatically.")
+    }
+
+    /**
+     Initialize with a query used to load the items which are going to be displayed.
+     - parameter settingsQuery: A query with a `Result` of an array of a type that conforms to `CodedOption` protocol.
+     */
+    required init(apiClient: SchedJoulesApi, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
+        self.apiClient = apiClient
+        self.settingsQuery = settingsQuery
+        self.settingsType = settingsType
+        super.init(nibName: nil, bundle: nil)
+    }
+
     // - MARK: ViewController Methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initalize API Client
-        apiClient = SchedJoulesApi(accessToken: accessToken)
-        
+
         // Set navbar title
-        navigationItem.title = type.rawValue.capitalized
-        
-        // Set table view delegate and data source
+        navigationItem.title = settingsType.rawValue.capitalized
+
+        // Create a table view
+        tableView = UITableView(frame: view.frame)
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // Remove table view seperators
+        view.addSubview(tableView)
+
+        // Remove empty table cell seperators
         tableView.tableFooterView = UIView(frame: .zero)
         
+        // Register table cell for reuse
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+
         // Start loading indicator(s)
         setUpActivityIndicator()
         
-        // Load the items based on the set type
-        switch type {
-        case .language:
-            loadItems(query: SupportedLanguagesQuery())
-        default:
-            loadItems(query: SupportedCountriesQuery())
-        }
+        // Set up the refresh control
+        refreshControl.tintColor = navigationController?.navigationBar.tintColor
+        refreshControl.addTarget(self, action: #selector(loadItems), for: UIControlEvents.valueChanged)
+        tableView.refreshControl = refreshControl
+
+        // Load the items with the query passed in on initialization
+        loadItems()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if calendarStoreViewController != nil {
+            // Re-add the view controllers to the tab bar controller to make sure they are using the new settings
+            calendarStoreViewController!.addViewControllers()
+        }
+    }
+
     // MARK: - Helper Methods
-    
+
     // Load the items and refresh the UI
-    func loadItems<LocalizationQuery: Query>(query: LocalizationQuery) {
-        apiClient.execute(query: query, completion: { result in
+    @objc func loadItems() {
+        apiClient.execute(query: settingsQuery, completion: { result in
             self.stopLoading()
             switch result {
             case let .success(loadedItems):
-                self.items = loadedItems as! [SettingsDetail]
+                self.items = loadedItems as! [CodedOption]
                 DispatchQueue.main.async {
+                    self.tableView.refreshControl?.endRefreshing()
                     self.tableView.reloadData()
                 }
             case .failure:
@@ -105,7 +140,7 @@ final class SettingsDetailViewController: UIViewController {
             }
         })
     }
-    
+
     // Show network indicator and activity indicator
     func setUpActivityIndicator(){
         activityIndicator.hidesWhenStopped = true
@@ -114,7 +149,7 @@ final class SettingsDetailViewController: UIViewController {
         view.addSubview(activityIndicator)
         startLoading()
     }
-    
+
     // Show network indicator and activity indicator
     func startLoading(){
         // Remove the load error view, if present
@@ -124,7 +159,7 @@ final class SettingsDetailViewController: UIViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
     }
-    
+
     // Hide network indicator and activity indicator
     func stopLoading(){
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -133,7 +168,7 @@ final class SettingsDetailViewController: UIViewController {
             loadErrorView.removeFromSuperview()
         }
     }
-    
+
     // Show load error view
     func showLoadErrorView(){
         loadErrorView.delegate = self
@@ -142,7 +177,7 @@ final class SettingsDetailViewController: UIViewController {
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
     }
-    
+
     /// Read localization settings, use device defaults otherwise
     func readSettings() -> [String] {
         let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
@@ -151,10 +186,9 @@ final class SettingsDetailViewController: UIViewController {
         let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
         return [locale!,location!]
     }
-}
-
-// MARK: - Table View Delegate and Data Source Methods
-extension SettingsDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    // MARK: - Table View Delegate and Data Source Methods
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -186,33 +220,28 @@ extension SettingsDetailViewController: UITableViewDelegate, UITableViewDataSour
         // Deselect the table cell
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // Reference to the CalendarStoreController
-        let calendarStoreController = parent?.parent as! CalendarStoreViewController
-        
         // Default was selected
         if indexPath.section == 0 {
             // Remove user settings to revert back to using the device defaults
-            UserDefaults.standard.removeObject(forKey: "\(type.rawValue)_settings")
+            UserDefaults.standard.removeObject(forKey: "\(settingsType.rawValue)_settings")
             // Something other than default was selected
         } else {
             // Save selection to the user defaults
-            UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code], forKey: "\(type.rawValue)_settings")
+            UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code],
+                                      forKey: "\(settingsType.rawValue)_settings")
         }
         
-        // Re-add the view controllers to the tab bar controller to make sure they are using the new settings
-        calendarStoreController.addViewControllers()
+        calendarStoreViewController = parent?.parent as? CalendarStoreViewController
+        
+        // Move back
+        navigationController?.popViewController(animated: true)
     }
-}
-
-// MARK: - Load Error View Delegate Mehods
-extension SettingsDetailViewController: LoadErrorViewDelegate{
+    
+    // MARK: - Load Error View Delegate Mehods
+    
     func refreshPressed() {
+        // Refresh the view
         startLoading()
-        switch type {
-        case .language:
-            loadItems(query: SupportedLanguagesQuery())
-        default:
-            loadItems(query: SupportedCountriesQuery())
-        }
+        loadItems()
     }
 }

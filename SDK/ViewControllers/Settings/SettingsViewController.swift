@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 import UIKit
+import SchedJoulesApiClient
 
 final class SettingsViewController: UIViewController {
     
@@ -32,8 +33,8 @@ final class SettingsViewController: UIViewController {
     /// The table view
     @IBOutlet weak var tableView: UITableView!
 
-    /// The API Key.
-    var accessToken: String!
+    /// The ApiClient.
+    var apiClient: SchedJoulesApi!
     
     // - MARK: Private Properties
     
@@ -63,6 +64,7 @@ final class SettingsViewController: UIViewController {
 }
 
 // MARK: - Table View Delegate and Data Source Methods
+
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -145,12 +147,17 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(webVC, animated: true)
         // Country & Language
         case 1:
-            let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
-            let detailVC = storyBoard.instantiateViewController(withIdentifier: "SettingsLocalizationViewController") as! SettingsDetailViewController
-            detailVC.accessToken = accessToken
-            let rawValue = tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased()
-            detailVC.type = SettingsDetailViewController.DetailType(rawValue: rawValue)
-            navigationController?.pushViewController(detailVC, animated: true)
+            let settingsType = SettingsDetailType(rawValue: tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased())!
+            switch settingsType {
+            case .language:
+                let settingsDetailVC = SettingsDetailViewController(apiClient: apiClient,
+                                                                         settingsQuery: SupportedLanguagesQuery(), settingsType: .language)
+                navigationController?.pushViewController(settingsDetailVC, animated: true)
+            case .country:
+                let settingsDetailVC = SettingsDetailViewController(apiClient: apiClient,
+                                                                         settingsQuery: SupportedCountriesQuery(), settingsType: .country)
+                navigationController?.pushViewController(settingsDetailVC, animated: true)
+            }
         // FAQ & Social
         default:
             // FAQ
