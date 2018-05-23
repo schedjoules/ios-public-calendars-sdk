@@ -65,9 +65,9 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
      - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
-    public init(apiKey: String, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
+    public init(apiClient: SchedJoulesApi, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
         // Initialization
-        self.apiClient = SchedJoulesApi(accessToken: apiKey)
+        self.apiClient = apiClient
         self.pageIdentifier = pageIdentifier
         self.largeTitle = largeTitle
         self.tintColor = tintColor
@@ -87,7 +87,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter pageIdentifier: The page identifier for the the home page.
      */
     public convenience init(apiKey: String, pageIdentifier: String?) {
-        self.init(apiKey: apiKey, pageIdentifier: pageIdentifier, title: nil)
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: nil)
     }
     
     /**
@@ -96,7 +96,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
     public convenience init(apiKey: String, title: String?) {
-        self.init(apiKey: apiKey, pageIdentifier: nil, title: title)
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: nil, title: title)
     }
     
     /**
@@ -104,7 +104,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      */
     public convenience init(apiKey: String) {
-        self.init(apiKey: apiKey, pageIdentifier: nil, title: nil)
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: nil, title: nil)
     }
     
     // - MARK: Helper Methods
