@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.7.2)
   - Result (3.0.0)
-  - SchedJoulesApiClient (0.6.2):
+  - SchedJoulesApiClient (0.7):
     - Alamofire (~> 4.5)
     - Result (~> 3.0.0)
   - SDWebImage (4.3.3):
@@ -11,25 +11,22 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Result (~> 3.0.0)
-  - SchedJoulesApiClient (from `/Users/balazsvincze/Desktop/Work/SchedJoules/ApiClient`)
+  - SchedJoulesApiClient
   - SDWebImage (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Result
+    - SchedJoulesApiClient
     - SDWebImage
-
-EXTERNAL SOURCES:
-  SchedJoulesApiClient:
-    :path: "/Users/balazsvincze/Desktop/Work/SchedJoules/ApiClient"
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
-  SchedJoulesApiClient: 945308f29230f959b5997569a749407dffae3287
+  SchedJoulesApiClient: 80e41fd01a5da19d34389c1864dbdda5b3e113cc
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
 
-PODFILE CHECKSUM: ecc864785c16d47015a9c829b395ea1060143a1f
+PODFILE CHECKSUM: 8cd683f264b49d10f8b888f4687cd99f8b2a6f28
 
 COCOAPODS: 1.5.2

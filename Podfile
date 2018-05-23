@@ -9,6 +9,6 @@ target 'iOS-SDK' do
 	pod 'SDWebImage', '~> 4.0'
 	pod 'Alamofire', '~> 4.5'
 	pod 'Result', '~> 3.0.0'
-	pod 'SchedJoulesApiClient', :path => '/Users/balazsvincze/Desktop/Work/SchedJoules/ApiClient'
+	pod 'SchedJoulesApiClient'
 end
 

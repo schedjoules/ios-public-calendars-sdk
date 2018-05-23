@@ -65,7 +65,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
      - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
-    private init(apiKey: String, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
+    public init(apiKey: String, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
         // Initialization
         self.apiClient = SchedJoulesApi(accessToken: apiKey)
         self.pageIdentifier = pageIdentifier
@@ -86,7 +86,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      */
-    private convenience init(apiKey: String, pageIdentifier: String?) {
+    public convenience init(apiKey: String, pageIdentifier: String?) {
         self.init(apiKey: apiKey, pageIdentifier: pageIdentifier, title: nil)
     }
     

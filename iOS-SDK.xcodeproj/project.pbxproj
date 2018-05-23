@@ -147,9 +147,9 @@
 			isa = PBXGroup;
 			children = (
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
-				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
+				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
