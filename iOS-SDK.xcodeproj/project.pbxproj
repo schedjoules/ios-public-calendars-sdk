@@ -17,17 +17,7 @@
 		B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E04F204D97570044C800 /* iOS_SDKTests.swift */; };
 		B6EF1C4420780879003E0095 /* SDK.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6EF1C1120780878003E0095 /* SDK.storyboard */; };
 		B6EF1C4520780879003E0095 /* SDK.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6EF1C1220780879003E0095 /* SDK.xcassets */; };
-		B6EF1C4820780879003E0095 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C1820780879003E0095 /* Event.swift */; };
-		B6EF1C4920780879003E0095 /* ParsedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C1920780879003E0095 /* ParsedLine.swift */; };
-		B6EF1C4A20780879003E0095 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C1A20780879003E0095 /* Parser.swift */; };
-		B6EF1C4B20780879003E0095 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C1B20780879003E0095 /* Calendar.swift */; };
-		B6EF1C4C20780879003E0095 /* CalendarQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C1C20780879003E0095 /* CalendarQuery.swift */; };
-		B6EF1C5920780879003E0095 /* LanguageQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3020780879003E0095 /* LanguageQuery.swift */; };
-		B6EF1C5A20780879003E0095 /* CountryQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3120780879003E0095 /* CountryQuery.swift */; };
-		B6EF1C5B20780879003E0095 /* JSONLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3420780879003E0095 /* JSONLanguage.swift */; };
-		B6EF1C5C20780879003E0095 /* JSONCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3520780879003E0095 /* JSONCountry.swift */; };
-		B6EF1C5D20780879003E0095 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3720780879003E0095 /* Localization.swift */; };
-		B6EF1C5E20780879003E0095 /* SettingsLocalizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */; };
+		B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */; };
 		B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */; };
 		B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3C20780879003E0095 /* SettingsViewController.swift */; };
 		B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */; };
@@ -64,17 +54,7 @@
 		B6D3E051204D97570044C800 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6EF1C1120780878003E0095 /* SDK.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SDK.storyboard; sourceTree = "<group>"; };
 		B6EF1C1220780879003E0095 /* SDK.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SDK.xcassets; sourceTree = "<group>"; };
-		B6EF1C1820780879003E0095 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		B6EF1C1920780879003E0095 /* ParsedLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedLine.swift; sourceTree = "<group>"; };
-		B6EF1C1A20780879003E0095 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		B6EF1C1B20780879003E0095 /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
-		B6EF1C1C20780879003E0095 /* CalendarQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarQuery.swift; sourceTree = "<group>"; };
-		B6EF1C3020780879003E0095 /* LanguageQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageQuery.swift; sourceTree = "<group>"; };
-		B6EF1C3120780879003E0095 /* CountryQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryQuery.swift; sourceTree = "<group>"; };
-		B6EF1C3420780879003E0095 /* JSONLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONLanguage.swift; sourceTree = "<group>"; };
-		B6EF1C3520780879003E0095 /* JSONCountry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONCountry.swift; sourceTree = "<group>"; };
-		B6EF1C3720780879003E0095 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocalizationViewController.swift; sourceTree = "<group>"; };
+		B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDetailViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWebViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3C20780879003E0095 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarStoreViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +89,15 @@
 				16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B60CC7E520B0AA7200CAE3BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6EF1C1120780878003E0095 /* SDK.storyboard */,
+				B6EF1C1220780879003E0095 /* SDK.xcassets */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B6D3E02E204D97570044C800 = {
@@ -157,87 +146,12 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				B6EF1C1320780879003E0095 /* ApiClient Additions */,
-				B6EF1C1120780878003E0095 /* SDK.storyboard */,
-				B6EF1C1220780879003E0095 /* SDK.xcassets */,
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
+				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
 			);
 			path = SDK;
-			sourceTree = "<group>";
-		};
-		B6EF1C1320780879003E0095 /* ApiClient Additions */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C1620780879003E0095 /* Calendar */,
-				B6EF1C2E20780879003E0095 /* Localization */,
-			);
-			path = "ApiClient Additions";
-			sourceTree = "<group>";
-		};
-		B6EF1C1620780879003E0095 /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C1720780879003E0095 /* iCalendarParser */,
-				B6EF1C1C20780879003E0095 /* CalendarQuery.swift */,
-			);
-			path = Calendar;
-			sourceTree = "<group>";
-		};
-		B6EF1C1720780879003E0095 /* iCalendarParser */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C1820780879003E0095 /* Event.swift */,
-				B6EF1C1920780879003E0095 /* ParsedLine.swift */,
-				B6EF1C1A20780879003E0095 /* Parser.swift */,
-				B6EF1C1B20780879003E0095 /* Calendar.swift */,
-			);
-			path = iCalendarParser;
-			sourceTree = "<group>";
-		};
-		B6EF1C2E20780879003E0095 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C2F20780879003E0095 /* Queries */,
-				B6EF1C3220780879003E0095 /* Models */,
-			);
-			path = Localization;
-			sourceTree = "<group>";
-		};
-		B6EF1C2F20780879003E0095 /* Queries */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C3020780879003E0095 /* LanguageQuery.swift */,
-				B6EF1C3120780879003E0095 /* CountryQuery.swift */,
-			);
-			path = Queries;
-			sourceTree = "<group>";
-		};
-		B6EF1C3220780879003E0095 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C3320780879003E0095 /* JSON */,
-				B6EF1C3620780879003E0095 /* Protocols */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		B6EF1C3320780879003E0095 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C3420780879003E0095 /* JSONLanguage.swift */,
-				B6EF1C3520780879003E0095 /* JSONCountry.swift */,
-			);
-			path = JSON;
-			sourceTree = "<group>";
-		};
-		B6EF1C3620780879003E0095 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				B6EF1C3720780879003E0095 /* Localization.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		B6EF1C3820780879003E0095 /* ViewControllers */ = {
@@ -255,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
-				B6EF1C3A20780879003E0095 /* SettingsLocalizationViewController.swift */,
+				B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */,
 				B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */,
 			);
 			path = Settings;
@@ -291,7 +205,6 @@
 				B6D3E034204D97570044C800 /* Frameworks */,
 				B6D3E035204D97570044C800 /* Resources */,
 				455F587FF1B4C628F01288F9 /* [CP] Embed Pods Frameworks */,
-				4859911694E948C7A63F4DF1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,21 +339,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4859911694E948C7A63F4DF1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -452,22 +350,12 @@
 				B6D3E03D204D97570044C800 /* ViewController.swift in Sources */,
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
-				B6EF1C5B20780879003E0095 /* JSONLanguage.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
-				B6EF1C5A20780879003E0095 /* CountryQuery.swift in Sources */,
-				B6EF1C4B20780879003E0095 /* Calendar.swift in Sources */,
 				B6D3E03B204D97570044C800 /* AppDelegate.swift in Sources */,
-				B6EF1C4920780879003E0095 /* ParsedLine.swift in Sources */,
-				B6EF1C4820780879003E0095 /* Event.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
-				B6EF1C5E20780879003E0095 /* SettingsLocalizationViewController.swift in Sources */,
-				B6EF1C5C20780879003E0095 /* JSONCountry.swift in Sources */,
-				B6EF1C4A20780879003E0095 /* Parser.swift in Sources */,
-				B6EF1C5D20780879003E0095 /* Localization.swift in Sources */,
+				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
-				B6EF1C5920780879003E0095 /* LanguageQuery.swift in Sources */,
-				B6EF1C4C20780879003E0095 /* CalendarQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,23 +5,23 @@
 //  Created by Balazs Vincze on 2018. 04. 20..
 //  Copyright © 2018. SchedJoules. All rights reserved.
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 import UIKit
 import SchedJoulesApiClient
@@ -37,7 +37,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     // - MARK: Private Properties
     
     /// The Page query used by this view controller.
-    private var pageQuery: PageQuery!
+    private let pageQuery: PageQuery!
     
     /// The returned Pages object from the query.
     private var page: Page?
@@ -45,11 +45,8 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     /// A temporary variable to hold the Pages object while searching.
     private var tempPage: Page?
     
-    /// The Api key.
-    private var apiKey: String!
-    
     /// The Api client.
-    private var apiClient: SchedJoulesApi!
+    private let apiClient: SchedJoulesApi
     
     /// The table view for presenting the pages.
     private var tableView: UITableView!
@@ -71,21 +68,21 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     
     // - MARK: Initialization
 
-    // This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `PageViewController` must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`.
+    /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `PageViewController`
+    must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
     required init?(coder aDecoder: NSCoder) {
         fatalError("PageViewController must only be initialized programatically.")
     }
     
     /**
-     Initialize with a Page query and an Api key.
+     Initialize with a Page query and an ApiClient.
+     - parameter apiClient: The API Key (access token) for the **SchedJoules API**.
      - parameter pageQuery: A query with a `Result` of type `Page`.
-     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiKey: String, pageQuery: PageQuery, searchEnabled: Bool = false) {
+    required init(apiClient: SchedJoulesApi, pageQuery: PageQuery, searchEnabled: Bool = false) {
         self.pageQuery = pageQuery
-        self.apiKey = apiKey
-        self.apiClient = SchedJoulesApi(accessToken: apiKey)
+        self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
         super.init(nibName: nil, bundle: nil)
     }
@@ -243,6 +240,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     // - MARK: Table View Data source Methods
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return page?.sections.count ?? 0
     }
@@ -297,6 +295,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     // - MARK: Table View Delegate Methods
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect the row
         tableView.deselectRow(at: indexPath, animated: true)
@@ -306,7 +305,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Show the seleced page in a PageViewController
         if pageSection.items[indexPath.row].itemClass == .page {
-            let pageVC = PageViewController<SinglePageQuery>(apiKey: "0443a55244bb2b6224fd48e0416f0d9c",
+            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
                                                              pageQuery: SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!)))
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
@@ -314,7 +313,8 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             let storyboard = UIStoryboard(name: "SDK", bundle: nil)
             let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
             calendarVC.icsURL = URL(string: pageSection.items[indexPath.row].url)
-            calendarVC.apiKey = apiKey
+            calendarVC.title = pageSection.items[indexPath.row].name
+            calendarVC.apiClient = apiClient
             navigationController?.pushViewController(calendarVC, animated: true)
         }
     }
@@ -354,6 +354,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     // MARK: - Load Error View Delegate Methods
+    
     func refreshPressed() {
         startLoading()
         fetchPages()
