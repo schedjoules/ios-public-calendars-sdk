@@ -30,7 +30,7 @@ final class SettingsViewController: UIViewController {
     
     // - MARK: Public Properties
     
-    /// The table view
+    /// The table view.
     @IBOutlet weak var tableView: UITableView!
 
     /// The ApiClient.
@@ -108,7 +108,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = contactItems[indexPath.row]
             cell.detailTextLabel!.text = contactItemsDetail[indexPath.row]
-            cell.imageView?.image = UIImage(named: contactItems[indexPath.row])
+            cell.imageView?.image = UIImage(named: contactItems[indexPath.row], in: Bundle.resourceBundle, compatibleWith: nil)
             cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
             cell.detailTextLabel!.textColor = .lightGray
             return cell
@@ -118,7 +118,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel!.text = "SchedJoules"
             cell.detailTextLabel!.text = nil
             cell.detailTextLabel!.textColor = .lightGray
-            cell.imageView?.image = UIImage(named: "Icon")
+            cell.imageView?.image = UIImage(named: "Icon", in: Bundle.resourceBundle, compatibleWith: nil)
             return cell
         }
        
