@@ -4,7 +4,8 @@ This is the **Swift** implementation of the iOS Public Calendar SDK.
 
 ## Installation
 
-You can install the SDK through `CocoaPods`. Add this line to your `.podfile`:
+You can install the SDK through **CocoaPods**. 
+Add this line to your `podfile`:
 
 `pod 'SchedJoulesSDK'`
 
