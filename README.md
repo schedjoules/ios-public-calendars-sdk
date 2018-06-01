@@ -37,5 +37,5 @@ The default initializer for the Calendar Store includes parameters for customiza
 ```Swift
 init(apiClient: SchedJoulesApi, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red)
 ```
-Please refer to the [inline code documentation](https://github.com/schedjoules/ios-public-calendars-sdk/blob/master/SDK/CalendarStoreViewController.swift#L68) for further details.
+Please refer to the [inline code documentation](https://github.com/schedjoules/ios-public-calendars-sdk/blob/master/SDK/CalendarStoreViewController.swift#L61) for further details.
 
