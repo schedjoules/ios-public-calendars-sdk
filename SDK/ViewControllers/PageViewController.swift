@@ -55,7 +55,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     private lazy var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     
     // Load error view
-    private lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
     
     // Search controller
     private lazy var searchController = UISearchController(searchResultsController: nil)
@@ -267,7 +267,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Set icon (if any)
         if item.icon != nil{
-            cell.imageView!.sd_setImage(with: item.icon!, placeholderImage: UIImage(named: "Icon_Placeholder"))
+            cell.imageView!.sd_setImage(with: item.icon!, placeholderImage: UIImage(named: "Icon_Placeholder", in: Bundle.resourceBundle,
+                                                                                    compatibleWith: nil)
+)
         } else {
             cell.imageView!.image = nil
         }
@@ -275,7 +277,8 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         // Add subscribe button if item is a calendar item
         if item.itemClass == .calendar {
             let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 28, height: 28))
-            addButton.setImage(UIImage(named: "Add")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            addButton.setImage(UIImage(named: "Add", in: Bundle.resourceBundle,
+                                       compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
             addButton.imageView?.tintColor = navigationController?.navigationBar.tintColor
             addButton.addTarget(self, action: #selector(subscribe(sender:)), for: .touchUpInside)
             cell.accessoryView = addButton

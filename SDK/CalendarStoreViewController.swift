@@ -119,14 +119,14 @@ public final class CalendarStoreViewController: UITabBarController {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
                 SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
-            homeVC.tabBarItem.image = UIImage(named: "Featured")
+            homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
             // Create home page with juts localization parameters
         } else {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
                 HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
-            homeVC.tabBarItem.image = UIImage(named: "Featured")
+            homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
         }
         
@@ -134,27 +134,27 @@ public final class CalendarStoreViewController: UITabBarController {
         let topVC = PageViewController(apiClient: apiClient, pageQuery:
             TopPageQuery(numberOfItems: 12, locale: readSettings().first!, location: readSettings().last!))
         topVC.title = "Top"
-        topVC.tabBarItem.image = UIImage(named: "Top")
+        topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
         
         // Create new page
         let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: readSettings().first!))
         newVC.title = "New"
-        newVC.tabBarItem.image = UIImage(named: "New")
+        newVC.tabBarItem.image = UIImage(named: "New", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(newVC)
         
         // Create next page
         let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: readSettings().first!))
         nextVC.title = "Next"
-        nextVC.tabBarItem.image = UIImage(named: "Next")
+        nextVC.tabBarItem.image = UIImage(named: "Next", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(nextVC)
         
         // Create settings page
-        let storyBoard = UIStoryboard.init(name: "SDK", bundle: nil)
+        let storyBoard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
         let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
         settingsVC.apiClient = apiClient
         settingsVC.title = "Settings"
-        settingsVC.tabBarItem.image = UIImage(named: "Settings")
+        settingsVC.tabBarItem.image = UIImage(named: "Settings", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(settingsVC)
         
         // Embed all view controllers in a UINavigationController

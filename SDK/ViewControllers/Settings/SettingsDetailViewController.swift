@@ -52,14 +52,14 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     /// The API Client.
     private let apiClient: SchedJoulesApi
     
-    /// Reference to the CalendarStoreViewController (used for reloading)
+    /// Reference to the CalendarStoreViewController (used for reloading).
     private var calendarStoreViewController: CalendarStoreViewController?
 
     /// Acitivity indicator reference.
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
 
     /// Load error view reference.
-    private lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
     
     // Refresh control
     private var refreshControl = UIRefreshControl()
@@ -208,7 +208,8 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
             let item = self.items[indexPath.row]
             cell.textLabel?.text = item.name
             if item.icon != nil {
-                cell.imageView?.sd_setImage(with: item.icon, placeholderImage: UIImage(named: "Icon_Placeholder"))
+                cell.imageView?.sd_setImage(with: item.icon, placeholderImage: UIImage(named: "Icon_Placeholder", in: Bundle.resourceBundle, compatibleWith: nil)
+)
             } else {
                 cell.imageView?.image = nil
             }

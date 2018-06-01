@@ -49,7 +49,7 @@ final class CalendarItemViewController: UIViewController {
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     
     // Load error view
-    private lazy var loadErrorView = Bundle.main.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
+    private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
 
     // - MARK: ViewController Methods
     
@@ -57,7 +57,7 @@ final class CalendarItemViewController: UIViewController {
         super.viewDidLoad()
         
         // Set subscribe button image
-        subscribeButton.setImage(UIImage(named: "Add_White"), for: .normal)
+        subscribeButton.setImage(UIImage(named: "Add_White", in: Bundle.resourceBundle, compatibleWith: nil), for: .normal)
         
         // Remove empty seperators
         tableView.tableFooterView = UIView(frame: .zero)
