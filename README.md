@@ -13,7 +13,7 @@ You can install the SDK through `CocoaPods`. Add this line to your `.podfile`:
 
 To present the Calendar Store, you first have to initialize it using the API Key we provided you.
 
-Mail us at support@schedjoules.com to request you personal API key if you don't have any yet. Until then you can use the test API key **0443a55244bb2b6224fd48e0416f0d9c**
+Mail us at support@schedjoules.com to request you personal API key if you don't have one yet. Until then you can use the test API key **0443a55244bb2b6224fd48e0416f0d9c**
 
 ### Example
 
