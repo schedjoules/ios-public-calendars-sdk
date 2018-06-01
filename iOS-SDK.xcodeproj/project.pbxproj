@@ -15,6 +15,7 @@
 		B625A60C20C038D000586F5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60520C038D000586F5E /* Main.storyboard */; };
 		B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60720C038D000586F5E /* AppDelegate.swift */; };
 		B625A60E20C038D000586F5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B625A60820C038D000586F5E /* Info.plist */; };
+		B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */; };
 		B69268872089F32A003456FB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69268862089F32A003456FB /* PageViewController.swift */; };
 		B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E04F204D97570044C800 /* iOS_SDKTests.swift */; };
 		B6EF1C4420780879003E0095 /* SDK.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6EF1C1120780878003E0095 /* SDK.storyboard */; };
@@ -50,6 +51,7 @@
 		B625A60620C038D000586F5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B625A60720C038D000586F5E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B625A60820C038D000586F5E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStoreSinglePageViewController.swift; sourceTree = "<group>"; };
 		B69268862089F32A003456FB /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		B6D3E037204D97570044C800 /* iOS-SDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-SDK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D3E04B204D97570044C800 /* iOS-SDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-SDKTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
+				B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
 				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
@@ -366,6 +369,7 @@
 				B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
+				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,

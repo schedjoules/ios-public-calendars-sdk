@@ -313,7 +313,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
-            let storyboard = UIStoryboard(name: "SDK", bundle: nil)
+            let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
             let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
             calendarVC.icsURL = URL(string: pageSection.items[indexPath.row].url)
             calendarVC.title = pageSection.items[indexPath.row].name

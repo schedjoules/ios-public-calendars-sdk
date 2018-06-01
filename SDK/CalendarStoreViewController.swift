@@ -59,7 +59,7 @@ public final class CalendarStoreViewController: UITabBarController {
     }
     
     /**
-     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
+     - parameter apiClient: An instance of `SchedJoulesApi`, initialized with a valid access token.
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
@@ -79,6 +79,17 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Add the view controllers to the tab bar controller
         addViewControllers()
+    }
+    
+    /**
+     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
+     - parameter pageIdentifier: The page identifier for the the home page.
+     - parameter title: The title for the `navigtaion bar` in the home page.
+     - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
+     - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
+     */
+    public convenience init(apiKey: String, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title, largeTitle: largeTitle, tintColor: tintColor)
     }
     
     /**
@@ -121,7 +132,7 @@ public final class CalendarStoreViewController: UITabBarController {
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
-            // Create home page with juts localization parameters
+            // Create home page with just localization parameters
         } else {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
                 HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)

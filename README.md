@@ -17,17 +17,18 @@ Mail us at support@schedjoules.com to request you personal API key if you don't 
 
 ### Example
 
+If you would like to present our fully-featured Calendar Store, use the `CalendarStoreViewController` class:
+
 ```Swift
 // Presenting the Calendar Store View Controller
 let calendarVC = CalendarStoreViewController(apiKey: "YOUR_API_KEY")
 present(calendarVC, animated: true, completion: nil)
 ```
 
-Optionally, you can also pass a `pageIdentifier` to start directly from a page rather than the home.
+Optionally, if you would only like to use the Calendar Store to present a single page, use the `CalendarStoreSinglePageViewController` class:
 
 ```Swift
-// Presenting the Calendar Store View Controller with a given page
-let calendarVC = CalendarStoreViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673")
+let calendarVC = CalendarStoreSinglePageViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673", title: "Featured")
 present(calendarVC, animated: true, completion: nil)
 ```
 

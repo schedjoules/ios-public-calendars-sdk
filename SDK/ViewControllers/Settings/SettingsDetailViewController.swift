@@ -177,15 +177,6 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
     }
-
-    /// Read localization settings, use device defaults otherwise
-    func readSettings() -> [String] {
-        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
-        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
-        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
-        return [locale!,location!]
-    }
     
     // MARK: - Table View Delegate and Data Source Methods
     
@@ -228,7 +219,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
             // Something other than default was selected
         } else {
             // Save selection to the user defaults
-            UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code],
+            UserDefaults.standard.set(["displayName": items[indexPath.row].name, "countryCode": items[indexPath.row].code],
                                       forKey: "\(settingsType.rawValue)_settings")
         }
         
