@@ -33,19 +33,9 @@ present(calendarVC, animated: true, completion: nil)
 
 ### Customization options
 
-The Calendar Store View Controller can also be initlaized using a title. This title will show in the navigation bar on the first page.
-
+The default initializer for the Calendar Store includes parameters for customization. 
 ```Swift
-// Presenting the Calendar Store View Controller with a given page
-let calendarVC = CalendarStoreViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673", title:"Featured")
-present(calendarVC, animated: true, completion: nil)
+init(apiClient: SchedJoulesApi, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red)
 ```
+Please refer to the [inline code documentation](https://github.com/schedjoules/ios-public-calendars-sdk/blob/master/SDK/CalendarStoreViewController.swift#L68) for further details.
 
-You can also set a global `tintColor` for the whole Calendar Store, by setting it's `tintColor` property.
-
-```Swift
-// Presenting the Calendar Store View Controller with a given page
-let calendarVC = CalendarStoreViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673", title:"Featured")
-calendarVC.tintColor = .black
-present(calendarVC, animated: true, completion: nil)
-```
