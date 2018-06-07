@@ -48,13 +48,13 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
      - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
      - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
-    public init(apiClient: SchedJoulesApi, pageIdentifier: String, title: String, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
+    public init(apiClient: Api, pageIdentifier: String, title: String) {
         super.init(nibName: nil, bundle: nil)
         
         // Customize the naivgation controller
-        navigationBar.tintColor = tintColor
+        navigationBar.tintColor = ColorPalette.red
         if #available(iOS 11.0, *) {
-            navigationBar.prefersLargeTitles = largeTitle
+            navigationBar.prefersLargeTitles = true
         }
         
         // Create home page with a specific page identifier and push it on to the navigation stack
@@ -71,8 +71,8 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
      - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
      - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
-    public convenience init(apiKey: String, pageIdentifier: String, title: String, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title, largeTitle: largeTitle, tintColor: tintColor)
+    public convenience init(apiKey: String, pageIdentifier: String, title: String) {
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title)
     }
     
     /// Read localization settings, use device defaults otherwise

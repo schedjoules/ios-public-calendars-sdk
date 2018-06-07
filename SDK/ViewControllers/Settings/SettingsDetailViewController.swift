@@ -50,7 +50,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     private let settingsType: SettingsDetailType!
 
     /// The API Client.
-    private let apiClient: SchedJoulesApi
+    private let apiClient: Api
     
     /// Reference to the CalendarStoreViewController (used for reloading).
     private var calendarStoreViewController: CalendarStoreViewController?
@@ -74,7 +74,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
      Initialize with a query used to load the items which are going to be displayed.
      - parameter settingsQuery: A query with a `Result` of an array of a type that conforms to `CodedOption` protocol.
      */
-    required init(apiClient: SchedJoulesApi, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
+    required init(apiClient: Api, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
         self.apiClient = apiClient
         self.settingsQuery = settingsQuery
         self.settingsType = settingsType
