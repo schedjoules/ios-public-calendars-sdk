@@ -31,12 +31,3 @@ Optionally, if you would only like to use the Calendar Store to present a single
 let calendarVC = CalendarStoreSinglePageViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673", title: "Featured")
 present(calendarVC, animated: true, completion: nil)
 ```
-
-### Customization options
-
-The default initializer for the Calendar Store includes parameters for customization. 
-```Swift
-init(apiClient: SchedJoulesApi, pageIdentifier: String?, title: String?, largeTitle: Bool = true, tintColor: UIColor = ColorPalette.red)
-```
-Please refer to the [inline code documentation](https://github.com/schedjoules/ios-public-calendars-sdk/blob/master/SDK/CalendarStoreViewController.swift#L61) for further details.
-
