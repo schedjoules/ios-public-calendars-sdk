@@ -45,8 +45,6 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
      - parameter apiClient: An instance of `SchedJoulesApi`, initialized with a valid access token.
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
-     - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
-     - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
     public init(apiClient: Api, pageIdentifier: String, title: String) {
         super.init(nibName: nil, bundle: nil)
@@ -68,8 +66,6 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
-     - parameter largeTitle: Set to `false` if you don't want to use large navigation bar titles.
-     - parameter tintColor: The tint color used through out the SDK, default is SchedJoules red.
      */
     public convenience init(apiKey: String, pageIdentifier: String, title: String) {
         self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title)
