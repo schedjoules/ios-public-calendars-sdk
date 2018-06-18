@@ -35,7 +35,7 @@ final class CalendarItemViewController: UIViewController {
     @IBOutlet weak var subscribeButton: UIButton!
     
     /// The Api client.
-    var apiClient: SchedJoulesApi!
+    var apiClient: Api!
     
     /// URL to the .ics file.
     var icsURL: URL!

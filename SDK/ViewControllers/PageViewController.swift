@@ -46,7 +46,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     private var tempPage: Page?
     
     /// The Api client.
-    private let apiClient: SchedJoulesApi
+    private let apiClient: Api
     
     /// The table view for presenting the pages.
     private var tableView: UITableView!
@@ -80,7 +80,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: SchedJoulesApi, pageQuery: PageQuery, searchEnabled: Bool = false) {
+    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
@@ -313,7 +313,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
-            let storyboard = UIStoryboard(name: "SDK", bundle: nil)
+            let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
             let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
             calendarVC.icsURL = URL(string: pageSection.items[indexPath.row].url)
             calendarVC.title = pageSection.items[indexPath.row].name

@@ -34,7 +34,7 @@ final class SettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     /// The ApiClient.
-    var apiClient: SchedJoulesApi!
+    var apiClient: Api!
     
     // - MARK: Private Properties
     

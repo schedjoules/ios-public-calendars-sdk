@@ -50,7 +50,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     private let settingsType: SettingsDetailType!
 
     /// The API Client.
-    private let apiClient: SchedJoulesApi
+    private let apiClient: Api
     
     /// Reference to the CalendarStoreViewController (used for reloading).
     private var calendarStoreViewController: CalendarStoreViewController?
@@ -74,7 +74,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
      Initialize with a query used to load the items which are going to be displayed.
      - parameter settingsQuery: A query with a `Result` of an array of a type that conforms to `CodedOption` protocol.
      */
-    required init(apiClient: SchedJoulesApi, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
+    required init(apiClient: Api, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
         self.apiClient = apiClient
         self.settingsQuery = settingsQuery
         self.settingsType = settingsType
@@ -177,15 +177,6 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
     }
-
-    /// Read localization settings, use device defaults otherwise
-    func readSettings() -> [String] {
-        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
-        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
-        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
-        return [locale!,location!]
-    }
     
     // MARK: - Table View Delegate and Data Source Methods
     
@@ -228,7 +219,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
             // Something other than default was selected
         } else {
             // Save selection to the user defaults
-            UserDefaults.standard.set(["displayName":items[indexPath.row].name,"countryCode":items[indexPath.row].code],
+            UserDefaults.standard.set(["displayName": items[indexPath.row].name, "countryCode": items[indexPath.row].code],
                                       forKey: "\(settingsType.rawValue)_settings")
         }
         
