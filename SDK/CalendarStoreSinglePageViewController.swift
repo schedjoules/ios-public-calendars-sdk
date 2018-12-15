@@ -58,8 +58,8 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
         // Create home page with a specific page identifier and push it on to the navigation stack
         let countrySetting = SettingsManager.get(type: .country)
         
-        let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-            SinglePageQuery(pageID: pageIdentifier, locale: countrySetting.code), searchEnabled: true)
+        let homeVC = PageViewController(apiClient: apiClient,
+                                        pageQuery: SinglePageQuery(pageID: pageIdentifier, locale: countrySetting.code), searchEnabled: true)
         homeVC.title = title
         pushViewController(homeVC, animated: false)
     }

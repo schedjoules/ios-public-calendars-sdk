@@ -119,23 +119,23 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
-            let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
+            let homeVC = PageViewController(apiClient: apiClient,
+                                            pageQuery: SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
         } else {
             // Create home page with just localization parameters
-            let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
+            let homeVC = PageViewController(apiClient: apiClient,
+                                            pageQuery: HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
         }
         
         // Create top page
-        let topVC = PageViewController(apiClient: apiClient, pageQuery:
-            TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
+        let topVC = PageViewController(apiClient: apiClient,
+                                       pageQuery: TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
         topVC.title = "Top"
         topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
