@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		11E13311B6F934DED2B16326 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */; };
+		465569F021C5352300FE7064 /* DefaulsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* DefaulsKeys.swift */; };
+		465569F121C5352300FE7064 /* DefaulsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* DefaulsKeys.swift */; };
+		465569F321C537FA00FE7064 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* Settings.swift */; };
+		465569F421C537FA00FE7064 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* Settings.swift */; };
 		B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
 		B625A60A20C038D000586F5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B625A60220C038D000586F5E /* Assets.xcassets */; };
 		B625A60B20C038D000586F5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60320C038D000586F5E /* LaunchScreen.storyboard */; };
 		B625A60C20C038D000586F5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60520C038D000586F5E /* Main.storyboard */; };
 		B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60720C038D000586F5E /* AppDelegate.swift */; };
-		B625A60E20C038D000586F5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B625A60820C038D000586F5E /* Info.plist */; };
 		B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */; };
 		B69268872089F32A003456FB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69268862089F32A003456FB /* PageViewController.swift */; };
 		B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E04F204D97570044C800 /* iOS_SDKTests.swift */; };
@@ -44,6 +47,8 @@
 		116E5228BC3B1C0076C7D9CB /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
+		465569EF21C5352300FE7064 /* DefaulsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaulsKeys.swift; sourceTree = "<group>"; };
+		465569F221C537FA00FE7064 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B625A60220C038D000586F5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +93,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		465569ED21C534A600FE7064 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				465569EF21C5352300FE7064 /* DefaulsKeys.swift */,
+				B625A5EE20C037F400586F5E /* Extensions */,
+				465569EE21C5350A00FE7064 /* Models */,
+			);
+			name = Utils;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		465569EE21C5350A00FE7064 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8F02A3D2818F97746AAFE47C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,12 +182,12 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				465569ED21C534A600FE7064 /* Utils */,
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
 				B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
 				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
-				B625A5EE20C037F400586F5E /* Extensions */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -183,6 +206,7 @@
 		B6EF1C3920780879003E0095 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				465569F221C537FA00FE7064 /* Settings.swift */,
 				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
 				B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */,
 				B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */,
@@ -299,7 +323,6 @@
 				B625A60C20C038D000586F5E /* Main.storyboard in Resources */,
 				B625A60B20C038D000586F5E /* LaunchScreen.storyboard in Resources */,
 				B6EF1C6620780879003E0095 /* LoadErrorView.xib in Resources */,
-				B625A60E20C038D000586F5E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,9 +394,11 @@
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
+				465569F321C537FA00FE7064 /* Settings.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
+				465569F021C5352300FE7064 /* DefaulsKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +406,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465569F121C5352300FE7064 /* DefaulsKeys.swift in Sources */,
+				465569F421C537FA00FE7064 /* Settings.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,7 +559,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H4FCPLHYSF;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -549,7 +576,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H4FCPLHYSF;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
