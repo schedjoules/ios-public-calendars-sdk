@@ -57,7 +57,7 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
         
         // Create home page with a specific page identifier and push it on to the navigation stack
         let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-            SinglePageQuery(pageID: pageIdentifier, locale: readSettings().last!), searchEnabled: true)
+            SinglePageQuery(pageID: pageIdentifier, locale: Settings.readSettings().last!), searchEnabled: true)
         homeVC.title = title
         pushViewController(homeVC, animated: false)
     }
@@ -71,12 +71,4 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
         self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title)
     }
     
-    /// Read localization settings, use device defaults otherwise
-    func readSettings() -> [String] {
-        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
-        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
-        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
-        return [locale!,location!]
-    }
 }
