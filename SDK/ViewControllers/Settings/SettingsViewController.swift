@@ -88,14 +88,14 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellDetail", for: indexPath)
             if indexPath.row == 0 {
                 cell.textLabel!.text = "Country"
-                if let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String> {
+                if let countrySetting = UserDefaults.standard.value(forKey: DefaultsKeys.Settings.country) as? Dictionary<String, String> {
                     cell.detailTextLabel!.text = countrySetting["displayName"]
                 } else {
                     cell.detailTextLabel!.text = "Default"
                 }
             } else {
                 cell.textLabel!.text = "Language"
-                if let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String> {
+                if let languageSetting = UserDefaults.standard.value(forKey: DefaultsKeys.Settings.language) as? Dictionary<String, String> {
                     cell.detailTextLabel!.text = languageSetting["displayName"]
                 } else {
                     cell.detailTextLabel!.text = "Default"
