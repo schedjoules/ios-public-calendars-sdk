@@ -124,14 +124,14 @@ public final class CalendarStoreViewController: UITabBarController {
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
+                SinglePageQuery(pageID: pageIdentifier!, locale: Settings.readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
             // Create home page with just localization parameters
         } else {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
+                HomePageQuery(locale: Settings.readSettings().first!, location: Settings.readSettings().last!), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
@@ -139,19 +139,19 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Create top page
         let topVC = PageViewController(apiClient: apiClient, pageQuery:
-            TopPageQuery(numberOfItems: 12, locale: readSettings().first!, location: readSettings().last!))
+            TopPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!, location: Settings.readSettings().last!))
         topVC.title = "Top"
         topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
         
         // Create new page
-        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!))
         newVC.title = "New"
         newVC.tabBarItem.image = UIImage(named: "New", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(newVC)
         
         // Create next page
-        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!))
         nextVC.title = "Next"
         nextVC.tabBarItem.image = UIImage(named: "Next", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(nextVC)
@@ -173,15 +173,6 @@ public final class CalendarStoreViewController: UITabBarController {
             }
             return navigationController
         }
-    }
-    
-    /// Read localization settings, use device defaults otherwise
-    func readSettings() -> [String] {
-        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
-        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
-        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
-        return [locale!,location!]
     }
     
 }
