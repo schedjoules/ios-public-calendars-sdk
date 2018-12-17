@@ -27,11 +27,6 @@ import UIKit
 import SchedJoulesApiClient
 import SDWebImage
 
-enum SettingsDetailType: String {
-    case language
-    case country
-}
-
 final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate,
     LoadErrorViewDelegate where SettingsQuery.Result: Sequence, SettingsQuery.Result.Element: CodedOption {
 
@@ -44,10 +39,10 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     private let settingsQuery: SettingsQuery
 
     /// The items to show.
-    private var items = [CodedOption]()
+    private var items = [SettingsObject]()
 
     /// Type of data to show.
-    private let settingsType: SettingsDetailType!
+    private let settingsType: SettingsManager.SettingsType!
 
     /// The API Client.
     private let apiClient: Api
@@ -74,7 +69,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
      Initialize with a query used to load the items which are going to be displayed.
      - parameter settingsQuery: A query with a `Result` of an array of a type that conforms to `CodedOption` protocol.
      */
-    required init(apiClient: Api, settingsQuery: SettingsQuery, settingsType: SettingsDetailType) {
+    required init(apiClient: Api, settingsQuery: SettingsQuery, settingsType: SettingsManager.SettingsType) {
         self.apiClient = apiClient
         self.settingsQuery = settingsQuery
         self.settingsType = settingsType
@@ -130,7 +125,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
             self.stopLoading()
             switch result {
             case let .success(loadedItems):
-                self.items = loadedItems as! [CodedOption]
+                self.items = loadedItems.map({ SettingsObject(object: $0, type: self.settingsType)})
                 DispatchQueue.main.async {
                     self.tableView.refreshControl?.endRefreshing()
                     self.tableView.reloadData()
@@ -215,12 +210,12 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
         // Default was selected
         if indexPath.section == 0 {
             // Remove user settings to revert back to using the device defaults
-            UserDefaults.standard.removeObject(forKey: "\(settingsType.rawValue)_settings")
-            // Something other than default was selected
+            SettingsManager.delete(type: settingsType)
         } else {
+            // Something other than default was selected
             // Save selection to the user defaults
-            UserDefaults.standard.set(["displayName": items[indexPath.row].name, "countryCode": items[indexPath.row].code],
-                                      forKey: "\(settingsType.rawValue)_settings")
+            let item = items[indexPath.row]
+            item.save()
         }
         
         calendarStoreViewController = parent?.parent as? CalendarStoreViewController
