@@ -1,5 +1,5 @@
 //
-//  DefaultsKeys.swift
+//  UserDefaultsKeys.swift
 //  iOS-SDK
 //
 //  Created by Alberto Huerdo on 12/15/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DefaultsKeys {
+struct UserDefaultsKeys {
     
     struct Settings {
         static let country = "country_settings"
