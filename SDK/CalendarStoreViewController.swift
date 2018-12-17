@@ -121,17 +121,20 @@ public final class CalendarStoreViewController: UITabBarController {
         // Array to hold the view controllers
         var tabViewControllers = [UIViewController]()
         
+        let languageSetting = SettingsManager.get(type: .language)
+        let countrySetting = SettingsManager.get(type: .country)
+        
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                SinglePageQuery(pageID: pageIdentifier!, locale: Settings.readSettings().last!), searchEnabled: true)
+                SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
             // Create home page with just localization parameters
         } else {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                HomePageQuery(locale: Settings.readSettings().first!, location: Settings.readSettings().last!), searchEnabled: true)
+                HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
@@ -139,19 +142,19 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Create top page
         let topVC = PageViewController(apiClient: apiClient, pageQuery:
-            TopPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!, location: Settings.readSettings().last!))
+            TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
         topVC.title = "Top"
         topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
         
         // Create new page
-        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!))
+        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: languageSetting.code))
         newVC.title = "New"
         newVC.tabBarItem.image = UIImage(named: "New", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(newVC)
         
         // Create next page
-        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: Settings.readSettings().first!))
+        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: languageSetting.code))
         nextVC.title = "Next"
         nextVC.tabBarItem.image = UIImage(named: "Next", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(nextVC)
