@@ -308,8 +308,14 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Show the seleced page in a PageViewController
         if pageSection.items[indexPath.row].itemClass == .page {
-            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
-                                                             pageQuery: SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!)))
+            let languageSetting = SettingsManager.get(type: .language)
+            let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
+                                                  locale: languageSetting.code)
+            let extractedExpr = PageViewController<SinglePageQuery>(apiClient: apiClient,
+                                                                    pageQuery: singlePageQuery,
+                                                                    searchEnabled: true)
+            
+            let pageVC = extractedExpr
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
