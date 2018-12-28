@@ -131,8 +131,8 @@ public final class CalendarStoreViewController: UITabBarController {
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
-            // Create home page with just localization parameters
         } else {
+            // Create home page with just localization parameters
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
                 HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
