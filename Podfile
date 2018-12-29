@@ -10,7 +10,5 @@ target 'iOS-SDK' do
 	pod 'Alamofire', '~> 4.5'
 	pod 'Result', '~> 3.0.0'
 	pod 'SchedJoulesApiClient'
-	pod 'Fabric'
-	pod 'Crashlytics'
 end
 

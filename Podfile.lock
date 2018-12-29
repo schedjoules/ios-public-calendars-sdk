@@ -1,8 +1,5 @@
 PODS:
   - Alamofire (4.7.2)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
-  - Fabric (1.8.2)
   - Result (3.0.0)
   - SchedJoulesApiClient (0.7.1):
     - Alamofire (~> 4.5)
@@ -13,8 +10,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
-  - Crashlytics
-  - Fabric
   - Result (~> 3.0.0)
   - SchedJoulesApiClient
   - SDWebImage (~> 4.0)
@@ -22,20 +17,16 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Crashlytics
-    - Fabric
     - Result
     - SchedJoulesApiClient
     - SDWebImage
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   SchedJoulesApiClient: 4f76adcfd0191e1ca666ced92fa82bd728f84fbc
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
 
-PODFILE CHECKSUM: 7101afd7ec7c9428674188521c73dafe060d0a23
+PODFILE CHECKSUM: 8cd683f264b49d10f8b888f4687cd99f8b2a6f28
 
 COCOAPODS: 1.5.3
