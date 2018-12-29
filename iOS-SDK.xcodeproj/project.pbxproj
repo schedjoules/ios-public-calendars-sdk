@@ -390,7 +390,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputFileListPaths = (
 			);
@@ -398,7 +397,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" ae98c6209f9472e08545f9ef23cd0f371ed103d7 b69f617659b54d44da34876ee509a2ce1d7a288bf56f174d30e06c02f983f695\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
