@@ -436,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				463741E521DDF78200198481 /* SettingsObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
