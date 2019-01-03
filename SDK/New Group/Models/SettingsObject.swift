@@ -2,7 +2,7 @@
 //  SettingsObject.swift
 //  iOS-SDK
 //
-//  Created by Alberto Huerdo on 12/17/18.
+//  Created by Alberto Huerdo on 2018. 12. 17..
 //  Copyright © 2018 SchedJoules. All rights reserved.
 //
 
