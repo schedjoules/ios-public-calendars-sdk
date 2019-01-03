@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11E13311B6F934DED2B16326 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */; };
+		463741E521DDF78200198481 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469F5A6821C81925003FE9B1 /* SettingsObject.swift */; };
 		465569F021C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
@@ -428,6 +429,7 @@
 				465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */,
 				465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				463741E521DDF78200198481 /* SettingsObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
