@@ -24,13 +24,14 @@ struct SettingsObject: CodedOption {
     
     var path: String?
     
-    init(name: String, code: String, iconURL: URL?) {
-        self.name = name
-        self.code = code
-        self.icon = iconURL
-    }
     
-    init(object: CodedOption, type: SettingsManager.SettingsType) {
+    init(object: CodedOption?, type: SettingsManager.SettingsType?) {
+        guard let object = object, let type = type else {
+            self.name = "Default"
+            self.code = "Default"
+            return
+        }
+        
         self.name = object.name
         self.code = object.code
         self.icon = object.icon
@@ -44,8 +45,7 @@ struct SettingsObject: CodedOption {
     }
     
     init() {
-        self.name = "Default"
-        self.code = "Default"
+        self.init(object: nil, type: nil)
     }
 }
 
