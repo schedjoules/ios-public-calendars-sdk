@@ -311,11 +311,10 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             let languageSetting = SettingsManager.get(type: .language)
             let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
                                                   locale: languageSetting.code)
-            let extractedExpr = PageViewController<SinglePageQuery>(apiClient: apiClient,
+             let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
                                                                     pageQuery: singlePageQuery,
                                                                     searchEnabled: true)
             
-            let pageVC = extractedExpr
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
