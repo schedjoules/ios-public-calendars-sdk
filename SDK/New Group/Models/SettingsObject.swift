@@ -14,29 +14,43 @@ struct SettingsObject: CodedOption {
     enum CodingKeys: String, CodingKey {
         case code = "code"
         case name = "name"
+        case icon = "icon"
         case path = "path"
     }
     
     
-    var name: String
-    var code: String
+    let code: String
+    let name: String
     var icon: URL?
     
-    var path: String?
+    let path: String?
     
     
-    init(object: CodedOption?, type: SettingsManager.SettingsType?) {
-        guard let object = object, let type = type else {
+    init(object: CodedOption?, type: SettingsManager.SettingsType?) {        
+        guard let validObject = object, let validType = type else {
             self.name = "Default"
-            self.code = "Default"
+            self.icon = nil
+            self.path = nil
+            
+            if let type = type {
+                switch type {
+                case .country:
+                    self.code = Locale.current.regionCode ?? ""
+                case .language:
+                    self.code = Locale.preferredLanguages[0].components(separatedBy: "-")[0]
+                }
+            } else {
+                self.code = ""
+            }
+            
             return
         }
         
-        self.name = object.name
-        self.code = object.code
-        self.icon = object.icon
+        self.name = validObject.name
+        self.code = validObject.code
+        self.icon = validObject.icon
         
-        switch type {
+        switch validType {
         case .language:
             path = UserDefaultsKeys.Settings.language
         case .country:

@@ -37,14 +37,7 @@ class SettingsManager {
     static func get(type: SettingsType) -> SettingsObject {
         guard let existingData = UserDefaults.standard.object(forKey: type.path) as? Data,
             let existingObject = try? JSONDecoder().decode(SettingsObject.self, from: existingData) else {
-                
-                var defaultObject = SettingsObject()
-                switch type {
-                case .country:
-                     defaultObject.code = Locale.current.regionCode ?? ""
-                case .language:
-                     defaultObject.code = Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-                }
+                let defaultObject = SettingsObject(object: nil, type: type)
                 return defaultObject
         }
         return existingObject
