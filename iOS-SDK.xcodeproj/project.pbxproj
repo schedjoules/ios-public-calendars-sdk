@@ -427,6 +427,7 @@
 				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
+				463745D521E5D01500198481 /* ArrayExtension.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +437,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				463745DD21E5D55D00198481 /* AnalyticsEvent.swift in Sources */,
+				463745DC21E5D55A00198481 /* AnalyticsTracker.swift in Sources */,
 				463741E521DDF78200198481 /* SettingsObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
