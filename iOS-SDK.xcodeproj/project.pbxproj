@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		11E13311B6F934DED2B16326 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */; };
 		463741E521DDF78200198481 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469F5A6821C81925003FE9B1 /* SettingsObject.swift */; };
+		463745D521E5D01500198481 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D421E5D01500198481 /* ArrayExtension.swift */; };
+		463745DA21E5D55500198481 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D821E5D55500198481 /* AnalyticsTracker.swift */; };
+		463745DB21E5D55500198481 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D921E5D55500198481 /* AnalyticsEvent.swift */; };
+		463745DC21E5D55A00198481 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D821E5D55500198481 /* AnalyticsTracker.swift */; };
+		463745DD21E5D55D00198481 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D921E5D55500198481 /* AnalyticsEvent.swift */; };
 		465569F021C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
@@ -49,6 +54,9 @@
 		116E5228BC3B1C0076C7D9CB /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
+		463745D421E5D01500198481 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		463745D821E5D55500198481 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
+		463745D921E5D55500198481 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		469F5A6821C81925003FE9B1 /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
@@ -96,10 +104,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		463745D721E5D55500198481 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				463745D821E5D55500198481 /* AnalyticsTracker.swift */,
+				463745D921E5D55500198481 /* AnalyticsEvent.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		465569ED21C534A600FE7064 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */,
+				463745D421E5D01500198481 /* ArrayExtension.swift */,
+				463745D721E5D55500198481 /* Analytics */,
 				B625A5EE20C037F400586F5E /* Extensions */,
 				465569EE21C5350A00FE7064 /* Models */,
 			);
@@ -389,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463745DA21E5D55500198481 /* AnalyticsTracker.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
@@ -397,11 +417,13 @@
 				469F5A6921C81925003FE9B1 /* SettingsObject.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
+				463745DB21E5D55500198481 /* AnalyticsEvent.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
 				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
+				463745D521E5D01500198481 /* ArrayExtension.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
 				465569F021C5352300FE7064 /* UserDefaultsKeys.swift in Sources */,
 			);
@@ -414,6 +436,8 @@
 				465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */,
 				465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				463745DD21E5D55D00198481 /* AnalyticsEvent.swift in Sources */,
+				463745DC21E5D55A00198481 /* AnalyticsTracker.swift in Sources */,
 				463741E521DDF78200198481 /* SettingsObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +506,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -503,6 +528,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -541,6 +567,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -554,6 +581,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -571,6 +599,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -588,6 +617,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

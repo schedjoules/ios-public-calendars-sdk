@@ -135,6 +135,24 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         if shouldReload { fetchPages() }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+        print(Date())
+        print(Date().timeIntervalSinceNow)
+        print(Date().timeIntervalSinceNow.hashValue)
+        print(Date().timeIntervalSince1970)
+        print(Date().timeIntervalSince1970.hashValue)
+        
+        AnalyticsTracker.shared().trackScreen(name: self.title, pageId: self.page?.itemID ?? 1)
+//        let analyticsTracker = CalStoreAnalyticsTracker()
+//        let info = [
+//            "url":"https://api.schedjoules.com/pages?locale=en_US&location=us",
+//            "pageId":115673] as [String : Any]
+//        analyticsTracker.trackScreen(withName: "All Calendars United States", info: info)
+    }
+    
     // - MARK: Helper Methods
     
     /// Execute the Page query and handle the result.

@@ -15,4 +15,16 @@ struct UserDefaultsKeys {
         static let language = "language_settings"
     }
     
+    static let analytics = "analytics"
+    
 }
+
+extension UserDefaults {
+    
+    var trackingEvents:Array<[String : AnyObject]> {
+        get { return array(forKey: #function) as? [[String : AnyObject]] ?? [] }
+        set { set(newValue, forKey: #function) }
+    }
+    
+}
+
