@@ -54,7 +54,6 @@ extension URLRequest {
                     Keys.xLocale : SettingsObject(object: nil, type: .language).code,
                     Keys.xUserId : Config.uuid
             ]
-            print(headers)
             return headers
         }
     }

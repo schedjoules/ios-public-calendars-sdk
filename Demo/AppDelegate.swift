@@ -10,6 +10,7 @@ import UIKit
 import SchedJoulesApiClient
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -24,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = calendarVC
         window?.makeKeyAndVisible()
 
+        AnalyticsTracker.shared().launch()
+        
         return true
     }
 
@@ -51,4 +54,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
