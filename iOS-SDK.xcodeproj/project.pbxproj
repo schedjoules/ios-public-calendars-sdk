@@ -18,6 +18,8 @@
 		465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
+		4697551421F03EDF001331A1 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4697551321F03EDF001331A1 /* URLRequest+Headers.swift */; };
+		4697551621F10A3A001331A1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4697551521F10A39001331A1 /* Config.swift */; };
 		469F5A6921C81925003FE9B1 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469F5A6821C81925003FE9B1 /* SettingsObject.swift */; };
 		B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
@@ -59,6 +61,8 @@
 		463745D921E5D55500198481 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		4697551321F03EDF001331A1 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
+		4697551521F10A39001331A1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		469F5A6821C81925003FE9B1 /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
 		B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				463745D721E5D55500198481 /* Analytics */,
 				B625A5EE20C037F400586F5E /* Extensions */,
 				465569EE21C5350A00FE7064 /* Models */,
+				4697551521F10A39001331A1 /* Config.swift */,
 			);
 			name = Utils;
 			path = "New Group";
@@ -154,6 +159,7 @@
 		B625A5EE20C037F400586F5E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4697551321F03EDF001331A1 /* URLRequest+Headers.swift */,
 				B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */,
 			);
 			path = Extensions;
@@ -417,6 +423,7 @@
 				469F5A6921C81925003FE9B1 /* SettingsObject.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
+				4697551421F03EDF001331A1 /* URLRequest+Headers.swift in Sources */,
 				463745DB21E5D55500198481 /* AnalyticsEvent.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
@@ -424,6 +431,7 @@
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				463745D521E5D01500198481 /* ArrayExtension.swift in Sources */,
+				4697551621F10A3A001331A1 /* Config.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
 				465569F021C5352300FE7064 /* UserDefaultsKeys.swift in Sources */,
 			);
