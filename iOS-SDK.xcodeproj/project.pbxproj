@@ -428,6 +428,7 @@
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				463745D521E5D01500198481 /* ArrayExtension.swift in Sources */,
+				4697551621F10A3A001331A1 /* Config.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

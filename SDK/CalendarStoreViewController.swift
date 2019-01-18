@@ -49,6 +49,14 @@ public final class CalendarStoreViewController: UITabBarController {
      */
     private let largeTitle: Bool
     
+    /// The Api Key stored on the info.plist
+    private var apiKey: String = {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "SchedJoulesApiKey") as? String else {
+            fatalError("No token provided. Add api key ")
+        }
+        return apiKey
+    }()
+    
     // - MARK: Initialization
     
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`.

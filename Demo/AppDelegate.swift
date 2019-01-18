@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Initialize the calendar store
-        let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
+        let calendarVC = CalendarStoreViewController(title: "Featured")
         
         // Show the calendar store
         window?.rootViewController = calendarVC
