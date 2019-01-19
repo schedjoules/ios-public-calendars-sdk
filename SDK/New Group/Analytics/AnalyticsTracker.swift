@@ -8,14 +8,46 @@
 
 import Foundation
 import UIKit
-import Alamofire
+import SchedJoulesApiClient
 
 class AnalyticsTracker: NSObject {
     
     private var isProcessing: Bool = false
-    private let sizeForUpload: Int = 5
+    private let sizeForUpload: Int = 20
     private let loopTime: Int = 30
     private let urlString = "https://api.schedjoules.com/collect/"
+    
+    
+    struct Keys {
+        struct Events {
+            static let hits = "hits"
+            static let name = "name"
+            static let pageId = "pageId"
+            static let system = "system"
+            static let timestamp = "timestamp"
+            static let type = "type"
+            static let url = "url"
+            static let uuid = "uuid"
+        }
+        
+        struct EventType {
+            static let sessionStart = "session-start"
+            static let sessionEnd = "session-end"
+            static let event = "event"
+            static let screen = "screen"
+            static let purchase = "purchase"
+        }
+        
+        struct System {
+            static let language = "language"
+            static let country = "country"
+            static let resolution = "screenResolution"
+            static let bundleIdentifier = "appBundleIdentifier"
+            static let appVersion = "appVersion"
+            static let deviceModel = "deviceHardwareModel"
+        }
+        
+    }
     
     
     @objc class func shared() -> AnalyticsTracker {
@@ -36,32 +68,16 @@ class AnalyticsTracker: NSObject {
         }
     }
     
-    func modelIdentifier() -> String {
-        if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] { return simulatorModelIdentifier }
-        var sysinfo = utsname()
-        uname(&sysinfo) // ignore return value
-        return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
-    }
-    
-    private func systemDictionary() -> NSDictionary {
-        
-        let languageSetting = SettingsManager.get(type: .language)
-        let countrySetting = SettingsManager.get(type: .country)
-        let screenResolution = "\(UIScreen.main.bounds.width)x\(UIScreen.main.bounds.height)"
-        let appBundleIdentifier = Bundle.main.bundleIdentifier ?? ""
-        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "0.0.0"
-        let deviceHardwareModel = modelIdentifier()
-        
-        
-        
-        return [
-            "language" : languageSetting.code,
-            "country": countrySetting.code,
-            "screenResolution" : screenResolution,
-            "appBundleIdentifier" : appBundleIdentifier,
-            "appVersion" : appVersion,
-            "deviceHardwareModel" : deviceHardwareModel
+    private func systemDictionary() -> [String : String] {
+        let dictionary = [
+            Keys.System.language : SettingsManager.get(type: .language).code,
+            Keys.System.country : SettingsManager.get(type: .country).code,
+            Keys.System.resolution : "\(UIScreen.main.bounds.width)x\(UIScreen.main.bounds.height)",
+            Keys.System.bundleIdentifier : Config.bundleIdentifier,
+            Keys.System.appVersion : Config.bundleVersion,
+            Keys.System.deviceModel : UIDevice.current.model
         ]
+        return dictionary
     }
     
     private func finishProcessing() {
@@ -77,19 +93,19 @@ class AnalyticsTracker: NSObject {
                 self.finishProcessing()
                 return
             }
+            print("eventa to upload: ", UserDefaults.standard.trackingEvents.count)
             
             let parameters = [
-                "hits" : events,
-                "system": self.systemDictionary(),
-                "timestamp":1547013002,
-                "uuid":"721E27E3-809C-4B7E-9B81-F500B0728457"
+                Keys.Events.hits : events,
+                Keys.Events.system : self.systemDictionary(),
+                Keys.Events.timestamp : Config.dateForAnalytics,
+                Keys.Events.uuid : Config.uuid
                 ] as [String : AnyObject]
             
-            
-            
-            
-            
-            guard let url = URL(string: self.urlString) else { fatalError("url isn't valid") }
+            guard let url = URL(string: self.urlString) else {
+                print("url isn't valid")
+                return
+            }
             
             var urlRequest = URLRequest(url: url)
             urlRequest.httpMethod = "POST"
@@ -102,8 +118,6 @@ class AnalyticsTracker: NSObject {
             }
             
             let session = URLSession.shared
-            
-            
             
             let task = session.dataTask(with: urlRequest) {
                 (data, response, error) in
@@ -134,35 +148,9 @@ class AnalyticsTracker: NSObject {
     }
     
     func deleteEvents(_ count: Int) {
-        
-        
-        
-        
-//        var array = [1,2,3,4,5,6,7,8,9,0,"a","b","c"] as [Any]
-//        let prefix = array.prefix(count)
-//        let suffix1 = array.suffix(count)
-//        let suffix2 = array.suffix(array.count - count)
-//
-//        print(array)
-//        print(prefix)
-//        print(suffix1)
-//        print(suffix2)
-        
-        
-        
-        
-        
-        print("number evnts: ", count)
         let allEvents = UserDefaults.standard.trackingEvents
-        print("allEvents ", allEvents.count)
         let remainingEvents = Array(allEvents.suffix(allEvents.count - count))
-        print("leftEvents ", remainingEvents.count)
-        
-        
-        
-        print("count first: ", UserDefaults.standard.trackingEvents.count)
         UserDefaults.standard.trackingEvents = remainingEvents
-        print("count later: ", UserDefaults.standard.trackingEvents.count)
         
         self.finishProcessing()
     }
@@ -170,10 +158,8 @@ class AnalyticsTracker: NSObject {
     private func loopEvents() {
         DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(loopTime), qos: .background) {
             if self.isProcessing == true {
-                print("loopEvents true")
                 self.loopEvents()
             } else {
-                print("loopEvents false")
                 self.isProcessing = true
                 self.uploadEvents()
             }
@@ -183,22 +169,22 @@ class AnalyticsTracker: NSObject {
     
     //MARK: Tracking events
     
-    func trackScreen(name: String?, pageId: Int) {
-        
-        //        let atracker: CalStoreAnalyticsTracker?
-        
-        
-        //1. Create a hit
-        let eventInfo = [
-            "type":"screen",
-             "timestamp":1547012994,
-             "url":"https://api.schedjoules.com/pages?locale=es_MX&location=mx",
-             "name":"swift-main-view",
-             "pageId":117846
+    func trackScreen(name: String?, page: Page?, url: URL?) {
+        var eventInfo = [
+            Keys.Events.type : Keys.EventType.screen,
+            Keys.Events.timestamp : Config.dateForAnalytics,
+            Keys.Events.pageId : page?.itemID ?? 1
             ] as [String : AnyObject]
         
-        //2. queue the hit
-        track(event: eventInfo)
+        let name: String? = page?.name ?? name
+        if let validName = name {
+            eventInfo[Keys.Events.name] = validName as AnyObject
+        }
         
+        if let url = url {
+            eventInfo[Keys.Events.url] = url.absoluteString as AnyObject
+        }
+        
+        track(event: eventInfo)
     }
 }

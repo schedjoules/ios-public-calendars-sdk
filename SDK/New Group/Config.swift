@@ -22,7 +22,25 @@ class Config {
             let uuidNew = UUID().uuidString
             UserDefaults.standard.uuid = uuidNew
             return uuidNew
-        }        
+        }
         return uuidExisting
+    }
+    
+    static var bundleIdentifier: String {
+        guard let bundleString = Bundle.main.infoDictionary?[kCFBundleIdentifierKey! as String] as? String else {
+            return ""
+        }
+        return bundleString
+    }
+    
+    static var bundleVersion: String {
+        guard let bundleString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            return ""
+        }
+        return bundleString
+    }
+    
+    static var dateForAnalytics: Int {
+        return Int(Date().timeIntervalSince1970)
     }
 }
