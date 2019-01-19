@@ -93,7 +93,7 @@ class AnalyticsTracker: NSObject {
                 self.finishProcessing()
                 return
             }
-            print("eventa to upload: ", UserDefaults.standard.trackingEvents.count)
+            print("events to upload: ", UserDefaults.standard.trackingEvents.count)
             
             let parameters = [
                 Keys.Events.hits : events,
@@ -136,6 +136,7 @@ class AnalyticsTracker: NSObject {
                 
                 if result.statusCode == 200 {
                     self.deleteEvents(events.count)
+                    print(events)
                     print("success")
                 } else {
                     print("fail")
@@ -172,13 +173,16 @@ class AnalyticsTracker: NSObject {
     func trackScreen(name: String?, page: Page?, url: URL?) {
         var eventInfo = [
             Keys.Events.type : Keys.EventType.screen,
-            Keys.Events.timestamp : Config.dateForAnalytics,
-            Keys.Events.pageId : page?.itemID ?? 1
+            Keys.Events.timestamp : Config.dateForAnalytics
             ] as [String : AnyObject]
         
         let name: String? = page?.name ?? name
         if let validName = name {
             eventInfo[Keys.Events.name] = validName as AnyObject
+        }
+        
+        if let pageId = page?.itemID {
+            eventInfo[Keys.Events.pageId] = pageId as AnyObject
         }
         
         if let url = url {
