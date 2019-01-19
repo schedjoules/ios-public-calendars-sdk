@@ -46,11 +46,11 @@ extension URLRequest {
                     Keys.cache : "no-cache",
                     Keys.contentType : "application/json",
                     Keys.userAgent : userAgent,
-                    Keys.appId : "\(bundleIdentifier)/\(bundleVersion)",
-                    Keys.libraryVersion : "2.3.4-4-g8cd554c", //Don't know what is this value
+                    Keys.appId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
+                    Keys.libraryVersion : "2.3.4-4-g8cd554c", //Don't know what is this value R = This is the SDK version
                     Keys.uuid : Config.uuid,
                     Keys.iosVersion : UIDevice.current.systemVersion,
-                    Keys.xAppId : "\(bundleIdentifier)/\(bundleVersion)",
+                    Keys.xAppId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
                     Keys.xLocale : SettingsObject(object: nil, type: .language).code,
                     Keys.xUserId : Config.uuid
             ]
@@ -62,23 +62,9 @@ extension URLRequest {
         return "Token token=\"\(Config.apiKey)\""
     }
     
-    private var bundleIdentifier: String {
-        guard let bundleString = Bundle.main.infoDictionary?[kCFBundleIdentifierKey! as String] as? String else {
-            return ""
-        }
-        return bundleString
-    }
-    
-    private var bundleVersion: String {        
-        guard let bundleString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
-            return ""
-        }
-        return bundleString
-    }
-    
     private var userAgent: String {
         let productName = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? ""
-        let productVersion = bundleVersion
+        let productVersion = Config.bundleVersion
         let deviceModel = UIDevice.current.model
         let systemName = UIDevice.current.systemName
         let systemVersion = UIDevice.current.systemVersion

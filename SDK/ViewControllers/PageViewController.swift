@@ -138,19 +138,6 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
-        print(Date())
-        print(Date().timeIntervalSinceNow)
-        print(Date().timeIntervalSinceNow.hashValue)
-        print(Date().timeIntervalSince1970)
-        print(Date().timeIntervalSince1970.hashValue)
-        
-        AnalyticsTracker.shared().trackScreen(name: self.title, pageId: self.page?.itemID ?? 1)
-//        let analyticsTracker = CalStoreAnalyticsTracker()
-//        let info = [
-//            "url":"https://api.schedjoules.com/pages?locale=en_US&location=us",
-//            "pageId":115673] as [String : Any]
-//        analyticsTracker.trackScreen(withName: "All Calendars United States", info: info)
     }
     
     // - MARK: Helper Methods
@@ -163,6 +150,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             case let .success(page):
                 // Set the Page variable to the just fecthed Page object
                 self.page = page as Page
+                AnalyticsTracker.shared().trackScreen(name: self.title,
+                                                      page: self.page,
+                                                      url: self.pageQuery.url)
                 
                 // Set the page name as the navigation bar title, only if it has not been explicitly set before
                 if self.navigationItem.title == nil {

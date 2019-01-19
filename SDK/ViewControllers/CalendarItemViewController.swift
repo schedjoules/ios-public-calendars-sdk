@@ -74,6 +74,11 @@ final class CalendarItemViewController: UIViewController {
         // Fetch and parse the ics file
         loadICS()
         
+        
+//        AnalyticsTracker.shared().trackScreen(name: self.title,
+//                                              page:apiClient self.page,
+//                                              url: self.pageQuery.url)
+        
     }
     
     // Prepare for segue
