@@ -19,7 +19,7 @@ class AnalyticsTracker: NSObject {
     
     
     struct Keys {
-        struct Events {
+        struct Hits {
             static let hits = "hits"
             static let name = "name"
             static let pageId = "pageId"
@@ -30,10 +30,10 @@ class AnalyticsTracker: NSObject {
             static let uuid = "uuid"
         }
         
-        struct EventType {
+        struct HitType {
             static let sessionStart = "session-start"
             static let sessionEnd = "session-end"
-            static let event = "event"
+            static let hit = "hit"
             static let screen = "screen"
             static let purchase = "purchase"
         }
@@ -57,14 +57,14 @@ class AnalyticsTracker: NSObject {
     }
     
     public func launch() {
-        loopEvents()
+        loopHits()
     }
     
-    private func track(event: [String : AnyObject]) {
+    private func track(hit: [String : AnyObject]) {
         DispatchQueue.global(qos: .background).async {
-            var events = UserDefaults.standard.trackingEvents
-            events.append(event)
-            UserDefaults.standard.trackingEvents = events
+            var hits = UserDefaults.standard.trackingHits
+            hits.append(hit)
+            UserDefaults.standard.trackingHits = hits
         }
     }
     
@@ -82,24 +82,24 @@ class AnalyticsTracker: NSObject {
     
     private func finishProcessing() {
         self.isProcessing = false
-        self.loopEvents()
+        self.loopHits()
     }
     
-    private func uploadEvents() {
+    private func uploadHits() {
         DispatchQueue.global(qos: .background).async {
             
-            guard let events = UserDefaults.standard.trackingEvents.splitBy(size: self.sizeForUpload).first else {
-                print("all events uploaded")
+            guard let hits = UserDefaults.standard.trackingHits.splitBy(size: self.sizeForUpload).first else {
+                print("all hits uploaded")
                 self.finishProcessing()
                 return
             }
-            print("events to upload: ", UserDefaults.standard.trackingEvents.count)
+            print("hits to upload: ", UserDefaults.standard.trackingHits.count)
             
             let parameters = [
-                Keys.Events.hits : events,
-                Keys.Events.system : self.systemDictionary(),
-                Keys.Events.timestamp : Config.dateForAnalytics,
-                Keys.Events.uuid : Config.uuid
+                Keys.Hits.hits : hits,
+                Keys.Hits.system : self.systemDictionary(),
+                Keys.Hits.timestamp : Config.dateForAnalytics,
+                Keys.Hits.uuid : Config.uuid
                 ] as [String : AnyObject]
             
             guard let url = URL(string: self.urlString) else {
@@ -135,8 +135,8 @@ class AnalyticsTracker: NSObject {
                 
                 
                 if result.statusCode == 200 {
-                    self.deleteEvents(events.count)
-                    print(events)
+                    self.deleteHits(hits.count)
+                    print(hits)
                     print("success")
                 } else {
                     print("fail")
@@ -148,47 +148,47 @@ class AnalyticsTracker: NSObject {
         }
     }
     
-    func deleteEvents(_ count: Int) {
-        let allEvents = UserDefaults.standard.trackingEvents
-        let remainingEvents = Array(allEvents.suffix(allEvents.count - count))
-        UserDefaults.standard.trackingEvents = remainingEvents
+    func deleteHits(_ count: Int) {
+        let allHits = UserDefaults.standard.trackingHits
+        let remainingHits = Array(allHits.suffix(allHits.count - count))
+        UserDefaults.standard.trackingHits = remainingHits
         
         self.finishProcessing()
     }
     
-    private func loopEvents() {
+    private func loopHits() {
         DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(loopTime), qos: .background) {
             if self.isProcessing == true {
-                self.loopEvents()
+                self.loopHits()
             } else {
                 self.isProcessing = true
-                self.uploadEvents()
+                self.uploadHits()
             }
         }
     }
     
     
-    //MARK: Tracking events
+    //MARK: Tracking hits
     
     func trackScreen(name: String?, page: Page?, url: URL?) {
-        var eventInfo = [
-            Keys.Events.type : Keys.EventType.screen,
-            Keys.Events.timestamp : Config.dateForAnalytics
+        var hitInfo = [
+            Keys.Hits.type : Keys.HitType.screen,
+            Keys.Hits.timestamp : Config.dateForAnalytics
             ] as [String : AnyObject]
         
         let name: String? = page?.name ?? name
         if let validName = name {
-            eventInfo[Keys.Events.name] = validName as AnyObject
+            hitInfo[Keys.Hits.name] = validName as AnyObject
         }
         
         if let pageId = page?.itemID {
-            eventInfo[Keys.Events.pageId] = pageId as AnyObject
+            hitInfo[Keys.Hits.pageId] = pageId as AnyObject
         }
         
         if let url = url {
-            eventInfo[Keys.Events.url] = url.absoluteString as AnyObject
+            hitInfo[Keys.Hits.url] = url.absoluteString as AnyObject
         }
         
-        track(event: eventInfo)
+        track(hit: hitInfo)
     }
 }

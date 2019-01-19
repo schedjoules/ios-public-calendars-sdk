@@ -11,9 +11,7 @@
 		463741E521DDF78200198481 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469F5A6821C81925003FE9B1 /* SettingsObject.swift */; };
 		463745D521E5D01500198481 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D421E5D01500198481 /* ArrayExtension.swift */; };
 		463745DA21E5D55500198481 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D821E5D55500198481 /* AnalyticsTracker.swift */; };
-		463745DB21E5D55500198481 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D921E5D55500198481 /* AnalyticsEvent.swift */; };
 		463745DC21E5D55A00198481 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D821E5D55500198481 /* AnalyticsTracker.swift */; };
-		463745DD21E5D55D00198481 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463745D921E5D55500198481 /* AnalyticsEvent.swift */; };
 		465569F021C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
@@ -58,7 +56,6 @@
 		32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
 		463745D421E5D01500198481 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		463745D821E5D55500198481 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
-		463745D921E5D55500198481 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4697551321F03EDF001331A1 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
@@ -112,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				463745D821E5D55500198481 /* AnalyticsTracker.swift */,
-				463745D921E5D55500198481 /* AnalyticsEvent.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -424,7 +420,6 @@
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
 				4697551421F03EDF001331A1 /* URLRequest+Headers.swift in Sources */,
-				463745DB21E5D55500198481 /* AnalyticsEvent.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
 				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
@@ -444,7 +439,6 @@
 				465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */,
 				465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
-				463745DD21E5D55D00198481 /* AnalyticsEvent.swift in Sources */,
 				463745DC21E5D55A00198481 /* AnalyticsTracker.swift in Sources */,
 				463741E521DDF78200198481 /* SettingsObject.swift in Sources */,
 			);
