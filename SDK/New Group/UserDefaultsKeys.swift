@@ -21,7 +21,7 @@ struct UserDefaultsKeys {
 
 extension UserDefaults {
     
-    var trackingEvents: Array<[String : AnyObject]> {
+    var trackingHits: Array<[String : AnyObject]> {
         get { return array(forKey: #function) as? [[String : AnyObject]] ?? [] }
         set { set(newValue, forKey: #function) }
     }
