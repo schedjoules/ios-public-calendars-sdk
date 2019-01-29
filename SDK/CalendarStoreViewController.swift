@@ -49,14 +49,6 @@ public final class CalendarStoreViewController: UITabBarController {
      */
     private let largeTitle: Bool
     
-    /// The Api Key stored on the info.plist
-    private var apiKey: String = {
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "SchedJoulesApiKey") as? String else {
-            fatalError("No token provided. Add api key ")
-        }
-        return apiKey
-    }()
-    
     // - MARK: Initialization
     
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`.
@@ -67,11 +59,11 @@ public final class CalendarStoreViewController: UITabBarController {
     }
     
     /**
-     - parameter apiClient: An instance of `Api`, initialized with a valid access token.
+     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public init(pageIdentifier: String?, title: String?) {
+    public init(apiKey: String, pageIdentifier: String?, title: String?) {
         // Initialization
         self.apiClient = SchedJoulesApi(accessToken: apiKey)
         self.pageIdentifier = pageIdentifier
@@ -85,6 +77,8 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Add the view controllers to the tab bar controller
         addViewControllers()
+        
+        AnalyticsTracker.shared().launch(with: apiKey)
     }
     
     /**
@@ -92,8 +86,8 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      */
-    public convenience init(pageIdentifier: String?) {
-        self.init(pageIdentifier: pageIdentifier, title: nil)
+    public convenience init(apiKey: String, pageIdentifier: String?) {
+        self.init(apiKey: apiKey, pageIdentifier: pageIdentifier, title: nil)
     }
     
     /**
@@ -101,16 +95,16 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public convenience init(title: String?) {
-        self.init(pageIdentifier: nil, title: title)
+    public convenience init(apiKey: String, title: String?) {
+        self.init(apiKey: apiKey, pageIdentifier: nil, title: title)
     }
     
     /**
      Initialize with an `API key`.
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      */
-    public convenience init() {
-        self.init(pageIdentifier: nil, title: nil)
+    public convenience init(apiKey: String) {
+        self.init(apiKey: apiKey, pageIdentifier: nil, title: nil)
     }
     
     // - MARK: Helper Methods

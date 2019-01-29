@@ -37,29 +37,23 @@ extension URLRequest {
         case analytics
     }
     
-    private var analyticsHeaders: [String : String] {
-        get {
-            let headers: [String : String] =
-                [
-                    Keys.authorization : authorization,
-                    Keys.accept : "application/vnd.schedjoules; version=1",
-                    Keys.cache : "no-cache",
-                    Keys.contentType : "application/json",
-                    Keys.userAgent : userAgent,
-                    Keys.appId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
-                    Keys.libraryVersion : "2.3.4-4-g8cd554c", //Don't know what is this value R = This is the SDK version
-                    Keys.uuid : Config.uuid,
-                    Keys.iosVersion : UIDevice.current.systemVersion,
-                    Keys.xAppId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
-                    Keys.xLocale : SettingsObject(object: nil, type: .language).code,
-                    Keys.xUserId : Config.uuid
-            ]
-            return headers
-        }
-    }
-    
-    private var authorization: String {
-        return "Token token=\"\(Config.apiKey)\""
+    private func analyticsHeaders(apiKey: String) -> [String : String] {
+        let headers: [String : String] =
+            [
+                Keys.authorization : String(format: "Token token=\"%@\"", apiKey),
+                Keys.accept : "application/vnd.schedjoules; version=1",
+                Keys.cache : "no-cache",
+                Keys.contentType : "application/json",
+                Keys.userAgent : userAgent,
+                Keys.appId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
+                Keys.libraryVersion : "2.3.4-4-g8cd554c", //Don't know what is this value R = This is the SDK version
+                Keys.uuid : Config.uuid,
+                Keys.iosVersion : UIDevice.current.systemVersion,
+                Keys.xAppId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
+                Keys.xLocale : SettingsObject(object: nil, type: .language).code,
+                Keys.xUserId : Config.uuid
+        ]
+        return headers
     }
     
     private var userAgent: String {
@@ -75,16 +69,22 @@ extension URLRequest {
         
         return userAgentString
     }
-
+    
     
     //Method to add headers to request
     
-    mutating func setHeaders(for type: Kind) {
+    mutating func setHeaders(for type: Kind, apiKey: String?) {
+        
+        guard let apiKey = apiKey else {
+            sjPrint("there is no ApiKey set for SchedJoules")
+            return
+        }
+        
         var headers: [String : String] = [:]
         
         switch type {
         case .analytics:
-            headers = analyticsHeaders
+            headers = analyticsHeaders(apiKey: apiKey)
         }
         
         for (key, value) in headers {
