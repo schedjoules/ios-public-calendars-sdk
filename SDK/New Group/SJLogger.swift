@@ -2,7 +2,7 @@
 //  SJLogger.swift
 //  iOS-SDK
 //
-//  Created by Alberto Huerdo on 1/29/19.
+//  Created by Alberto Huerdo on 2019. 01. 29..
 //  Copyright © 2019 SchedJoules. All rights reserved.
 //
 
