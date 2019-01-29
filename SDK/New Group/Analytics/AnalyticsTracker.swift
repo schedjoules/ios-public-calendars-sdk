@@ -16,6 +16,7 @@ class AnalyticsTracker: NSObject {
     private let sizeForUpload: Int = 20
     private let loopTime: Int = 30
     private let urlString = "https://api.schedjoules.com/collect/"
+    private var apiKey: String?
     
     
     struct Keys {
@@ -56,7 +57,8 @@ class AnalyticsTracker: NSObject {
         return shared
     }
     
-    public func launch() {
+    public func launch(with apiKey: String) {
+        self.apiKey = apiKey
         loopHits()
     }
     
@@ -89,11 +91,11 @@ class AnalyticsTracker: NSObject {
         DispatchQueue.global(qos: .background).async {
             
             guard let hits = UserDefaults.standard.trackingHits.splitBy(size: self.sizeForUpload).first else {
-                print("all hits uploaded")
+                sjPrint("all hits uploaded")
                 self.finishProcessing()
                 return
             }
-            print("hits to upload: ", UserDefaults.standard.trackingHits.count)
+            sjPrint("hits to upload: ", UserDefaults.standard.trackingHits.count)
             
             let parameters = [
                 Keys.Hits.hits : hits,
@@ -103,18 +105,18 @@ class AnalyticsTracker: NSObject {
                 ] as [String : AnyObject]
             
             guard let url = URL(string: self.urlString) else {
-                print("url isn't valid")
+                sjPrint("url isn't valid")
                 return
             }
             
             var urlRequest = URLRequest(url: url)
             urlRequest.httpMethod = "POST"
-            urlRequest.setHeaders(for: .analytics)
+            urlRequest.setHeaders(for: .analytics, apiKey: self.apiKey)
             
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
             } catch let error {
-                print(error.localizedDescription)
+                sjPrint(error.localizedDescription)
             }
             
             let session = URLSession.shared
@@ -124,22 +126,22 @@ class AnalyticsTracker: NSObject {
                 // check for any errors
                 
                 if let error = error {
-                    print("error:", error)
+                    sjPrint("error:", error)
                     return
                 }
                 
                 guard let result = response as? HTTPURLResponse else {
-                    print("no response")
+                    sjPrint("no response")
                     return
                 }
                 
                 
                 if result.statusCode == 200 {
                     self.deleteHits(hits.count)
-                    print(hits)
-                    print("success")
+                    sjPrint(hits)
+                    sjPrint("success")
                 } else {
-                    print("fail")
+                    sjPrint("fail")
                 }
                 
             }

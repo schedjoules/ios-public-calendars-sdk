@@ -16,6 +16,7 @@
 		465569F121C5352300FE7064 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
+		466AD23722004B3D002A810C /* SJLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466AD23622004B3D002A810C /* SJLogger.swift */; };
 		4697551421F03EDF001331A1 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4697551321F03EDF001331A1 /* URLRequest+Headers.swift */; };
 		4697551621F10A3A001331A1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4697551521F10A39001331A1 /* Config.swift */; };
 		469F5A6921C81925003FE9B1 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469F5A6821C81925003FE9B1 /* SettingsObject.swift */; };
@@ -58,6 +59,7 @@
 		463745D821E5D55500198481 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
 		465569EF21C5352300FE7064 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		466AD23622004B3D002A810C /* SJLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJLogger.swift; sourceTree = "<group>"; };
 		4697551321F03EDF001331A1 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
 		4697551521F10A39001331A1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		469F5A6821C81925003FE9B1 /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				B625A5EE20C037F400586F5E /* Extensions */,
 				465569EE21C5350A00FE7064 /* Models */,
 				4697551521F10A39001331A1 /* Config.swift */,
+				466AD23622004B3D002A810C /* SJLogger.swift */,
 			);
 			name = Utils;
 			path = "New Group";
@@ -413,6 +416,7 @@
 				463745DA21E5D55500198481 /* AnalyticsTracker.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
+				466AD23722004B3D002A810C /* SJLogger.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
 				B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */,

@@ -174,7 +174,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     @objc private func subscribe(sender: UIButton){
         let cell = sender.superview as! UITableViewCell
         guard let indexPath = tableView.indexPath(for: cell) else {
-            print("Could not get row")
+            sjPrint("Could not get row")
             return
         }
         let pageSection = page!.sections[indexPath.section]
@@ -266,7 +266,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Get the page item from the given section
         guard let item = pageSection?.items[indexPath.row] else {
-            print("Could not get page item.")
+            sjPrint("Could not get page item.")
             return cell
         }
         
@@ -357,7 +357,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
                     self.page = searchPage
                     self.tableView.reloadData()
                 case let .failure(error):
-                    print("There was an error searching: \(error)")
+                    sjPrint("There was an error searching: \(error)")
                 }
             })
         }
