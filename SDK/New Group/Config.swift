@@ -2,15 +2,13 @@
 //  Config.swift
 //  iOS-SDK
 //
-//  Created by Alberto Huerdo on 1/17/19.
+//  Created by Alberto Huerdo on 2019. 17. 29..
 //  Copyright © 2019 SchedJoules. All rights reserved.
 //
 
 import Foundation
 
 class Config {
-    
-
     
     static var uuid: String {
         guard let uuidExisting = UserDefaults.standard.uuid else {
