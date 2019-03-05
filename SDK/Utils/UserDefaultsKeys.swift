@@ -31,6 +31,24 @@ extension UserDefaults {
         set { set(newValue, forKey: #function) }
     }
     
+    var subscriptionExpirationDate: Date? {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+            let stringSaved = string(forKey: #function) ?? ""
+            let expirationDate = dateFormatter.date(from: stringSaved)
+            return expirationDate
+        }
+        set {
+            guard let validNewValue = newValue else {
+                return
+            }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+            let dateString = dateFormatter.string(from: validNewValue)
+            set(dateString, forKey: #function)
+        }
+    }
     
 }
 

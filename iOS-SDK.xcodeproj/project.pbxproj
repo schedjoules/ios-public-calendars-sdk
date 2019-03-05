@@ -16,8 +16,14 @@
 		460015562208987300C6E9F2 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */; };
 		460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */; };
 		460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015502208987300C6E9F2 /* AnalyticsTracker.swift */; };
+		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
+		468B4E37221EB9AF00211C2A /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468B4E36221EB9AF00211C2A /* StoreViewController.swift */; };
+		468B4E39221EBC3F00211C2A /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468B4E38221EBC3E00211C2A /* StoreManager.swift */; };
+		468B4E3B221F30BF00211C2A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468B4E3A221F30BF00211C2A /* UIColorExtension.swift */; };
+		46C4D8D0222DAC610051FF47 /* SJSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C4D8CF222DAC610051FF47 /* SJSecureStorage.swift */; };
+		46C4D8D4222DF1F50051FF47 /* SJSecureStorageQueryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C4D8D3222DF1F50051FF47 /* SJSecureStorageQueryable.swift */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
 		B625A60A20C038D000586F5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B625A60220C038D000586F5E /* Assets.xcassets */; };
 		B625A60B20C038D000586F5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60320C038D000586F5E /* LaunchScreen.storyboard */; };
@@ -60,7 +66,13 @@
 		4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
 		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
+		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		468B4E36221EB9AF00211C2A /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
+		468B4E38221EBC3E00211C2A /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		468B4E3A221F30BF00211C2A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		46C4D8CF222DAC610051FF47 /* SJSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJSecureStorage.swift; sourceTree = "<group>"; };
+		46C4D8D3222DF1F50051FF47 /* SJSecureStorageQueryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJSecureStorageQueryable.swift; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B625A60220C038D000586F5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B625A60420C038D000586F5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -107,6 +119,7 @@
 		460015422208987300C6E9F2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				46C4D8D2222DF0E30051FF47 /* SJSecureStorage */,
 				460015452208987300C6E9F2 /* Config.swift */,
 				460015442208987300C6E9F2 /* SJLogger.swift */,
 				460015432208987300C6E9F2 /* UserDefaultsKeys.swift */,
@@ -131,6 +144,8 @@
 				460015492208987300C6E9F2 /* ArrayExtension.swift */,
 				4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */,
 				4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */,
+				468B4E3A221F30BF00211C2A /* UIColorExtension.swift */,
+				46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -141,6 +156,24 @@
 				460015502208987300C6E9F2 /* AnalyticsTracker.swift */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		468B4E35221EB98900211C2A /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				468B4E36221EB9AF00211C2A /* StoreViewController.swift */,
+				468B4E38221EBC3E00211C2A /* StoreManager.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		46C4D8D2222DF0E30051FF47 /* SJSecureStorage */ = {
+			isa = PBXGroup;
+			children = (
+				46C4D8D3222DF1F50051FF47 /* SJSecureStorageQueryable.swift */,
+				46C4D8CF222DAC610051FF47 /* SJSecureStorage.swift */,
+			);
+			path = SJSecureStorage;
 			sourceTree = "<group>";
 		};
 		8F02A3D2818F97746AAFE47C /* Frameworks */ = {
@@ -206,6 +239,7 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				468B4E35221EB98900211C2A /* Store */,
 				460015422208987300C6E9F2 /* Utils */,
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
 				B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */,
@@ -412,23 +446,29 @@
 				460015522208987300C6E9F2 /* SJLogger.swift in Sources */,
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
+				468B4E39221EBC3F00211C2A /* StoreManager.swift in Sources */,
 				460015532208987300C6E9F2 /* Config.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
+				46C4D8D4222DF1F50051FF47 /* SJSecureStorageQueryable.swift in Sources */,
 				460015512208987300C6E9F2 /* UserDefaultsKeys.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
 				460015542208987300C6E9F2 /* SettingsObject.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
+				46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
 				460015562208987300C6E9F2 /* Bundle+ResourceBundle.swift in Sources */,
 				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
 				460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
+				46C4D8D0222DAC610051FF47 /* SJSecureStorage.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
 				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
+				468B4E3B221F30BF00211C2A /* UIColorExtension.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
+				468B4E37221EB9AF00211C2A /* StoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,9 +634,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
+				PRODUCT_BUNDLE_IDENTIFIER = "api-test-user.schedjoules.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
@@ -612,9 +652,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
+				PRODUCT_BUNDLE_IDENTIFIER = "api-test-user.schedjoules.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;

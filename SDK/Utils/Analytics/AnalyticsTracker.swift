@@ -16,7 +16,7 @@ class AnalyticsTracker: NSObject {
     private let sizeForUpload: Int = 20
     private let loopTime: Int = 30
     private let urlString = "https://api.schedjoules.com/collect/"
-    private var apiKey: String?
+    private let apiKey = SJSecureStorage(type: .api).apiKey
     
     
     struct Keys {
@@ -57,8 +57,7 @@ class AnalyticsTracker: NSObject {
         return shared
     }
     
-    public func launch(with apiKey: String) {
-        self.apiKey = apiKey
+    public func launch() {
         loopHits()
     }
     
