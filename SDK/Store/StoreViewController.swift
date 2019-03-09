@@ -132,6 +132,7 @@ class StoreViewController: UIViewController {
     }
     
     func setupProperties() {
+        storeManager.apiClient = self.apiClient
         storeManager.presentable = self
                 
         let iapQuery = SubscriptionIAPQuery()

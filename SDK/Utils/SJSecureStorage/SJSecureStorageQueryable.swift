@@ -13,22 +13,33 @@ public protocol SJSecureStorageQueryable {
 }
 
 public struct SJApiSecureStorageQueryable {
-    let service = "CalendarStore"
+    let service = "CalendarStore-API"
     let accessGroup = "SchedJoules"
 }
 
 extension SJApiSecureStorageQueryable: SJSecureStorageQueryable {
-    
     public var query: [String : Any] {
         var query: [String: Any] = [:]
         query[String(kSecClass)] = kSecClassGenericPassword
         query[String(kSecAttrService)] = service
-        // Access group if target environment is not simulator
-        #if !targetEnvironment(simulator)
-        if let accessGroup = accessGroup {
-            query[String(kSecAttrAccessGroup)] = accessGroup
-        }
-        #endif
+        query[String(kSecAttrAccessGroup)] = accessGroup
         return query
     }
 }
+
+
+public struct SJSubscriptionSecureStorageQueryable {
+    let service = "CalendarStore-SubscriptionId"
+    let accessGroup = "SchedJoules"
+}
+
+extension SJSubscriptionSecureStorageQueryable: SJSecureStorageQueryable {
+    public var query: [String : Any] {
+        var query: [String: Any] = [:]
+        query[String(kSecClass)] = kSecClassGenericPassword
+        query[String(kSecAttrService)] = service
+        query[String(kSecAttrAccessGroup)] = accessGroup
+        return query
+    }
+}
+

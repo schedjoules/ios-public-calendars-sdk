@@ -23,6 +23,12 @@ class StoreManager: NSObject {
     
     weak var presentable: InteractableStoreManager?
     
+    /// The Api client.
+    var apiClient: Api! {
+        didSet {
+            getStatusForSubscription()
+        }
+    }
     let apiKey = SJSecureStorage(type: .api).apiKey
     var productsRequest = SKProductsRequest()
     var iapProducts = [SKProduct]()
@@ -45,15 +51,34 @@ class StoreManager: NSObject {
     static let shared = StoreManager()
     
     func Begin(){
-        print("StoreManager initialized")
+        sjPrint("StoreManager initialized")
     }
     
     
     override init() {
         super.init()
         
-        // Add pyament observer to payment qu
+        // Add pyament observer to payment queu
         SKPaymentQueue.default().add(self)
+    }
+    
+    
+    
+    private func getStatusForSubscription() {
+        guard let subscriptionId = UserDefaults.standard.subscriptionId else {
+            return
+        }
+        let subscriptionStatusQuery = SubscriptionStatusQuery(subscriptionId: subscriptionId)
+        apiClient.execute(query: subscriptionStatusQuery) { result in
+            switch result {
+            case let .success(resultInfo):
+                UserDefaults.standard.subscriptionExpirationDate = Date(timeIntervalSince1970: resultInfo.expirationDate)
+            case let .failure(error):
+                sjPrint(error)
+                sjPrint(error.localizedDescription)
+                break
+            }
+        }
     }
     
     func requestProductWithID(identifers:Set<String>, subscriptionIAP: SubscriptionIAP) {
@@ -64,13 +89,9 @@ class StoreManager: NSObject {
                 identifers)
             request.delegate = self
             request.start()
-            
-            
         } else {
-            print("ERROR: Store Not Available")
+            sjPrint("ERROR: Store Not Available")
         }
-        
-        
     }
     
     func buyProduct(product: SKProduct) {
@@ -79,122 +100,35 @@ class StoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    
     func restorePurchases(){
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
-    /*
-     Instance variables
-     
-     */
+    
     //Receipt
-    func validateInServer(transaction: SKPaymentTransaction) {
+    func validateThroughApi(transaction: SKPaymentTransaction) {
+        guard let validProduct = self.iapProduct else {
+            return
+        }
+        
         let receiptURL = Bundle.main.appStoreReceiptURL
-        
-        guard let receipt = NSData(contentsOf: receiptURL!) else {
+        guard let receiptData = NSData(contentsOf: receiptURL!) else {
             return
         }
         
-        
-        print( self.subscriptionIAP)
-        guard let validSubscriptionIAP = self.subscriptionIAP else {
-            return
-        }
-        
-        print(self.iapProduct?.subscriptionPeriod)
-        print(self.iapProduct?.subscriptionPeriod?.unit)
-        print(self.iapProduct?.subscriptionPeriod?.unit.rawValue)
-        print(self.iapProduct?.subscriptionPeriod?.unit.hashValue)
-        print(self.iapProduct?.subscriptionPeriod?.numberOfUnits)
-        
-        
-        
-        let receiptData = receipt.base64EncodedString(options: [])
-        let transactionId = transaction.transactionIdentifier ?? ""
-        let purchaseDateValid = transaction.transactionDate ?? Date()
-        let purchaseDate = Int(purchaseDateValid.timeIntervalSince1970)
-        let productId = validSubscriptionIAP.productId
-        let pricingLocale = iapProduct?.priceLocale.currencyCode ?? "" //=> {"type" => "string", "minLength" => 1, "maxLength" => 3},
-        let pricing = iapProduct?.price.description(withLocale: nil) ?? "" // => {"type" => "string", "minLength" => 1, "maxLength" => 200},
-        let formattedPrice = subscriptionIAP?.localizedPriceInfo ?? ""
-        let transactionDictionary = [
-            "transactions": [
-                "transactionId" : transactionId,
-                "purchaseDate" : purchaseDate,
-                "productId" : productId,
-                "quantity" : 1,
-                "pricingLocale" : pricingLocale,
-                "pricing" : pricing,
-                "formattedPrice" : formattedPrice
-            ]
-        ]
-        let requestContents: [String: Any] = [
-            "receipt-data": receiptData,
-            "transactions": transactionDictionary
-        ]
-        
-        DispatchQueue.global(qos: .background).async {
-            let stringURL = "https://api.schedjoules.com/subscription"
-            guard let url = URL(string: stringURL) else {
-                sjPrint("url isn't valid")
-                return
-            }
-            
-            var urlRequest = URLRequest(url: url)
-            urlRequest.httpMethod = "POST"
-            urlRequest.setHeaders(for: .analytics, apiKey: self.apiKey)
-            
-            do {
-                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: requestContents, options: .prettyPrinted)
-            } catch let error {
+        let receipt = receiptData.base64EncodedString(options: [])
+        let storeQuery = SubscriptionQuery(transaction: transaction,
+                                           product: validProduct,
+                                           receipt: receipt)
+        apiClient.execute(query: storeQuery, completion: { result in
+            switch result {
+            case let .success(resultInfo):
+                UserDefaults.standard.subscriptionId = resultInfo.subscriptionId
+            case let .failure(error):
+                sjPrint(error)
                 sjPrint(error.localizedDescription)
+                break
             }
-            
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: urlRequest) {
-                (data, response, error) in
-                // check for any errors
-                
-                if let error = error {
-                    sjPrint("error:", error)
-                    return
-                }
-                
-                guard let result = response as? HTTPURLResponse else {
-                    sjPrint("no response")
-                    return
-                }
-                
-                print(result)
-                
-                guard let data = data else { return }
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [AnyHashable : Any]
-                    
-                    guard let receipts = json["latest_receipt_info"] as? [[AnyHashable : Any]] else { print("nothing here")
-                        return
-                    }
-                    
-                    if let status = json["status"] as? Int,
-                        status == 0 {
-                        SKPaymentQueue.default().finishTransaction(transaction)
-                        self.presentable?.finishPurchase()
-                    } else {
-                        fatalError("bad status")
-                    }
-                    
-                    for dict in receipts {
-                        print(dict)
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
-            }
-            
-            task.resume()
-        }
+        })
     }
     
     private func expirationDate(for product: SKProduct) -> Date? {
@@ -231,7 +165,6 @@ class StoreManager: NSObject {
 }
 
 
-// MARK:
 // MARK: SKProductsRequestDelegate
 
 //The delegate receives the product information that the request was interested in.
@@ -245,14 +178,12 @@ extension StoreManager:SKProductsRequestDelegate{
         presentable?.show(subscription: nil, product: firstProduct)
     }
     
-    
     func request(_ request: SKRequest, didFailWithError error: Error) {
-        print("Something went wrong: \(error.localizedDescription)")
+        sjPrint("Something went wrong: \(error.localizedDescription)")
     }
 }
 
 
-// MARK:
 // MARK: SKTransactions
 extension StoreManager: SKPaymentTransactionObserver {
     
@@ -279,11 +210,10 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
     
     private func completeTransaction(transaction: SKPaymentTransaction) {
-        
-        print("completeTransaction...")
+        sjPrint("completeTransaction...")
         
         SKPaymentQueue.default().finishTransaction(transaction)
-        validateInServer(transaction: transaction)
+        validateThroughApi(transaction: transaction)
         
         guard let productPurchased = iapProduct else { return }
         
@@ -294,11 +224,9 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
     
     private func restoreTransaction(transaction: SKPaymentTransaction) {
-        
-        
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
         
-        print("restoreTransaction... \(productIdentifier)")
+        sjPrint("restoreTransaction... \(productIdentifier)")
         
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
@@ -306,7 +234,6 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
     
     private func failedTransaction(transaction: SKPaymentTransaction) {
-        
         var errorDescription: String?
         
         if let error = transaction.error as NSError? {
@@ -338,7 +265,6 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
     
 }
-
 
 
 //In-App Purchases App Store

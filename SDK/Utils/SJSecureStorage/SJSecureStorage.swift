@@ -16,6 +16,7 @@ public struct SJSecureStorage {
     
     public enum SJType: String {
         case api
+        case subscription
     }
     
     let secureStorageQueryable: SJSecureStorageQueryable
@@ -45,6 +46,9 @@ public struct SJSecureStorage {
         switch type {
         case .api:
             self.secureStorageQueryable = SJApiSecureStorageQueryable()
+            break
+        case .subscription:
+            self.secureStorageQueryable = SJSubscriptionSecureStorageQueryable()
         }
     }
     
