@@ -177,6 +177,14 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             sjPrint("Could not get row")
             return
         }
+        
+        //First we check if the user has a valid subscription
+        guard StoreManager.shared.isSubscriptionValid == true else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
+        
         let pageSection = page!.sections[indexPath.section]
         let item = pageSection.items[indexPath.row]
         let urlBegin = item.url.range(of: "://")!.upperBound

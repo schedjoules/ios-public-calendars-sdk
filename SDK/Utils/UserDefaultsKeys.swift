@@ -50,5 +50,8 @@ extension UserDefaults {
         }
     }
     
+    var subscriptionId: String? {
+        get { return string(forKey: #function) }
+        set { set(newValue, forKey: #function) }
+    }
 }
-

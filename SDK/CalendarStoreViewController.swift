@@ -78,7 +78,10 @@ public final class CalendarStoreViewController: UITabBarController {
         // Add the view controllers to the tab bar controller
         addViewControllers()
         
-        AnalyticsTracker.shared().launch()
+        AnalyticsTracker.shared().launch()        
+        
+        let storeManager = StoreManager.shared
+        storeManager.apiClient = self.apiClient
     }
     
     /**
@@ -100,8 +103,6 @@ public final class CalendarStoreViewController: UITabBarController {
         
         var secureStorage = SJSecureStorage(type: .api)
         secureStorage.apiKey = apiKey
-                
-        SKPaymentQueue.default().add(iapObserver)
     }
     
     /**
