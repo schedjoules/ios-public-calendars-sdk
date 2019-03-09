@@ -28,28 +28,90 @@ import SchedJoulesApiClient
 
 final class SettingsViewController: UIViewController {
     
-    // - MARK: Public Properties
+    // - MARK: Objects
+    fileprivate struct Section {
+        var kind: Kind
+        var items: [Item]
+        var title: String {
+            get {
+                switch self.kind {
+                case .about:
+                    return "About us"
+                case .localization:
+                    return "Country & Language"
+                case .contact:
+                    return "Contact us"
+                }
+            }
+        }
+        
+        enum Kind {
+            case about
+            case localization
+            case contact
+        }
+    }
+    
+    fileprivate struct Item {
+        var title: String
+        var details: String?
+        var data: Any?
+        
+        init(title: String, details: String? = nil, data: Any? = nil) {
+            self.title = title
+            self.details = details
+            self.data = data
+        }
+    }
+    
+    
+    // - MARK: Properties
     
     /// The table view.
     @IBOutlet weak var tableView: UITableView!
-
+    
     /// The ApiClient.
     var apiClient: Api!
     
     // - MARK: Private Properties
     
+    // Items
+    //About
+    private let aboutItems = [Item(title: "SchedJoules",
+                                   data: URL(string: "https://cms.schedjoules.com/static_pages/about_us_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"))]
+    
+    /// Country & Language menu items.
+    private let countryLanguageItems = [Item(title: "Country",
+                                             data: SettingsManager.SettingsType.country),
+                                        Item(title: "Language",
+                                             data: SettingsManager.SettingsType.language)]
+    
     /// Contact menu items.
-    private let contactItems = ["FAQ", "Twitter", "Facebook", "Website"]
+    private let contactItems = [Item(title: "FAQ",
+                                     details: nil,
+                                     data: URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html")),
+                                Item(title: "Twitter",
+                                     details: "@schedjoules",
+                                     data: URL(string:"https://twitter.com/SchedJoules")),
+                                Item(title: "Facebook",
+                                     details: "SchedJoules",
+                                     data: URL(string:"https://www.facebook.com/SchedJoules/")),
+                                Item(title: "Website",
+                                     details: "http://www.schedjoules.com",
+                                     data: URL(string:"http://www.schedjoules.com"))]
     
-    /// Contact menu item details.
-    private let contactItemsDetail = [nil, "@schedjoules", "SchedJoules", "http://www.schedjoules.com"]
+    //Sections
+    private var sections: [Section] {
+        get {
+            return [Section(kind: .about, items: aboutItems),
+                    Section(kind: .localization, items: countryLanguageItems),
+                    Section(kind: .contact, items: contactItems)]
+        }
+    }
     
-    /// Contact menu item links to open.
-    private let contactLinks = [URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"), URL(string:"https://twitter.com/SchedJoules"), URL(string:"https://www.facebook.com/SchedJoules/"), URL(string:"http://www.schedjoules.com")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Set table view delegate and data source
         tableView.delegate = self
         tableView.dataSource = self
@@ -63,106 +125,100 @@ final class SettingsViewController: UIViewController {
     }
 }
 
-// MARK: - Table View Delegate and Data Source Methods
 
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingsViewController: UITableViewDataSource {
+    //MARK: Sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return sections.count
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let settingsSection = sections[section]
+        return settingsSection.title
+    }
+    
+    
+    //MARK: Items
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 2
-        default:
-            return 4
-        }
+        let settingsSection = sections[section]
+        return settingsSection.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        // Country & Language
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellDetail", for: indexPath)
-            if indexPath.row == 0 {
-                cell.textLabel!.text = "Country"
-                let countrySetting = SettingsManager.get(type: .country)
-                cell.detailTextLabel?.text = countrySetting.name
-            } else {
-                cell.textLabel!.text = "Language"
-                let countrySetting = SettingsManager.get(type: .language)
-                cell.detailTextLabel?.text = countrySetting.name
-            }
-            cell.detailTextLabel!.textColor = .lightGray
-            return cell
-        // FAQ & Social
-        case 2:
+        let section = sections[indexPath.section]
+        let item = section.items[indexPath.row]
+        
+        //Separate the code by section because each one uses a different design
+        switch section.kind {
+        case .about:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-            cell.textLabel!.text = contactItems[indexPath.row]
-            cell.detailTextLabel!.text = contactItemsDetail[indexPath.row]
-            cell.imageView?.image = UIImage(named: contactItems[indexPath.row], in: Bundle.resourceBundle, compatibleWith: nil)
-            cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
-            cell.detailTextLabel!.textColor = .lightGray
-            return cell
-        // About us
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-            cell.textLabel!.text = "SchedJoules"
-            cell.detailTextLabel!.text = nil
+            cell.textLabel!.text = item.title
+            cell.detailTextLabel!.text = item.details
             cell.detailTextLabel!.textColor = .lightGray
             cell.imageView?.image = UIImage(named: "Icon", in: Bundle.resourceBundle, compatibleWith: nil)
             return cell
+        case .localization:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellDetail", for: indexPath)
+            cell.textLabel!.text = item.title
+            if let localizationType = item.data as? SettingsManager.SettingsType {
+                let localizationObject = SettingsManager.get(type: localizationType)
+                cell.detailTextLabel?.text = localizationObject.name
+            }
+            cell.detailTextLabel!.textColor = .lightGray
+            return cell
+        case .contact:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
+            cell.textLabel!.text = item.title
+            cell.detailTextLabel!.text = item.details
+            cell.imageView?.image = UIImage(named: item.title, in: Bundle.resourceBundle, compatibleWith: nil)
+            cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
+            cell.detailTextLabel!.textColor = .lightGray
+            return cell
         }
-       
     }
-    
-    // Headers for the table view sections
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "About us"
-        case 1:
-            return "Country & Language"
-        default:
-            return "Contact us"
-        }
-    }
+}
+
+
+extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath.section {
-        // About us
-        case 0:
-            let webVC = SettingsWebViewController()
-            webVC.url = URL(string: "https://cms.schedjoules.com/static_pages/about_us_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html")
-            webVC.navigationItem.title = "About us"
-            navigationController?.pushViewController(webVC, animated: true)
-        // Country & Language
-        case 1:
-            let settingsType = SettingsManager.SettingsType(rawValue: tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased())!
-            switch settingsType {
+        let section = sections[indexPath.section]
+        let item = section.items[indexPath.row]
+        
+        //Separate the code by section because each one uses a different design
+        switch section.kind {
+        case .about, .contact:
+            guard let url = item.data as? URL else {
+                sjPrint("invalid url for item: \(item.title)")
+                return
+            }
+            
+            //We show the website in safari, everything else in SettingsWebViewController
+            if url.absoluteString == "http://www.schedjoules.com" {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                let webVC = SettingsWebViewController()
+                webVC.url = url
+                webVC.navigationItem.title = section.title
+                print(url)
+                navigationController?.pushViewController(webVC, animated: true)
+            }
+        case .localization:
+            guard let localizationType = item.data as? SettingsManager.SettingsType else {
+                sjPrint("Wrong localization setting")
+                return
+            }
+            
+            switch localizationType {
             case .language:
                 let settingsDetailVC = SettingsDetailViewController(apiClient: apiClient,
-                                                                         settingsQuery: SupportedLanguagesQuery(), settingsType: .language)
+                                                                    settingsQuery: SupportedLanguagesQuery(), settingsType: localizationType)
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
             case .country:
                 let settingsDetailVC = SettingsDetailViewController(apiClient: apiClient,
-                                                                         settingsQuery: SupportedCountriesQuery(), settingsType: .country)
+                                                                    settingsQuery: SupportedCountriesQuery(), settingsType: localizationType)
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
-            }
-        // FAQ & Social
-        default:
-            // FAQ
-            if indexPath.row == 0 {
-                let webVC = SettingsWebViewController()
-                webVC.url = contactLinks[indexPath.row]!
-                webVC.navigationItem.title = "FAQ"
-                navigationController?.pushViewController(webVC, animated: true)
-            // Other links
-            } else {
-                UIApplication.shared.open(contactLinks[indexPath.row]!, options: [:], completionHandler: nil)
             }
         }
     }
