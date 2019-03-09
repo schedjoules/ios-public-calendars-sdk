@@ -9,6 +9,7 @@ target 'iOS-SDK' do
 	pod 'SDWebImage', '~> 4.0'
 	pod 'Alamofire', '~> 4.5'
 	pod 'Result', '~> 3.0.0'
-	pod 'SchedJoulesApiClient'
+    pod 'SchedJoulesApiClient', :git => 'https://github.com/schedjoules/swift-api-client.git', :branch => '58-subscriptions'
+
 end
 
