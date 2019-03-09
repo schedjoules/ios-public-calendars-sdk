@@ -60,6 +60,7 @@
 		4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
 		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		464F7BCA2233D1AE00907906 /* iOS-SDK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-SDK.entitlements"; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +199,7 @@
 		B6D3E02E204D97570044C800 = {
 			isa = PBXGroup;
 			children = (
+				464F7BCA2233D1AE00907906 /* iOS-SDK.entitlements */,
 				B6D3E05A204D97CE0044C800 /* SDK */,
 				B625A60020C038D000586F5E /* Demo */,
 				B6D3E04E204D97570044C800 /* iOS-SDKTests */,
@@ -332,6 +334,11 @@
 					B6D3E036204D97570044C800 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					B6D3E04A204D97570044C800 = {
 						CreatedOnToolsVersion = 9.2;
@@ -619,8 +626,9 @@
 			baseConfigurationReference = 116E5228BC3B1C0076C7D9CB /* Pods-iOS-SDK.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iOS-SDK.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W7764ZQNWC;
+				DEVELOPMENT_TEAM = H4FCPLHYSF;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -637,8 +645,9 @@
 			baseConfigurationReference = 32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iOS-SDK.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W7764ZQNWC;
+				DEVELOPMENT_TEAM = H4FCPLHYSF;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
