@@ -29,7 +29,7 @@ class StoreManager: NSObject {
             getStatusForSubscription()
         }
     }
-    let apiKey = SJSecureStorage(type: .api).apiKey
+    
     var productsRequest = SKProductsRequest()
     var iapProducts = [SKProduct]()
     var subscriptionIAP: SubscriptionIAP?
@@ -101,6 +101,7 @@ class StoreManager: NSObject {
     }
     
     func restorePurchases(){
+        print("restore purchases")
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -226,8 +227,7 @@ extension StoreManager: SKPaymentTransactionObserver {
     private func restoreTransaction(transaction: SKPaymentTransaction) {
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
         
-        sjPrint("restoreTransaction... \(productIdentifier)")
-        
+        sjPrint("restoreTransaction... \(productIdentifier)")        
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
