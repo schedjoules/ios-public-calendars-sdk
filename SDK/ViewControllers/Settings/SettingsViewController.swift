@@ -39,6 +39,8 @@ final class SettingsViewController: UIViewController {
                     return "About us"
                 case .localization:
                     return "Country & Language"
+                case .purchases:
+                    return "Purchases"
                 case .contact:
                     return "Contact us"
                 }
@@ -48,6 +50,7 @@ final class SettingsViewController: UIViewController {
         enum Kind {
             case about
             case localization
+            case purchases
             case contact
         }
     }
@@ -76,15 +79,15 @@ final class SettingsViewController: UIViewController {
     // - MARK: Private Properties
     
     // Items
-    //About
     private let aboutItems = [Item(title: "SchedJoules",
                                    data: URL(string: "https://cms.schedjoules.com/static_pages/about_us_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"))]
     
-    /// Country & Language menu items.
     private let countryLanguageItems = [Item(title: "Country",
                                              data: SettingsManager.SettingsType.country),
                                         Item(title: "Language",
                                              data: SettingsManager.SettingsType.language)]
+    
+    private let purchasesItems = [Item(title: "Restore Purchases")]
     
     /// Contact menu items.
     private let contactItems = [Item(title: "FAQ",
@@ -105,6 +108,7 @@ final class SettingsViewController: UIViewController {
         get {
             return [Section(kind: .about, items: aboutItems),
                     Section(kind: .localization, items: countryLanguageItems),
+                    Section(kind: .purchases, items: purchasesItems),
                     Section(kind: .contact, items: contactItems)]
         }
     }
@@ -166,6 +170,12 @@ extension SettingsViewController: UITableViewDataSource {
             }
             cell.detailTextLabel!.textColor = .lightGray
             return cell
+        case .purchases:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
+            cell.textLabel!.text = item.title
+            cell.detailTextLabel!.text = ""
+            cell.detailTextLabel!.textColor = .lightGray
+            return cell
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = item.title
@@ -220,6 +230,9 @@ extension SettingsViewController: UITableViewDelegate {
                                                                     settingsQuery: SupportedCountriesQuery(), settingsType: localizationType)
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
             }
+        case .purchases:
+            let storeManager = StoreManager.shared
+            storeManager.restorePurchases()
         }
     }
 }
