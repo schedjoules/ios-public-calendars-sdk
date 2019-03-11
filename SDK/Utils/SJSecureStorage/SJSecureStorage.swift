@@ -15,38 +15,13 @@ import Security
 public struct SJSecureStorage {
     
     public enum SJType: String {
-        case api
         case subscription
     }
     
     let secureStorageQueryable: SJSecureStorageQueryable
     
-    var apiKey: String? {
-        get {
-            do {
-                let value = try getValue(for: .api)
-                return value
-            }
-            catch {
-                return nil
-            }
-        }
-        set {
-            guard let value = newValue else { return }
-            do {
-                try setValue(value, for: .api)
-            }
-            catch {
-                return
-            }
-        }
-    }
-    
     public init(type: SJSecureStorage.SJType) {
         switch type {
-        case .api:
-            self.secureStorageQueryable = SJApiSecureStorageQueryable()
-            break
         case .subscription:
             self.secureStorageQueryable = SJSubscriptionSecureStorageQueryable()
         }
