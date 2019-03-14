@@ -134,17 +134,14 @@ class StoreViewController: UIViewController {
     func setupProperties() {
         storeManager.apiClient = self.apiClient
         storeManager.presentable = self
-                
-        let iapQuery = SubscriptionIAPQuery()
-        apiClient.execute(query: iapQuery, completion: { result in
-            switch result {
-            case let .success(resultInfo):
-                self.subscriptionIAP = resultInfo
-                self.storeManager.requestProductWithID(identifers: [resultInfo.productId], subscriptionIAP: resultInfo)
-            case .failure:
-                break
-            }
-        })
+        
+        storeManager.requestSubscriptionProducts { (result, error) in
+            guard let validSubscriptionIAP = result,
+                error == nil else { return }
+            
+            self.subscriptionIAP = validSubscriptionIAP
+            self.storeManager.requestProductWithID(identifers: [validSubscriptionIAP.productId], subscriptionIAP: validSubscriptionIAP)
+        }
     }
     
     func setupUI() {

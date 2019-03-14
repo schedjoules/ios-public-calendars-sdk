@@ -62,8 +62,6 @@ class StoreManager: NSObject {
         SKPaymentQueue.default().add(self)
     }
     
-    
-    
     private func getStatusForSubscription() {
         guard let subscriptionId = UserDefaults.standard.subscriptionId else {
             return
@@ -79,6 +77,20 @@ class StoreManager: NSObject {
                 break
             }
         }
+    }
+    
+    func requestSubscriptionProducts(_ completion:@escaping (_ subscription: SubscriptionIAP?, _ error: ApiError?) -> Void) {
+        let iapQuery = SubscriptionIAPQuery()
+        apiClient.execute(query: iapQuery, completion: { result in
+            switch result {
+            case let .success(resultInfo):
+                completion(resultInfo, nil)
+                break
+            case let .failure(error):
+                completion(nil, error)
+                break
+            }
+        })
     }
     
     func requestProductWithID(identifers:Set<String>, subscriptionIAP: SubscriptionIAP) {
@@ -227,7 +239,7 @@ extension StoreManager: SKPaymentTransactionObserver {
     private func restoreTransaction(transaction: SKPaymentTransaction) {
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
         
-        sjPrint("restoreTransaction... \(productIdentifier)")        
+        sjPrint("restoreTransaction... \(productIdentifier)")
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
