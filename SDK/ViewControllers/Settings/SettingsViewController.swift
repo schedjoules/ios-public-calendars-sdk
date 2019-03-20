@@ -25,6 +25,7 @@
 
 import UIKit
 import SchedJoulesApiClient
+import StoreKit
 
 final class SettingsViewController: UIViewController {
     
@@ -78,6 +79,9 @@ final class SettingsViewController: UIViewController {
     
     // - MARK: Private Properties
     
+    //Reference to IAP Store
+    private lazy var storeManager = StoreManager.shared
+    
     // Items
     private let aboutItems = [Item(title: "SchedJoules",
                                    data: URL(string: "https://cms.schedjoules.com/static_pages/about_us_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html"))]
@@ -113,6 +117,14 @@ final class SettingsViewController: UIViewController {
         }
     }
     
+    //Activity indicator
+    var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .blue
+        return activityIndicator
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +138,10 @@ final class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.stopAnimating()
+        view.addSubview(activityIndicator)
     }
 }
 
@@ -231,8 +247,53 @@ extension SettingsViewController: UITableViewDelegate {
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
             }
         case .purchases:
-            let storeManager = StoreManager.shared
-            storeManager.restorePurchases()
+            //Only run if there is no subscription
+            if storeManager.isSubscriptionValid == false {
+                storeManager.isRestoringPurchases = true
+                storeManager.presentable = self
+                storeManager.restorePurchases()
+                activityIndicator.startAnimating()
+                self.view.isUserInteractionEnabled = false
+            } else {
+                presentSubscriptionActive(restored: false)
+            }
         }
     }
+    
+    private func presentSubscriptionActive(restored: Bool) {
+        let message = restored == true ? "Your purchases are restored!" : "Your subscription is active!"
+        
+        let alertController = UIAlertController(title: "Great",
+                                                message: message,
+                                                preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok",
+                                     style: .default) { (action) in
+                                        alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(okAction)
+        
+        activityIndicator.stopAnimating()
+        present(alertController, animated: true, completion: nil)
+    }
+    
+}
+
+
+extension SettingsViewController: InteractableStoreManager {
+    
+    func show(subscription: SubscriptionIAP?, product: SKProduct) {}
+    
+    func showNoProductsAlert() {}
+    
+    func finishPurchase() {}
+    
+    func purchaseFailed(errorDescription: String?) {
+        self.view.isUserInteractionEnabled = true
+    }
+    
+    func finishRestore() {
+        self.view.isUserInteractionEnabled = true
+        presentSubscriptionActive(restored: true)
+    }
+    
 }

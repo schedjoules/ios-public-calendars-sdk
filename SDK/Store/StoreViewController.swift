@@ -276,5 +276,6 @@ extension StoreViewController: InteractableStoreManager {
         present(alertController, animated: true, completion: nil)
     }
     
+    func finishRestore() {}
 }
 
