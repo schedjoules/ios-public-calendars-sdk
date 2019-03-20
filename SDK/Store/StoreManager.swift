@@ -16,6 +16,7 @@ protocol InteractableStoreManager: class {
     func showNoProductsAlert()
     func finishPurchase()
     func purchaseFailed(errorDescription: String?)
+    func finishRestore()
 }
 
 
@@ -281,14 +282,12 @@ extension StoreManager: SKPaymentTransactionObserver {
         
         validateThroughApi(transaction: transaction)
         
-        
-        
         guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
         
         sjPrint("restoreTransaction... \(productIdentifier)")
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
-        
+        presentable?.finishRestore()
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
