@@ -134,14 +134,31 @@ final class SettingsViewController: UIViewController {
         
         // Set navbar title
         navigationItem.title = "Settings"
+        view.addSubview(activityIndicator)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        showLoader(animate: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
         
         activityIndicator.center = self.view.center
-        activityIndicator.stopAnimating()
-        view.addSubview(activityIndicator)
+        showLoader(animate: false)
+    }
+    
+    private func showLoader(animate: Bool) {
+        switch animate {
+        case true:
+            activityIndicator.startAnimating()
+            self.view.isUserInteractionEnabled = false
+        case false:
+            activityIndicator.stopAnimating()
+            self.view.isUserInteractionEnabled = true
+        }
     }
 }
 
@@ -227,7 +244,6 @@ extension SettingsViewController: UITableViewDelegate {
                 let webVC = SettingsWebViewController()
                 webVC.url = url
                 webVC.navigationItem.title = section.title
-                print(url)
                 navigationController?.pushViewController(webVC, animated: true)
             }
         case .localization:
@@ -252,8 +268,7 @@ extension SettingsViewController: UITableViewDelegate {
                 storeManager.isRestoringPurchases = true
                 storeManager.presentable = self
                 storeManager.restorePurchases()
-                activityIndicator.startAnimating()
-                self.view.isUserInteractionEnabled = false
+                showLoader(animate: true)
             } else {
                 presentSubscriptionActive(restored: false)
             }
@@ -272,7 +287,7 @@ extension SettingsViewController: UITableViewDelegate {
         }
         alertController.addAction(okAction)
         
-        activityIndicator.stopAnimating()
+        showLoader(animate: false)
         present(alertController, animated: true, completion: nil)
     }
     
@@ -288,11 +303,22 @@ extension SettingsViewController: InteractableStoreManager {
     func finishPurchase() {}
     
     func purchaseFailed(errorDescription: String?) {
-        self.view.isUserInteractionEnabled = true
+        if let message = errorDescription {
+            let alertController = UIAlertController(title: "Error",
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok",
+                                         style: .default) { (action) in
+                                            alertController.dismiss(animated: true, completion: nil)
+            }
+            alertController.addAction(okAction)
+        }
+        
+        showLoader(animate: false)
     }
     
     func finishRestore() {
-        self.view.isUserInteractionEnabled = true
+        showLoader(animate: false)
         presentSubscriptionActive(restored: true)
     }
     

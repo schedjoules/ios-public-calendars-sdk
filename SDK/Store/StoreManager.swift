@@ -115,9 +115,7 @@ class StoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    func restorePurchases(){
-        print("restore purchases")
-        
+    func restorePurchases(){        
         //1.
         //If needed get the list of products from the backend
         
@@ -202,12 +200,14 @@ class StoreManager: NSObject {
 // MARK: SKProductsRequestDelegate
 
 //The delegate receives the product information that the request was interested in.
-extension StoreManager:SKProductsRequestDelegate{
+extension StoreManager: SKProductsRequestDelegate{
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         let products = response.products as [SKProduct]
         
-        guard let firstProduct = products.first else { return }
+        guard let firstProduct = products.first else {
+            presentable?.purchaseFailed(errorDescription: "No product found")
+            return }
         
         if isRestoringPurchases == false {
             presentable?.show(subscription: nil, product: firstProduct)
@@ -259,6 +259,14 @@ extension StoreManager: SKPaymentTransactionObserver {
                     break
                 }
             }
+        }
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        if error.localizedDescription == "Cannot connect to iTunes Store" {
+            presentable?.purchaseFailed(errorDescription: nil)
+        } else {
+            presentable?.purchaseFailed(errorDescription: error.localizedDescription)
         }
     }
     
