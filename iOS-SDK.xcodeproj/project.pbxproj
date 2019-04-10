@@ -8,13 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		11E13311B6F934DED2B16326 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */; };
-		B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */; };
+		460015512208987300C6E9F2 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015432208987300C6E9F2 /* UserDefaultsKeys.swift */; };
+		460015522208987300C6E9F2 /* SJLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015442208987300C6E9F2 /* SJLogger.swift */; };
+		460015532208987300C6E9F2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015452208987300C6E9F2 /* Config.swift */; };
+		460015542208987300C6E9F2 /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015472208987300C6E9F2 /* SettingsObject.swift */; };
+		460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015492208987300C6E9F2 /* ArrayExtension.swift */; };
+		460015562208987300C6E9F2 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */; };
+		460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */; };
+		460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015502208987300C6E9F2 /* AnalyticsTracker.swift */; };
+		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
+		465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
 		B625A60A20C038D000586F5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B625A60220C038D000586F5E /* Assets.xcassets */; };
 		B625A60B20C038D000586F5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60320C038D000586F5E /* LaunchScreen.storyboard */; };
 		B625A60C20C038D000586F5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B625A60520C038D000586F5E /* Main.storyboard */; };
 		B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60720C038D000586F5E /* AppDelegate.swift */; };
-		B625A60E20C038D000586F5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B625A60820C038D000586F5E /* Info.plist */; };
 		B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */; };
 		B69268872089F32A003456FB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69268862089F32A003456FB /* PageViewController.swift */; };
 		B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D3E04F204D97570044C800 /* iOS_SDKTests.swift */; };
@@ -44,7 +52,15 @@
 		116E5228BC3B1C0076C7D9CB /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		16CB3378AF18E9A3B936806D /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F3C33597A535DB8FABA56F /* Pods-iOS-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.release.xcconfig"; sourceTree = "<group>"; };
-		B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
+		460015432208987300C6E9F2 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		460015442208987300C6E9F2 /* SJLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SJLogger.swift; sourceTree = "<group>"; };
+		460015452208987300C6E9F2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		460015472208987300C6E9F2 /* SettingsObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
+		460015492208987300C6E9F2 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
+		4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
+		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
+		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B625A60220C038D000586F5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B625A60420C038D000586F5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -88,6 +104,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		460015422208987300C6E9F2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				460015452208987300C6E9F2 /* Config.swift */,
+				460015442208987300C6E9F2 /* SJLogger.swift */,
+				460015432208987300C6E9F2 /* UserDefaultsKeys.swift */,
+				460015462208987300C6E9F2 /* Models */,
+				460015482208987300C6E9F2 /* Extensions */,
+				4600154C2208987300C6E9F2 /* Analytics */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		460015462208987300C6E9F2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				460015472208987300C6E9F2 /* SettingsObject.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460015482208987300C6E9F2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				460015492208987300C6E9F2 /* ArrayExtension.swift */,
+				4600154A2208987300C6E9F2 /* Bundle+ResourceBundle.swift */,
+				4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4600154C2208987300C6E9F2 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				460015502208987300C6E9F2 /* AnalyticsTracker.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		8F02A3D2818F97746AAFE47C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,14 +158,6 @@
 				B6EF1C1220780879003E0095 /* SDK.xcassets */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B625A5EE20C037F400586F5E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B625A5EF20C037F400586F5E /* Bundle+ResourceBundle.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B625A60020C038D000586F5E /* Demo */ = {
@@ -159,12 +206,12 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				460015422208987300C6E9F2 /* Utils */,
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
 				B67696A920C16BE200D57347 /* CalendarStoreSinglePageViewController.swift */,
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
 				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
-				B625A5EE20C037F400586F5E /* Extensions */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -183,6 +230,7 @@
 		B6EF1C3920780879003E0095 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				465569F221C537FA00FE7064 /* SettingsManager.swift */,
 				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
 				B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */,
 				B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */,
@@ -299,7 +347,6 @@
 				B625A60C20C038D000586F5E /* Main.storyboard in Resources */,
 				B625A60B20C038D000586F5E /* LaunchScreen.storyboard in Resources */,
 				B6EF1C6620780879003E0095 /* LoadErrorView.xib in Resources */,
-				B625A60E20C038D000586F5E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,15 +409,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				460015522208987300C6E9F2 /* SJLogger.swift in Sources */,
+				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
+				460015532208987300C6E9F2 /* Config.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
+				460015512208987300C6E9F2 /* UserDefaultsKeys.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
-				B625A5F020C037F400586F5E /* Bundle+ResourceBundle.swift in Sources */,
+				460015542208987300C6E9F2 /* SettingsObject.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
+				460015562208987300C6E9F2 /* Bundle+ResourceBundle.swift in Sources */,
+				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
+				460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
+				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
 				B6EF1C6020780879003E0095 /* SettingsViewController.swift in Sources */,
 				B6EF1C6220780879003E0095 /* EventViewController.swift in Sources */,
@@ -381,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465569F421C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +505,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -470,6 +527,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -508,6 +566,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -521,6 +580,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -532,12 +592,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H4FCPLHYSF;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -549,12 +610,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H4FCPLHYSF;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schedjoules.iOS-SDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

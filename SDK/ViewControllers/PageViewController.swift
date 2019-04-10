@@ -135,6 +135,11 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         if shouldReload { fetchPages() }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     // - MARK: Helper Methods
     
     /// Execute the Page query and handle the result.
@@ -145,6 +150,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             case let .success(page):
                 // Set the Page variable to the just fecthed Page object
                 self.page = page as Page
+                AnalyticsTracker.shared().trackScreen(name: self.title,
+                                                      page: self.page,
+                                                      url: self.pageQuery.url)
                 
                 // Set the page name as the navigation bar title, only if it has not been explicitly set before
                 if self.navigationItem.title == nil {
@@ -166,7 +174,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     @objc private func subscribe(sender: UIButton){
         let cell = sender.superview as! UITableViewCell
         guard let indexPath = tableView.indexPath(for: cell) else {
-            print("Could not get row")
+            sjPrint("Could not get row")
             return
         }
         let pageSection = page!.sections[indexPath.section]
@@ -258,7 +266,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Get the page item from the given section
         guard let item = pageSection?.items[indexPath.row] else {
-            print("Could not get page item.")
+            sjPrint("Could not get page item.")
             return cell
         }
         
@@ -308,8 +316,13 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Show the seleced page in a PageViewController
         if pageSection.items[indexPath.row].itemClass == .page {
-            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
-                                                             pageQuery: SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!)))
+            let languageSetting = SettingsManager.get(type: .language)
+            let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
+                                                  locale: languageSetting.code)
+             let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
+                                                                    pageQuery: singlePageQuery,
+                                                                    searchEnabled: true)
+            
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
@@ -344,7 +357,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
                     self.page = searchPage
                     self.tableView.reloadData()
                 case let .failure(error):
-                    print("There was an error searching: \(error)")
+                    sjPrint("There was an error searching: \(error)")
                 }
             })
         }

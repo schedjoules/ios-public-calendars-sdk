@@ -59,13 +59,13 @@ public final class CalendarStoreViewController: UITabBarController {
     }
     
     /**
-     - parameter apiClient: An instance of `Api`, initialized with a valid access token.
+     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public init(apiClient: Api, pageIdentifier: String?, title: String?) {
+    public init(apiKey: String, pageIdentifier: String?, title: String?) {
         // Initialization
-        self.apiClient = apiClient
+        self.apiClient = SchedJoulesApi(accessToken: apiKey)
         self.pageIdentifier = pageIdentifier
         self.largeTitle = true
         self.tintColor = ColorPalette.red
@@ -77,15 +77,8 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Add the view controllers to the tab bar controller
         addViewControllers()
-    }
-    
-    /**
-     - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
-     - parameter pageIdentifier: The page identifier for the the home page.
-     - parameter title: The title for the `navigtaion bar` in the home page.
-     */
-    public convenience init(apiKey: String, pageIdentifier: String?, title: String?) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title)
+        
+        AnalyticsTracker.shared().launch(with: apiKey)
     }
     
     /**
@@ -94,7 +87,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter pageIdentifier: The page identifier for the the home page.
      */
     public convenience init(apiKey: String, pageIdentifier: String?) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: nil)
+        self.init(apiKey: apiKey, pageIdentifier: pageIdentifier, title: nil)
     }
     
     /**
@@ -103,7 +96,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
     public convenience init(apiKey: String, title: String?) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: nil, title: title)
+        self.init(apiKey: apiKey, pageIdentifier: nil, title: title)
     }
     
     /**
@@ -111,7 +104,7 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter apiKey: The API Key (access token) for the **SchedJoules API**.
      */
     public convenience init(apiKey: String) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: nil, title: nil)
+        self.init(apiKey: apiKey, pageIdentifier: nil, title: nil)
     }
     
     // - MARK: Helper Methods
@@ -121,17 +114,20 @@ public final class CalendarStoreViewController: UITabBarController {
         // Array to hold the view controllers
         var tabViewControllers = [UIViewController]()
         
+        let languageSetting = SettingsManager.get(type: .language)
+        let countrySetting = SettingsManager.get(type: .country)
+        
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                SinglePageQuery(pageID: pageIdentifier!, locale: readSettings().last!), searchEnabled: true)
+                SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
-            // Create home page with just localization parameters
         } else {
+            // Create home page with just localization parameters
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                HomePageQuery(locale: readSettings().first!, location: readSettings().last!), searchEnabled: true)
+                HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
@@ -139,19 +135,19 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Create top page
         let topVC = PageViewController(apiClient: apiClient, pageQuery:
-            TopPageQuery(numberOfItems: 12, locale: readSettings().first!, location: readSettings().last!))
+            TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
         topVC.title = "Top"
         topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
         
         // Create new page
-        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        let newVC = PageViewController(apiClient: apiClient, pageQuery: NewPageQuery(numberOfItems: 12, locale: languageSetting.code))
         newVC.title = "New"
         newVC.tabBarItem.image = UIImage(named: "New", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(newVC)
         
         // Create next page
-        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: readSettings().first!))
+        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: languageSetting.code))
         nextVC.title = "Next"
         nextVC.tabBarItem.image = UIImage(named: "Next", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(nextVC)
@@ -173,15 +169,6 @@ public final class CalendarStoreViewController: UITabBarController {
             }
             return navigationController
         }
-    }
-    
-    /// Read localization settings, use device defaults otherwise
-    func readSettings() -> [String] {
-        let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String>
-        let locale = languageSetting != nil ? languageSetting!["countryCode"] : Locale.preferredLanguages[0].components(separatedBy: "-")[0]
-        let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String>
-        let location = countrySetting != nil ? countrySetting!["countryCode"] : Locale.current.regionCode
-        return [locale!,location!]
     }
     
 }

@@ -86,6 +86,11 @@ final class EventViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AnalyticsTracker.shared().trackScreen(name: event.summary, page: nil, url: nil)        
+    }
+    
     // - MARK: Helper Methods
     
     // Called when there is no description to show

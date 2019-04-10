@@ -10,6 +10,7 @@ import UIKit
 import SchedJoulesApiClient
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -23,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Show the calendar store
         window?.rootViewController = calendarVC
         window?.makeKeyAndVisible()
-
+        
         return true
     }
 
@@ -51,4 +52,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-

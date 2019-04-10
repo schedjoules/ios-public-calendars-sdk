@@ -88,18 +88,12 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellDetail", for: indexPath)
             if indexPath.row == 0 {
                 cell.textLabel!.text = "Country"
-                if let countrySetting = UserDefaults.standard.value(forKey: "country_settings") as? Dictionary<String, String> {
-                    cell.detailTextLabel!.text = countrySetting["displayName"]
-                } else {
-                    cell.detailTextLabel!.text = "Default"
-                }
+                let countrySetting = SettingsManager.get(type: .country)
+                cell.detailTextLabel?.text = countrySetting.name
             } else {
                 cell.textLabel!.text = "Language"
-                if let languageSetting = UserDefaults.standard.value(forKey: "language_settings") as? Dictionary<String, String> {
-                    cell.detailTextLabel!.text = languageSetting["displayName"]
-                } else {
-                    cell.detailTextLabel!.text = "Default"
-                }
+                let countrySetting = SettingsManager.get(type: .language)
+                cell.detailTextLabel?.text = countrySetting.name
             }
             cell.detailTextLabel!.textColor = .lightGray
             return cell
@@ -147,7 +141,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(webVC, animated: true)
         // Country & Language
         case 1:
-            let settingsType = SettingsDetailType(rawValue: tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased())!
+            let settingsType = SettingsManager.SettingsType(rawValue: tableView.cellForRow(at: indexPath)!.textLabel!.text!.lowercased())!
             switch settingsType {
             case .language:
                 let settingsDetailVC = SettingsDetailViewController(apiClient: apiClient,
