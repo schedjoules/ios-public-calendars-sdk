@@ -254,7 +254,7 @@ extension StoreViewController: InteractableStoreManager {
         
     }
     
-    func finishPurchase() {
+    func purchaseFinished() {
         mainActivityIndicator.stopAnimating()
         
         self.dismiss()
@@ -276,6 +276,5 @@ extension StoreViewController: InteractableStoreManager {
         present(alertController, animated: true, completion: nil)
     }
     
-    func finishRestore() {}
 }
 

@@ -296,30 +296,41 @@ extension SettingsViewController: UITableViewDelegate {
 
 extension SettingsViewController: InteractableStoreManager {
     
+    //We don't need to present products in the settings View Controller
     func show(subscription: SubscriptionIAP?, product: SKProduct) {}
     
     func showNoProductsAlert() {}
     
-    func finishPurchase() {}
+    func purchaseFinished() {
+        showLoader(animate: false)
+        presentSubscriptionActive(restored: true)
+    }
     
     func purchaseFailed(errorDescription: String?) {
         if let message = errorDescription {
             let alertController = UIAlertController(title: "Error",
                                                     message: message,
                                                     preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok",
-                                         style: .default) { (action) in
+            
+            let purchaseAction = UIAlertAction(title: "Get a Subscription",
+                                               style: .default) { (action) in
+                                                let storeVC = StoreViewController(apiClient: self.apiClient)
+                                                self.storeManager.isRestoringPurchases = false
+                                                self.present(storeVC, animated: true, completion: nil)
+                                                return
+            }
+            alertController.addAction(purchaseAction)
+            
+            let dismissAction = UIAlertAction(title: "Dismisss",
+                                         style: .cancel) { (action) in
                                             alertController.dismiss(animated: true, completion: nil)
             }
-            alertController.addAction(okAction)
+            alertController.addAction(dismissAction)
+            
+            present(alertController, animated: true, completion: nil)
         }
         
         showLoader(animate: false)
-    }
-    
-    func finishRestore() {
-        showLoader(animate: false)
-        presentSubscriptionActive(restored: true)
     }
     
 }

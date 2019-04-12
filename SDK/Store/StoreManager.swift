@@ -13,10 +13,8 @@ import Alamofire
 
 protocol InteractableStoreManager: class {
     func show(subscription: SubscriptionIAP?, product: SKProduct)
-    func showNoProductsAlert()
-    func finishPurchase()
+    func purchaseFinished()
     func purchaseFailed(errorDescription: String?)
-    func finishRestore()
 }
 
 
@@ -36,6 +34,7 @@ class StoreManager: NSObject {
     var subscriptionIAP: SubscriptionIAP?
     var iapProduct: SKProduct?
     var isRestoringPurchases = false
+    var restorePurchaseCompleted = false
     
     var isSubscriptionValid: Bool {
         get {
@@ -115,10 +114,9 @@ class StoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    func restorePurchases(){        
+    func restorePurchases() {        
         //1.
         //If needed get the list of products from the backend
-        
         if self.iapProduct != nil {
             SKPaymentQueue.default().restoreCompletedTransactions()
         } else {
@@ -218,13 +216,15 @@ extension StoreManager: SKProductsRequestDelegate{
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
-        sjPrint("Something went wrong: \(error.localizedDescription)")
+        presentable?.purchaseFailed(errorDescription: error.localizedDescription)
     }
 }
 
 
 // MARK: SKTransactions
 extension StoreManager: SKPaymentTransactionObserver {
+    
+    
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         if isRestoringPurchases == true {
@@ -252,17 +252,24 @@ extension StoreManager: SKPaymentTransactionObserver {
                     //We already handled this scenario
                     break
                 case .deferred:
-                    // TODO show user that is waiting for approval
-                    
+                    //No need to handle
                     break
                 case .purchasing:
+                    //No need to handle
                     break
                 }
             }
         }
     }
     
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        if restorePurchaseCompleted == false {
+            presentable?.purchaseFailed(errorDescription: "No transaction was restored")
+        }
+    }
+    
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        sjPrint("failed restoration")
         if error.localizedDescription == "Cannot connect to iTunes Store" {
             presentable?.purchaseFailed(errorDescription: nil)
         } else {
@@ -270,6 +277,8 @@ extension StoreManager: SKPaymentTransactionObserver {
         }
     }
     
+    
+    //Helpers
     private func completeTransaction(transaction: SKPaymentTransaction) {
         sjPrint("completeTransaction...")
         
@@ -295,7 +304,8 @@ extension StoreManager: SKPaymentTransactionObserver {
         sjPrint("restoreTransaction... \(productIdentifier)")
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
-        presentable?.finishRestore()
+        presentable?.purchaseFinished()
+        restorePurchaseCompleted = true
         SKPaymentQueue.default().finishTransaction(transaction)
     }
     
@@ -327,7 +337,7 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
     
     private func deliverPurchaseForIdentifier(identifier: String?) {
-        presentable?.finishPurchase()
+        presentable?.purchaseFinished()
     }
     
 }
@@ -338,12 +348,6 @@ extension StoreManager{
     
     func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         return true
-        
-        //To hold
-        //return false
-        
-        //And then to continue
-        //SKPaymentQueue.default().add(savedPayment)
     }
     
 }
