@@ -107,6 +107,14 @@ public final class CalendarStoreViewController: UITabBarController {
         self.init(apiKey: apiKey, pageIdentifier: nil, title: nil)
     }
     
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged(_:)), name: NSNotification.Name(rawValue: ReachabilityStatusChangedNotification), object: nil)
+        Reach().monitorReachabilityChanges()
+    }
+    
     // - MARK: Helper Methods
     
     // Add the view controllers to the tab bar controller
@@ -171,4 +179,42 @@ public final class CalendarStoreViewController: UITabBarController {
         }
     }
     
+}
+
+
+//MARK: Handle internet connection
+
+extension CalendarStoreViewController {
+    
+    @objc func networkStatusChanged(_ notification: Notification) {
+        let status = Reach().connectionStatus()
+        switch status {
+        case .unknown, .offline:
+            createAlert(titleText: "Alert", messageText: "No Internet Connection")
+        case .online(.wwan):
+            sjPrint("Connected via WWAN")
+        case .online(.wiFi):
+            sjPrint("Connected via WiFi")
+        }
+    }
+    
+    func createAlert(titleText : String , messageText : String) {
+        let alert = UIAlertController(title: titleText,message: messageText, preferredStyle:.alert)
+        
+        //Create a button to open settings where users can enable internet connection
+        if let settingsURL = URL(string: UIApplicationOpenSettingsURLString) {
+            let settingsAction = UIAlertAction(title: "Open Settings", style: .default, handler:{ (action) in
+                UIApplication.shared.open(settingsURL)
+            })
+            alert.addAction(settingsAction)
+        }
+        
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (action) in
+            alert.dismiss(animated: true, completion: nil)
+        })
+        alert.addAction(dismissAction)
+        
+        self.present(alert, animated: true , completion: nil)
+    }
+
 }
