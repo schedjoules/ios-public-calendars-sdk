@@ -26,6 +26,7 @@
 import UIKit
 import SchedJoulesApiClient
 import StoreKit
+import MessageUI
 
 final class SettingsViewController: UIViewController {
     
@@ -97,6 +98,9 @@ final class SettingsViewController: UIViewController {
     private let contactItems = [Item(title: "FAQ",
                                      details: nil,
                                      data: URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html")),
+                                Item(title: "e-mail",
+                                     details: "support@schedjoules.com",
+                                     data: "support@schedjoules.com"),
                                 Item(title: "Twitter",
                                      details: "@schedjoules",
                                      data: URL(string:"https://twitter.com/SchedJoules")),
@@ -213,7 +217,8 @@ extension SettingsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = item.title
             cell.detailTextLabel!.text = item.details
-            cell.imageView?.image = UIImage(named: item.title, in: Bundle.resourceBundle, compatibleWith: nil)
+            let image = UIImage(named: item.title, in: Bundle.resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+            cell.imageView?.image = image
             cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
             cell.detailTextLabel!.textColor = .lightGray
             return cell
@@ -232,19 +237,13 @@ extension SettingsViewController: UITableViewDelegate {
         //Separate the code by section because each one uses a different design
         switch section.kind {
         case .about, .contact:
-            guard let url = item.data as? URL else {
+            if let url = item.data as? URL {
+                open(url: url, for: section)
+            } else if let email = item.data as? String {
+                presentAlertFor(email: email)
+            } else {
                 sjPrint("invalid url for item: \(item.title)")
                 return
-            }
-            
-            //We show the website in safari, everything else in SettingsWebViewController
-            if url.absoluteString == "http://www.schedjoules.com" {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                let webVC = SettingsWebViewController()
-                webVC.url = url
-                webVC.navigationItem.title = section.title
-                navigationController?.pushViewController(webVC, animated: true)
             }
         case .localization:
             guard let localizationType = item.data as? SettingsManager.SettingsType else {
@@ -291,6 +290,139 @@ extension SettingsViewController: UITableViewDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
+    
+    //MARK: open urls for contact and about
+    
+    private func open(url: URL, for section: Section) {
+        //We show the website in safari, everything else in SettingsWebViewController
+        if url.absoluteString == "http://www.schedjoules.com" {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            let webVC = SettingsWebViewController()
+            webVC.url = url
+            webVC.navigationItem.title = section.title
+            navigationController?.pushViewController(webVC, animated: true)
+        }
+    }
+    
+    
+    //MARK: Handle emailing support
+    private func presentAlertFor(email: String) {
+        let subject = "Calendar Store Feedback"
+        
+        let emailActionSheet = UIAlertController(title: "Choose an email client",
+                                                 message: nil,
+                                                 preferredStyle: .actionSheet)
+        
+        //Add actions for each email client we manually set
+        //Mail app
+        if MFMailComposeViewController.canSendMail() == true {
+            let emailAction = UIAlertAction(title: "Mail App", style: .default) { (action) in
+                let mail = MFMailComposeViewController()
+                mail.mailComposeDelegate = self
+                mail.setToRecipients([email])
+                mail.setSubject(subject)
+                mail.setMessageBody(self.feedbackInitialText(html: true), isHTML: true)
+                self.present(mail, animated: true)
+            }
+            emailActionSheet.addAction(emailAction)
+        }
+        
+        
+        let gmailUrlString = String(format: "googlegmail:///co?to=%@&subject=%@&body=%@", email, subject, self.feedbackInitialText(html: false))
+        let gmailEncodedUrl = gmailUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let gmailUrl = URL(string: gmailEncodedUrl) {
+            if UIApplication.shared.canOpenURL(gmailUrl) {
+                let gmailAction = UIAlertAction(title: "Gmail", style: .default) { (action) in
+                    UIApplication.shared.open(gmailUrl, options: [:])
+                }
+                emailActionSheet.addAction(gmailAction)
+            }
+        }
+        
+        let outlookUrlString = String(format: "ms-outlook://compose?to=%@&subject=%@&body=%@", email, subject, self.feedbackInitialText(html: true))
+        let outlookEncodedUrl = outlookUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let outlookUrl = URL(string: outlookEncodedUrl) {
+            if UIApplication.shared.canOpenURL(outlookUrl) {
+                let outlookAction = UIAlertAction(title: "Outlook", style: .default) { (action) in
+                    UIApplication.shared.open(outlookUrl, options: [:])
+                }
+                emailActionSheet.addAction(outlookAction)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action) in
+            emailActionSheet.dismiss(animated: true)
+        }
+        emailActionSheet.addAction(cancelAction)
+        
+        present(emailActionSheet, animated: true, completion: nil)
+    }
+    
+    func feedbackInitialText(html: Bool) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z" //RFC2822-Format
+        
+        // not localized, since it's for support-usage only.
+        //We need two formats becase Gmail doesn't parse the html tags
+        var formatBody = ""
+        if html == true {
+            formatBody = """
+            Describe your feedback:\
+            <br><br><br><hr>\
+            <font size='-6'><b>Diagnostics</b><br>\
+            App: %@ (%@/%@)<br>\
+            UUID: %@<br>\
+            SubscriptionId: %@<br>\
+            Device: %@<br>\
+            Firmware: %@<br>\
+            Library: %@<br>\
+            Date: %@<br>\
+            Locale: %@<br>\
+            Location: %@<br>\
+            TimeZone: %@</font><hr>
+            """
+        } else {
+            formatBody = """
+            Describe your feedback: -
+            Diagnostics: -
+            App: %@ (%@/%@) -
+            UUID: %@ -
+            SubscriptionId: %@ -
+            Device: %@ -
+            Firmware: %@ -
+            Library: %@ -
+            Date: %@ -
+            Locale: %@ -
+            Location: %@ -
+            TimeZone: %@
+            """
+        }
+        
+        let body: String = String(format: formatBody,
+                                  Config.appName,
+                                  Config.bundleIdentifier,
+                                  Config.bundleVersion,
+                                  Config.uuid,
+                                  UserDefaults.standard.subscriptionId ?? "",
+                                  UIDevice.current.model,
+                                  UIDevice.current.systemVersion,
+                                  Config.libraryVersion,
+                                  dateFormatter.string(from: Date()),
+                                  SettingsManager.get(type: .language).code,
+                                  SettingsManager.get(type: .country).code,
+                                  NSTimeZone.system.identifier
+        )
+        return body
+    }
+    
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
 }
 
 
