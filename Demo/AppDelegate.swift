@@ -8,15 +8,18 @@
 
 import UIKit
 import SchedJoulesApiClient
+import StoreKit
 
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let iapObserver = StoreManager.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        SKPaymentQueue.default().add(iapObserver)
         
         // Initialize the calendar store
         let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
@@ -48,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        SKPaymentQueue.default().remove(iapObserver)
     }
 
 
