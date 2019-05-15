@@ -135,6 +135,8 @@ final class SettingsViewController: UIViewController {
         // Set navbar title
         navigationItem.title = "Settings"
         view.addSubview(activityIndicator)
+        
+        storeManager.apiClient = self.apiClient
     }
     
     override func viewDidAppear(_ animated: Bool) {
