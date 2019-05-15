@@ -46,7 +46,7 @@ extension URLRequest {
                 Keys.contentType : "application/json",
                 Keys.userAgent : userAgent,
                 Keys.appId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
-                Keys.libraryVersion : "2.3.4-4-g8cd554c", //Don't know what is this value R = This is the SDK version
+                Keys.libraryVersion : Config.libraryVersion, //Don't know what is this value R = This is the SDK version
                 Keys.uuid : Config.uuid,
                 Keys.iosVersion : UIDevice.current.systemVersion,
                 Keys.xAppId : "\(Config.bundleIdentifier)/\(Config.bundleVersion)",
