@@ -19,6 +19,15 @@ class Config {
         return uuidExisting
     }
     
+    static var appName: String {
+        guard let infoKey = kCFBundleNameKey as String?,
+            let info = Bundle.main.infoDictionary,
+            let bundleString = info[infoKey] as? String else {
+                return ""
+        }
+        return bundleString
+    }
+    
     static var bundleIdentifier: String {
         guard let bundleString = Bundle.main.infoDictionary?[kCFBundleIdentifierKey! as String] as? String else {
             return ""
@@ -36,4 +45,6 @@ class Config {
     static var dateForAnalytics: Int {
         return Int(Date().timeIntervalSince1970)
     }
+    
+    static let libraryVersion: String = "2.3.4-4-g8cd554c"
 }
