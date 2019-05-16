@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SchedJoulesSDK'
-  s.version          = '0.6'
+  s.version          = '0.7'
   s.summary          = 'The SchedJoules iOS SDK, written in Swift.'
  
   s.description      = <<-DESC
@@ -9,17 +9,19 @@ This pod contains classes which make it easier to interact with the SchedJoules 
  
   s.homepage         = 'https://github.com/schedjoules/ios-public-calendars-sdk'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Balazs Vincze' => 'sayhello@bvincze.com' }
+  s.author           = { 'Balazs Vincze' => 'sayhello@bvincze.com', 'Alberto Huerdo' => 'alberto@schedjoules.com' }
   s.source           = { :git => 'https://github.com/schedjoules/ios-public-calendars-sdk.git', :tag => s.version.to_s }
 
   s.swift_version = '4.0'
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.4'
   s.source_files = 'SDK/**/*.swift'
   s.resource_bundles = {
     'SchedJoulesSDK' => ['SDK/*/*.{xib,storyboard,xcassets}']
   }
 
   s.dependency 'SDWebImage', '~> 4.0'
+  s.dependency 'Alamofire', '~> 4.5'
+  s.dependency 'Result', '~> 3.0.0'
   s.dependency 'SchedJoulesApiClient'
  
 end
