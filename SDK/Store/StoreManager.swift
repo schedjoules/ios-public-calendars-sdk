@@ -86,6 +86,7 @@ class StoreManager: NSObject {
         apiClient.execute(query: iapQuery, completion: { result in
             switch result {
             case let .success(resultInfo):
+                sjPrint("product for id: \(resultInfo.productId)")
                 completion(resultInfo, nil)
                 break
             case let .failure(error):

@@ -51,7 +51,8 @@ class StoreViewController: UIViewController {
     }()
     
     var imageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "purchase-intro-1"))
+        let image = UIImage(named: "purchase-intro-1")
+        let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
