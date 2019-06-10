@@ -262,18 +262,23 @@ extension StoreViewController: InteractableStoreManager {
     }
     
     func purchaseFailed(errorDescription: String?) {
+        mainActivityIndicator.stopAnimating()
+        productActivityIndicator.stopAnimating()
+        
         let message = errorDescription ?? "Your request failed"
         
         let alertController = UIAlertController(title: "Error",
                                                 message: message,
                                                 preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok",
+        let okAction = UIAlertAction(title: "Dismiss",
                                      style: .default) { (action) in
-                                        alertController.dismiss(animated: true, completion: nil)
+                                        self.dismiss()
+                                        alertController.dismiss(animated: true, completion: {
+                                            self.tapCloseButton()
+                                        })
         }
         alertController.addAction(okAction)
         
-        mainActivityIndicator.stopAnimating()
         present(alertController, animated: true, completion: nil)
     }
     
