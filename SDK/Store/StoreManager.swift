@@ -105,6 +105,7 @@ class StoreManager: NSObject {
             request.delegate = self
             request.start()
         } else {
+            presentable?.purchaseFailed(errorDescription: "Store Not Available")
             sjPrint("ERROR: Store Not Available")
         }
     }
