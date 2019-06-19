@@ -18,7 +18,36 @@ class StoreViewController: UIViewController {
     var subscriptionIAP: SubscriptionIAP?
     var product: SKProduct?
     
+    //Properties
+    enum TosLinks {
+        case terms
+        case privacy
+        
+        var text: String {
+            get {
+                switch self {
+                case .terms:
+                    return "Terms of Service"
+                case .privacy:
+                    return "Privacy Policy."
+                }
+            }
+        }
+        
+        var url: URL? {
+            get {
+                switch self {
+                case .terms:
+                    return URL(string: "https://www.schedjoules.com/app-terms-of-service/")
+                case .privacy:
+                    return URL(string: "https://www.schedjoules.com/privacy-policy/")
+                }
+            }
+        }
+        
+    }
     
+    //UI
     var closeButton: UIButton = {
         var button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +111,46 @@ class StoreViewController: UIViewController {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.alpha = 0.0
+        return label
+    }()
+    
+    var tosLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "SchedJoules Premium is a recurring subscription. You will automatically be billed the amount listed above through iTunes at the end of the free trial period which is 30 days. Your subscription will auto-renew unless you cancel or turn off auto-renew at least 24 hours before the end of the current period. You can manage your subscription in iTunes."
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .justified
+        label.adjustsFontSizeToFitWidth = true
+        label.alpha = 0.0
+        return label
+    }()
+    
+    var tosLinkLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.text = "\(TosLinks.terms.text) and \(TosLinks.privacy.text)."
+        
+        let text = (label.text)!
+        let formattedText = NSMutableAttributedString(string: text)
+        
+        let range1 = (text as NSString).range(of: TosLinks.terms.text)
+        let range2 = (text as NSString).range(of: TosLinks.privacy.text)
+        
+        let formatAttributes: [NSAttributedString.Key : Any] = [.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+                                                                .foregroundColor: UIColor.sjBlue]
+        
+        formattedText.addAttributes(formatAttributes, range: range1)
+        formattedText.addAttributes(formatAttributes, range: range2)
+        
+        label.attributedText = formattedText
+        
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .justified
+        label.adjustsFontSizeToFitWidth = true
+        label.alpha = 0.0
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -157,6 +226,8 @@ class StoreViewController: UIViewController {
         
         bottomView.addSubview(purchaseButton)
         bottomView.addSubview(priceLabel)
+        bottomView.addSubview(tosLabel)
+        bottomView.addSubview(tosLinkLabel)
         bottomView.addSubview(productActivityIndicator)
         
         let layoutGuide = view.safeAreaLayoutGuide
@@ -178,7 +249,6 @@ class StoreViewController: UIViewController {
             imageView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 40),
             imageView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width - 40),
-            imageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
             
             bottomView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
@@ -191,16 +261,28 @@ class StoreViewController: UIViewController {
             purchaseButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
             purchaseButton.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 40),
             purchaseButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -40),
-            purchaseButton.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: -60),
             
+            priceLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 8),
             priceLabel.heightAnchor.constraint(equalToConstant: 50),
             priceLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
-            priceLabel.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+
+            tosLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8),
+            tosLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
+            tosLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
+
+            tosLinkLabel.topAnchor.constraint(equalTo: tosLabel.bottomAnchor, constant: 8),
+            tosLinkLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
+            tosLinkLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
+            
+            tosLinkLabel.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: -16),
             
             productActivityIndicator.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
             productActivityIndicator.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor)
             ])
+        
+        let tosTap = UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:)))
+        tosLinkLabel.addGestureRecognizer(tosTap)
     }
     
     func dismiss() {
@@ -221,6 +303,24 @@ class StoreViewController: UIViewController {
             fatalError("no product loaded")
         }
         storeManager.buyProduct(product: validProduct)
+    }
+    
+    @objc func tapLabel(gesture: UITapGestureRecognizer) {
+        let text = (tosLinkLabel.text)!
+        let termsRange = (text as NSString).range(of: TosLinks.terms.text)
+        let privacyRange = (text as NSString).range(of: TosLinks.privacy.text)
+        var urlToOpen: URL?
+        
+        if gesture.didTapAttributedTextInLabel(label: tosLinkLabel, inRange: termsRange) {
+            urlToOpen = TosLinks.terms.url
+        } else if gesture.didTapAttributedTextInLabel(label: tosLinkLabel, inRange: privacyRange) {
+            urlToOpen = TosLinks.privacy.url
+        }
+        
+        guard let validUrl = urlToOpen,
+            UIApplication.shared.canOpenURL(validUrl) else { return }
+        
+        UIApplication.shared.open(validUrl)
     }
     
 }
@@ -248,6 +348,8 @@ extension StoreViewController: InteractableStoreManager {
         UIView.animate(withDuration: 0.2) {
             self.purchaseButton.alpha = 1.0
             self.priceLabel.alpha = 1.0
+            self.tosLabel.alpha = 1.0
+            self.tosLinkLabel.alpha = 1.0
         }
     }
     
@@ -283,4 +385,3 @@ extension StoreViewController: InteractableStoreManager {
     }
     
 }
-
