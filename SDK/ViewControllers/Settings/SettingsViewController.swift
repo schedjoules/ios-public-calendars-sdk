@@ -211,9 +211,21 @@ extension SettingsViewController: UITableViewDataSource {
             return cell
         case .purchases:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-            cell.textLabel!.text = item.title
-            cell.detailTextLabel!.text = ""
-            cell.detailTextLabel!.textColor = .lightGray
+            if UserDefaults.standard.subscriptionExpirationDate == nil {
+                UserDefaults.standard.subscriptionExpirationDate = Date()
+            }
+            if storeManager.isSubscriptionValid == true,
+                let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
+                cell.textLabel!.text = "\(expirationDate.remainingTimeString()) left on your subscription"
+                cell.detailTextLabel!.text = ""
+                cell.detailTextLabel!.textColor = .lightGray
+                cell.accessoryType = .none
+                return cell
+            } else {
+                cell.textLabel!.text = item.title
+                cell.detailTextLabel!.text = ""
+                cell.detailTextLabel!.textColor = .lightGray
+            }
             return cell
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
