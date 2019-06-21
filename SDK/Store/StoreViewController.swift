@@ -29,7 +29,7 @@ class StoreViewController: UIViewController {
                 case .terms:
                     return "Terms of Service"
                 case .privacy:
-                    return "Privacy Policy."
+                    return "Privacy Policy"
                 }
             }
         }
