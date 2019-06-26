@@ -6,9 +6,11 @@ target 'iOS-SDK' do
   use_frameworks!
 
   # Pods for iOS-SDK
-	pod 'SDWebImage', '~> 4.0'
-	pod 'Alamofire', '~> 4.5'
+  pod 'Alamofire', '~> 4.5'
+  pod 'Firebase/Core'
 	pod 'Result', '~> 3.0.0'
 	pod 'SchedJoulesApiClient'
+  pod 'SDWebImage', '~> 4.0'
+  
 end
 
