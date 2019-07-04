@@ -17,9 +17,13 @@
 		460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015502208987300C6E9F2 /* AnalyticsTracker.swift */; };
 		4610CD16228DD54800CE25C2 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610CD15228DD53F00CE25C2 /* Reach.swift */; };
 		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
+		4643FF5022CBFE9800A2FE41 /* WeatherMapDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF4F22CBFE9800A2FE41 /* WeatherMapDataSource.swift */; };
+		4643FF5722CDC10700A2FE41 /* WeatherCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5622CDC10700A2FE41 /* WeatherCity.swift */; };
+		4643FF5922CDCEE400A2FE41 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5822CDCEE400A2FE41 /* WeatherDetailViewController.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */; };
 		469887EE22AE5C29000B6D83 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469887ED22AE5C29000B6D83 /* GoogleService-Info.plist */; };
+		46B27FF522CB7A1C00FB97BE /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B27FF422CB7A1C00FB97BE /* WeatherMapViewController.swift */; };
 		46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */; };
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
@@ -67,10 +71,14 @@
 		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
 		4610CD15228DD53F00CE25C2 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		4643FF4F22CBFE9800A2FE41 /* WeatherMapDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapDataSource.swift; sourceTree = "<group>"; };
+		4643FF5622CDC10700A2FE41 /* WeatherCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCity.swift; sourceTree = "<group>"; };
+		4643FF5822CDCEE400A2FE41 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		464F7BCA2233D1AE00907906 /* iOS-SDK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-SDK.entitlements"; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		469887ED22AE5C29000B6D83 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46B27FF422CB7A1C00FB97BE /* WeatherMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		46F45C5222608B5D0005EAB6 /* StoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -136,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				460015472208987300C6E9F2 /* SettingsObject.swift */,
+				4643FF5622CDC10700A2FE41 /* WeatherCity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,6 +168,16 @@
 				460015502208987300C6E9F2 /* AnalyticsTracker.swift */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		4643FF4E22CBFE7B00A2FE41 /* WeatherMap */ = {
+			isa = PBXGroup;
+			children = (
+				46B27FF422CB7A1C00FB97BE /* WeatherMapViewController.swift */,
+				4643FF5822CDCEE400A2FE41 /* WeatherDetailViewController.swift */,
+				4643FF4F22CBFE9800A2FE41 /* WeatherMapDataSource.swift */,
+			);
+			path = WeatherMap;
 			sourceTree = "<group>";
 		};
 		468B4E35221EB98900211C2A /* Store */ = {
@@ -249,6 +268,7 @@
 		B6EF1C3820780879003E0095 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4643FF4E22CBFE7B00A2FE41 /* WeatherMap */,
 				B69268862089F32A003456FB /* PageViewController.swift */,
 				B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */,
 				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
@@ -430,7 +450,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		A88A0DB2EA7AA37C0B684B2F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -473,7 +494,9 @@
 			files = (
 				460015522208987300C6E9F2 /* SJLogger.swift in Sources */,
 				46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */,
+				4643FF5022CBFE9800A2FE41 /* WeatherMapDataSource.swift in Sources */,
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
+				4643FF5722CDC10700A2FE41 /* WeatherCity.swift in Sources */,
 				46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
 				460015532208987300C6E9F2 /* Config.swift in Sources */,
@@ -485,7 +508,9 @@
 				46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */,
 				46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
+				46B27FF522CB7A1C00FB97BE /* WeatherMapViewController.swift in Sources */,
 				46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */,
+				4643FF5922CDCEE400A2FE41 /* WeatherDetailViewController.swift in Sources */,
 				4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
 				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
