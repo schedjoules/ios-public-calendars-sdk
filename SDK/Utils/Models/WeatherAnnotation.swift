@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-struct WeatherCity: Codable {
+class WeatherAnnotation: MKPointAnnotation, Codable {
     
     let fo: Int
     let la: Double
@@ -17,18 +17,17 @@ struct WeatherCity: Codable {
     let to: String
     let ty: String
     
-    var annotation: MKAnnotation {
+    override var title: String? {
         get {
-            let annotation = MKPointAnnotation()
-            annotation.title = to
-            annotation.coordinate = CLLocationCoordinate2D(latitude: la, longitude: lo)
-            return annotation
+            return to
         }
+        set {}
     }
-    var coordinates: CLLocationCoordinate2D {
+    
+    override var coordinate: CLLocationCoordinate2D {
         get {
             return CLLocationCoordinate2D(latitude: la, longitude: lo)
         }
+        set {}
     }
-    
 }
