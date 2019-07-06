@@ -28,6 +28,7 @@
 		46F102ED22D0219E00EA0E4B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F102EC22D0219E00EA0E4B /* StringExtension.swift */; };
 		46F102EF22D0612600EA0E4B /* WeatherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F102EE22D0612600EA0E4B /* WeatherSettingsView.swift */; };
 		46F102F122D0618D00EA0E4B /* WeatherOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F102F022D0618D00EA0E4B /* WeatherOptionCollectionViewCell.swift */; };
+		46F102F322D0627800EA0E4B /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F102F222D0627800EA0E4B /* ApiClient.swift */; };
 		46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */; };
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
@@ -87,6 +88,7 @@
 		46F102EC22D0219E00EA0E4B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		46F102EE22D0612600EA0E4B /* WeatherSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSettingsView.swift; sourceTree = "<group>"; };
 		46F102F022D0618D00EA0E4B /* WeatherOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		46F102F222D0627800EA0E4B /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		46F45C5222608B5D0005EAB6 /* StoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		460015462208987300C6E9F2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				46F102F222D0627800EA0E4B /* ApiClient.swift */,
 				460015472208987300C6E9F2 /* SettingsObject.swift */,
 				4643FF5622CDC10700A2FE41 /* WeatherAnnotation.swift */,
 			);
@@ -504,6 +507,7 @@
 				46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */,
 				4643FF5022CBFE9800A2FE41 /* WeatherMapDataService.swift in Sources */,
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
+				46F102F322D0627800EA0E4B /* ApiClient.swift in Sources */,
 				46F102F122D0618D00EA0E4B /* WeatherOptionCollectionViewCell.swift in Sources */,
 				46F102ED22D0219E00EA0E4B /* StringExtension.swift in Sources */,
 				4643FF5722CDC10700A2FE41 /* WeatherAnnotation.swift in Sources */,

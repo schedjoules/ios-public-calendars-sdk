@@ -19,7 +19,11 @@ class WeatherMapDataService {
     
     struct WeatherMapRequest {
         var httpMethod = "GET"
-        let apiKey = "4f8a4d80e0b5079806cd344ce3095272"
+        let apiKey: String
+        
+        init(apiKey: String) {
+            self.apiKey = apiKey
+        }
         
         func cities(northEastCoordinate: CLLocationCoordinate2D, southWestCoordinate: CLLocationCoordinate2D) -> URLRequest? {
             var urlComponents = URLComponents(string: "https://api.schedjoules.com/cities/cities_within_bounds")
@@ -54,8 +58,14 @@ class WeatherMapDataService {
         
     }
     
+    let apiKey: String
+    
+    init(apiKey: String) {
+        self.apiKey = apiKey
+    }
+    
     func getWeatherPoints(northEastCoordinate: CLLocationCoordinate2D, southWestCoordinate: CLLocationCoordinate2D, completion: @escaping (_ array: [WeatherAnnotation], _ error: Error?) -> Void) {
-        guard let urlRequest = WeatherMapRequest().cities(northEastCoordinate: northEastCoordinate, southWestCoordinate: southWestCoordinate) else { return }
+        guard let urlRequest = WeatherMapRequest(apiKey: self.apiKey).cities(northEastCoordinate: northEastCoordinate, southWestCoordinate: southWestCoordinate) else { return }
         
         DispatchQueue.global(qos: .background).async {
             let session = URLSession.shared
@@ -100,7 +110,7 @@ class WeatherMapDataService {
     }
     
     func getWeatherSettings(completion: @escaping (_ array: WeatherSettings?, _ error: Error?) -> Void) {
-        guard let urlRequest = WeatherMapRequest().weatherSettings() else { return }
+        guard let urlRequest = WeatherMapRequest(apiKey: self.apiKey).weatherSettings() else { return }
         
         DispatchQueue.global(qos: .background).async {
             let session = URLSession.shared

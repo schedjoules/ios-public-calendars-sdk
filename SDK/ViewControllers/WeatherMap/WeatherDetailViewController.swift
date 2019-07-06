@@ -24,7 +24,7 @@ class WeatherDetailViewController: UIViewController {
     let weatherAnnotation: WeatherAnnotation
     var weatherSettings: WeatherSettings!
     var selectedSetting: WeatherSettings.Setting?
-    let apiClient: Api
+    let apiClient: ApiClient
     let urlString: String
     
     
@@ -86,7 +86,7 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     
-    init(annotation: WeatherAnnotation, apiClient: Api, url: String) {
+    init(annotation: WeatherAnnotation, apiClient: ApiClient, url: String) {
         self.weatherAnnotation = annotation
         self.apiClient = apiClient
         self.urlString = url
@@ -112,7 +112,7 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private func setupProperties() {
-        WeatherMapDataService().getWeatherSettings(completion: { (settings, error) in
+        WeatherMapDataService(apiKey: apiClient.key).getWeatherSettings(completion: { (settings, error) in
             guard error == nil,
                 let settings = settings else {
                     sjPrint("error loading settings")
@@ -248,7 +248,7 @@ class WeatherDetailViewController: UIViewController {
     @objc func subscribeButtonPressed(_ sender: UIButton) {
         //First we check if the user has a valid subscription
         guard StoreManager.shared.isSubscriptionValid == false else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
+            let storeVC = StoreViewController(apiClient: self.apiClient.api)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
