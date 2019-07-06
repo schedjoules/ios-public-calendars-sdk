@@ -187,9 +187,11 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         let pageSection = page!.sections[indexPath.section]
         let item = pageSection.items[indexPath.row]
-        let urlBegin = item.url.range(of: "://")!.upperBound
-        let urlString = item.url[urlBegin..<item.url.endIndex]
-        let webcal = URL(string: "webcal://\(urlString)")!
+        guard let webcal = item.url.webcalURL() else {
+            open(item: item)
+            return
+        }
+        
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
@@ -234,6 +236,22 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             }
         }
     }
+    
+    //Open calendar details
+    func open(item: PageItem) {
+        if item.url.contains("weather") {
+            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url)
+            navigationController?.pushViewController(weatherViewController, animated: true)
+        } else {
+            let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
+            let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
+            calendarVC.icsURL = URL(string: item.url)
+            calendarVC.title = item.name
+            calendarVC.apiClient = apiClient
+            navigationController?.pushViewController(calendarVC, animated: true)
+        }
+    }
+    
     
     /// Show the load error view and hide the refresh control
     private func showErrorView(){
@@ -335,17 +353,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         // Show the selected calendar
         } else {
             let item = pageSection.items[indexPath.row]
-            if item.url.contains("weather") {
-                let weatherViewController = WeatherMapViewController()
-                navigationController?.pushViewController(weatherViewController, animated: true)
-            } else {
-                let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
-                let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
-                calendarVC.icsURL = URL(string: pageSection.items[indexPath.row].url)
-                calendarVC.title = pageSection.items[indexPath.row].name
-                calendarVC.apiClient = apiClient
-                navigationController?.pushViewController(calendarVC, animated: true)
-            }
+            open(item: item)
         }
     }
     

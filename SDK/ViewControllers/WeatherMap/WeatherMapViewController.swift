@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+import SchedJoulesApiClient
 
 class WeatherMapViewController: UIViewController {
     
     //Properties
     let locationManager = CLLocationManager()
     var locationDisplayed = false
+    let apiClient: Api
+    let urlString: String
     
     //UI
     var mapView: MKMapView = {
@@ -22,7 +25,10 @@ class WeatherMapViewController: UIViewController {
         return mapView
     }()
     
-    init() {
+    init(apiClient: Api, url: String) {
+        self.apiClient = apiClient
+        self.urlString = url
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,7 +38,7 @@ class WeatherMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         setupProperties()
         setupUI()
@@ -61,7 +67,7 @@ class WeatherMapViewController: UIViewController {
             ])
     }
     
-
+    
     // MARK: Location
     private func checkLocationAuthorization() {
         if CLLocationManager.locationServicesEnabled() {
@@ -73,11 +79,10 @@ class WeatherMapViewController: UIViewController {
             case .authorizedWhenInUse, .authorizedAlways:
                 mapView.showsUserLocation = true
             case .notDetermined:
-                print(locationManager)
                 locationManager.requestWhenInUseAuthorization()
                 mapView.showsUserLocation = true
             case .denied, .restricted:
-                print("show alert")
+                startLocationDisplay()
                 break
             }
         } else {
@@ -87,29 +92,27 @@ class WeatherMapViewController: UIViewController {
     
     private func startLocationDisplay() {
         let northEastPoint = MKMapPoint(x: mapView.visibleMapRect.maxX,
-                                             y: mapView.visibleMapRect.minY)
+                                        y: mapView.visibleMapRect.minY)
         let northEastCoordinate = MKCoordinateForMapPoint(northEastPoint)
         
         let southWestPoint = MKMapPoint(x: mapView.visibleMapRect.minX,
                                         y: mapView.visibleMapRect.maxY)
         let southWestCoordinate = MKCoordinateForMapPoint(southWestPoint)
         
-        WeatherMapDataSource().getWeatherPoints(northEastCoordinate: northEastCoordinate,
+        WeatherMapDataService().getWeatherPoints(northEastCoordinate: northEastCoordinate,
                                                 southWestCoordinate: southWestCoordinate) { (cities, error) in
-                                                    print(cities)
-                                                    print("stop")
-                                                    let annotations = cities.map({ $0.annotation })
                                                     self.mapView.delegate = self
                                                     
                                                     DispatchQueue.main.async {
-                                                        self.mapView.showAnnotations(annotations, animated: true)
+                                                        self.mapView.showAnnotations(cities, animated: true)
                                                     }
-                                                    
-        }        
+        }
     }
     
-    private func presentDetails(_ annotation: MKPointAnnotation) {
-        let detailViewController = WeatherDetailViewController(annotation: annotation)
+    private func presentDetails(_ annotation: WeatherAnnotation) {
+        let detailViewController = WeatherDetailViewController(annotation: annotation,
+                                                               apiClient: apiClient,
+                                                               url: urlString)
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
@@ -118,7 +121,7 @@ class WeatherMapViewController: UIViewController {
 extension WeatherMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
+        guard annotation is WeatherAnnotation else { return nil }
         
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -136,7 +139,7 @@ extension WeatherMapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation as? MKPointAnnotation else { return }
+        guard let annotation = view.annotation as? WeatherAnnotation else { return }
         
         presentDetails(annotation)
     }
