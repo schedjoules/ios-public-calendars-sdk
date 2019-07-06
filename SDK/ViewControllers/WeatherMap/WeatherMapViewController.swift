@@ -15,7 +15,7 @@ class WeatherMapViewController: UIViewController {
     //Properties
     let locationManager = CLLocationManager()
     var locationDisplayed = false
-    let apiClient: Api
+    let apiClient: ApiClient
     let urlString: String
     
     //UI
@@ -25,7 +25,7 @@ class WeatherMapViewController: UIViewController {
         return mapView
     }()
     
-    init(apiClient: Api, url: String) {
+    init(apiClient: ApiClient, url: String) {
         self.apiClient = apiClient
         self.urlString = url
         
@@ -99,13 +99,13 @@ class WeatherMapViewController: UIViewController {
                                         y: mapView.visibleMapRect.maxY)
         let southWestCoordinate = MKCoordinateForMapPoint(southWestPoint)
         
-        WeatherMapDataService().getWeatherPoints(northEastCoordinate: northEastCoordinate,
-                                                southWestCoordinate: southWestCoordinate) { (cities, error) in
-                                                    self.mapView.delegate = self
-                                                    
-                                                    DispatchQueue.main.async {
-                                                        self.mapView.showAnnotations(cities, animated: true)
-                                                    }
+        WeatherMapDataService(apiKey: apiClient.key).getWeatherPoints(northEastCoordinate: northEastCoordinate,
+                                                                      southWestCoordinate: southWestCoordinate) { (cities, error) in
+                                                                        self.mapView.delegate = self
+                                                                        
+                                                                        DispatchQueue.main.async {
+                                                                            self.mapView.showAnnotations(cities, animated: true)
+                                                                        }
         }
     }
     
