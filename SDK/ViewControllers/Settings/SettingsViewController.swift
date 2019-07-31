@@ -211,9 +211,6 @@ extension SettingsViewController: UITableViewDataSource {
             return cell
         case .purchases:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-            if UserDefaults.standard.subscriptionExpirationDate == nil {
-                UserDefaults.standard.subscriptionExpirationDate = Date()
-            }
             if storeManager.isSubscriptionValid == true,
                 let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
                 cell.textLabel!.text = "\(expirationDate.remainingTimeString()) left on your subscription"
