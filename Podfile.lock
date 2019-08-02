@@ -50,10 +50,10 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
-  - Result (3.0.0)
-  - SchedJoulesApiClient (0.7.2):
+  - Result (4.0.1)
+  - SchedJoulesApiClient (0.7.3):
     - Alamofire (~> 4.5)
-    - Result (~> 3.0.0)
+    - Result (~> 4.0.0)
   - SDWebImage (4.4.6):
     - SDWebImage/Core (= 4.4.6)
   - SDWebImage/Core (4.4.6)
@@ -61,8 +61,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Firebase/Core
-  - Result (~> 3.0.0)
-  - SchedJoulesApiClient
+  - SchedJoulesApiClient (~> 0.7)
   - SDWebImage (~> 4.0)
 
 SPEC REPOS:
@@ -88,10 +87,10 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
   GoogleUtilities: 996e0db07153674fd1b54b220fda3a3dc3547cba
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
-  SchedJoulesApiClient: 13a98607464f424de400adc5f4099372a8def06e
+  Result: a6e784bebf48b471d59cddc1adb81f41f678c487
+  SchedJoulesApiClient: 5baad74b73de118a65f359bd5cc4a3d1cf23e9ae
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
 
-PODFILE CHECKSUM: b772ff197a92c9d8efbc31d41ec190f6b3c009c3
+PODFILE CHECKSUM: 1839d2090d02988be7d77ada4a4e6d0138a83147
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.5
