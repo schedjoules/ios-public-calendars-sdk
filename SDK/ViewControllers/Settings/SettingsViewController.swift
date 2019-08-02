@@ -196,8 +196,8 @@ extension SettingsViewController: UITableViewDataSource {
         case .about:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = item.title
-            cell.detailTextLabel!.text = item.details
-            cell.detailTextLabel!.textColor = .lightGray
+            cell.detailTextLabel?.text = item.details
+            cell.detailTextLabel?.textColor = .lightGray
             cell.imageView?.image = UIImage(named: "Icon", in: Bundle.resourceBundle, compatibleWith: nil)
             return cell
         case .localization:
@@ -213,21 +213,21 @@ extension SettingsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             if storeManager.isSubscriptionValid == true,
                 let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
-                cell.textLabel!.text = "\(expirationDate.remainingTimeString()) left on your subscription"
-                cell.detailTextLabel!.text = ""
-                cell.detailTextLabel!.textColor = .lightGray
+                cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
+                cell.detailTextLabel?.text = ""
+                cell.detailTextLabel?.textColor = .lightGray
                 cell.accessoryType = .none
                 return cell
             } else {
-                cell.textLabel!.text = item.title
-                cell.detailTextLabel!.text = ""
-                cell.detailTextLabel!.textColor = .lightGray
+                cell.textLabel?.text = item.title
+                cell.detailTextLabel?.text = nil
+                cell.detailTextLabel?.textColor = .lightGray
             }
             return cell
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = item.title
-            cell.detailTextLabel!.text = item.details
+            cell.detailTextLabel?.text = item.details
             let image = UIImage(named: item.title, in: Bundle.resourceBundle, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
             cell.imageView?.image = image
             cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
