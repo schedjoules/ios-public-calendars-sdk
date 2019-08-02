@@ -11,17 +11,32 @@ import Foundation
 extension Date {
     
     func remainingTimeString() -> String {
-        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
+        //Create the localized calendar to use
+        var calendar = Calendar.autoupdatingCurrent
+        let languageSetting = SettingsManager.get(type: .language)
+        let locale = Locale(identifier: languageSetting.code)
+        calendar.locale = locale
         
+        //Create the formatter including the calendar so it can be localized based on the app settings
+        let dateComponentsFormatter = DateComponentsFormatter()
+        dateComponentsFormatter.unitsStyle = .full
+        dateComponentsFormatter.calendar = calendar
+        
+        //Create date components to set the units in which the time left will be measured
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
         if let day = components.day, day > 0 {
-            return "\(day + 1) days"
+            dateComponentsFormatter.allowedUnits = .day
         } else if let hour = components.hour, hour > 0 {
-            return "\(hour + 1) hours"
+            dateComponentsFormatter.allowedUnits = .hour
         } else if let minute = components.minute, minute >= 0 {
-            return "\(minute + 1) \((minute + 1) == 1 ? "minute" : "minutes")"
+            dateComponentsFormatter.allowedUnits = .minute
         } else {
             return String()
         }
+        
+        //Format the time left
+        let time = dateComponentsFormatter.string(from: self, to: Date())
+        return time ?? ""        
     }
     
 }
