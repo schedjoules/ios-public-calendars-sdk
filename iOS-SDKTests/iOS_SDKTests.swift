@@ -7,6 +7,7 @@
 //
 
 import XCTest
+
 @testable import iOS_SDK
 
 class iOS_SDKTests: XCTestCase {
@@ -31,6 +32,20 @@ class iOS_SDKTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testDateLocalization() {
+        //Set the expected result in format # days, using the app settings localization
+        let expectedResult: String = "5 dagen"
+        //Set in seconds the time in the past for the date to compare. Example 3,600 == 1 hour, 360,000 == 100 hours
+        let secondsInThePast: Double = 432000 //This number should be seconds and in positive
+        
+        //Don't edit beyond this point
+        let timeInterval = TimeInterval(-secondsInThePast)
+        let dateToCompare = Date(timeInterval: timeInterval, since: Date())
+        let result = dateToCompare.remainingTimeString()
+        
+        XCTAssertEqual(expectedResult, result)
     }
     
 }
