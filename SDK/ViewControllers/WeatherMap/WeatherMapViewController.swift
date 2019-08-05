@@ -17,6 +17,7 @@ class WeatherMapViewController: UIViewController {
     var locationDisplayed = false
     let apiClient: ApiClient
     let urlString: String
+    var changedByUser: Bool = false
     
     //UI
     var mapView: MKMapView = {
@@ -65,6 +66,27 @@ class WeatherMapViewController: UIViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
+        
+        self.mapView.delegate = self
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didMoveMap(gesture:)))
+        panGesture.delegate = self
+        mapView.addGestureRecognizer(panGesture)
+        
+        let zoomGesture = UIPinchGestureRecognizer(target: self, action: #selector(didMoveMap(gesture:)))
+        zoomGesture.delegate = self
+        mapView.addGestureRecognizer(zoomGesture)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(didMoveMap(gesture:)))
+        doubleTap.delegate = self
+        doubleTap.numberOfTapsRequired = 2
+        mapView.addGestureRecognizer(doubleTap)
+    }
+    
+    @objc func didMoveMap(gesture: UIPanGestureRecognizer) {
+        if (gesture.state == .ended) {
+            changedByUser = true
+        }
     }
     
     
@@ -100,13 +122,15 @@ class WeatherMapViewController: UIViewController {
                                         y: mapView.visibleMapRect.maxY)
         let southWestCoordinate = MKCoordinateForMapPoint(southWestPoint)
         
-        WeatherMapDataService(apiKey: apiClient.key).getWeatherPoints(northEastCoordinate: northEastCoordinate,
-                                                                      southWestCoordinate: southWestCoordinate) { (cities, error) in
-                                                                        self.mapView.delegate = self
-                                                                        
-                                                                        DispatchQueue.main.async {
-                                                                            self.mapView.showAnnotations(cities, animated: true)
-                                                                        }
+        let dataService = WeatherMapDataService(apiKey: apiClient.key)
+        dataService.getWeatherPoints(northEastCoordinate: northEastCoordinate,
+                                     southWestCoordinate: southWestCoordinate) { (cities, error) in
+                                        DispatchQueue.main.async {
+                                            let allAnnotations = self.mapView.annotations
+                                            self.mapView.removeAnnotations(allAnnotations)
+                                            
+                                            self.mapView.addAnnotations(cities)
+                                        }
         }
     }
     
@@ -144,6 +168,13 @@ extension WeatherMapViewController: MKMapViewDelegate {
         
         presentDetails(annotation)
     }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if changedByUser == true {
+            changedByUser = false
+            startLocationDisplay()
+        }
+    }
 }
 
 
@@ -155,9 +186,9 @@ extension WeatherMapViewController: CLLocationManagerDelegate {
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                             longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center,
-                                        span: MKCoordinateSpan(latitudeDelta: 15.0,
-                                                               longitudeDelta: 15.0))
-        mapView.setRegion(region, animated: true)
+                                        span: MKCoordinateSpan(latitudeDelta: 1.0,
+                                                               longitudeDelta: 1.0))
+        mapView.setRegion(region, animated: false)
         
         locationManager.stopUpdatingLocation()
         
@@ -167,4 +198,12 @@ extension WeatherMapViewController: CLLocationManagerDelegate {
         }
     }
     
+}
+
+
+extension WeatherMapViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
