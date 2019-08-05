@@ -49,7 +49,7 @@ class WeatherSettingsView: UIView {
         addSubview(unitLabel)
         
         titleLabel.text = setting.title
-        unitLabel.text = setting.options[setting._default] ?? ""
+        unitLabel.text = setting.units[setting._default] ?? ""
         
         let heightConstraint = self.heightAnchor.constraint(equalToConstant: 44)
         heightConstraint.isActive = true
@@ -76,7 +76,7 @@ class WeatherSettingsView: UIView {
     
     func update(setting: WeatherSettings.Setting) {
         self._setting = setting
-        unitLabel.text = setting.options[setting._default] ?? ""
+        unitLabel.text = setting.units[setting._default] ?? ""
     }
     
     

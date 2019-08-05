@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SKPaymentQueue.default().add(iapObserver)
         
         // Initialize the calendar store
-        let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
+        let calendarVC = CalendarStoreViewController(apiKey: "4f8a4d80e0b5079806cd344ce3095272", title: "Featured")
         
         // Show the calendar store
         window?.rootViewController = calendarVC

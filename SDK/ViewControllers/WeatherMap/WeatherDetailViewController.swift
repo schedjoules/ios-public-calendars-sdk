@@ -65,26 +65,6 @@ class WeatherDetailViewController: UIViewController {
         return activityIndicator
     }()
     
-    var blurredView: UIVisualEffectView = {
-        let view = UIVisualEffectView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.effect = UIBlurEffect(style: .regular)
-        return view
-    }()
-    
-    var optionsCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = Constants.cellSpace
-        
-        let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionview.translatesAutoresizingMaskIntoConstraints = false
-        collectionview.register(WeatherOptionCollectionViewCell.self,
-                                forCellWithReuseIdentifier: Constants.cellIdentifier)
-        collectionview.backgroundColor = .clear
-        return collectionview
-    }()
-    
     
     init(annotation: WeatherAnnotation, apiClient: ApiClient, url: String) {
         self.weatherAnnotation = annotation
@@ -128,14 +108,9 @@ class WeatherDetailViewController: UIViewController {
         navigationController?.hidesBottomBarWhenPushed = true
         view.backgroundColor = .sjGrayLight
         
-        optionsCollectionView.dataSource = self
-        optionsCollectionView.delegate = self
-        
         view.addSubview(mapView)
         view.addSubview(stackView)
         view.addSubview(subscribeButton)
-        view.addSubview(blurredView)
-        view.addSubview(optionsCollectionView)
         
         let optionsLabel = UILabel(frame: .zero)
         optionsLabel.text = "     Options"
@@ -188,20 +163,6 @@ class WeatherDetailViewController: UIViewController {
         }
     }
     
-    func presentOptions(_ setting: WeatherSettings.Setting) {
-        
-        blurredView.center = view.center
-        optionsCollectionView.center = view.center
-        
-        self.optionsCollectionView.isHidden = false
-        UIView.animate(withDuration: 0.2, animations: {
-            self.blurredView.frame = self.view.bounds
-            self.optionsCollectionView.frame = self.stackView.frame
-        }) { (success) in
-            self.optionsCollectionView.reloadData()
-        }
-    }
-    
     func dismissOptionsView() {
         //Update the setting with the new data
         if let updatedSetting = selectedSetting {
@@ -231,15 +192,6 @@ class WeatherDetailViewController: UIViewController {
         }
         
         self.selectedSetting = nil
-        self.optionsCollectionView.reloadData()
-        
-        //Animate the dismissal of the view
-        UIView.animate(withDuration: 0.2, animations: {
-            self.blurredView.frame = CGRect(origin: self.view.center, size: .zero)
-            self.optionsCollectionView.frame = CGRect(origin: self.view.center, size: CGSize(width: 1, height: 1))
-        }) { (success) in
-            self.optionsCollectionView.isHidden = true
-        }
     }
     
     
@@ -274,60 +226,19 @@ extension WeatherDetailViewController: WeatherSettingsViewDelegate {
     
     func open(setting: WeatherSettings.Setting) {
         selectedSetting = setting
-        presentOptions(setting)
+        
+        let unitsViewController = WeatherUnitsViewController(setting: setting)
+        unitsViewController.delegate = self
+        navigationController?.pushViewController(unitsViewController, animated: true)
     }
     
 }
 
-
-extension WeatherDetailViewController: UICollectionViewDataSource {
+extension WeatherDetailViewController: WeatherUnitsDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedSetting?.options.keys.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let setting = selectedSetting else {
-            return UICollectionViewCell()
-        }
-        
-        let optionKeys = Array(setting.options.keys)
-        let optionKey = optionKeys[indexPath.row]
-        let option = setting.options[optionKey] ?? ""
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellIdentifier, for: indexPath) as! WeatherOptionCollectionViewCell
-        cell.setup(option: option)
-        return cell
-    }
-    
-}
-
-extension WeatherDetailViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let setting = selectedSetting else {
-            return
-        }
-        
-        let newDefault = Array(setting.options.keys)[indexPath.row]
-        selectedSetting?._default = newDefault
+    func save(updated setting: WeatherSettings.Setting) {
+        selectedSetting = setting
         dismissOptionsView()
     }
-}
-
-
-extension WeatherDetailViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: Constants.cellWidth, height: Constants.cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let vertical = max(4, (optionsCollectionView.bounds.height - Constants.cellHeight) / 2)
-        
-        let cellCount = min(2, CGFloat(collectionView.numberOfItems(inSection: section)))
-        let horizontal = max(4, (optionsCollectionView.bounds.width - (cellCount * Constants.cellWidth) - ((cellCount - 1) * Constants.cellSpace)) / 2)
-        
-        return UIEdgeInsetsMake(vertical, horizontal, vertical, horizontal)
-    }
 }

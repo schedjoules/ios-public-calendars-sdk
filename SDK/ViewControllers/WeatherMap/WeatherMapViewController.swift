@@ -87,6 +87,7 @@ class WeatherMapViewController: UIViewController {
             }
         } else {
             // Show alert letting the user know they have to turn this on.
+            startLocationDisplay()
         }
     }
     

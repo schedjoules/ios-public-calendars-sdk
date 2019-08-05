@@ -13,12 +13,12 @@ struct WeatherSettings: Codable {
     struct Setting: Codable {
         var _default: String
         var title: String
-        var options: [String: String]
+        var units: [String: String]
         
         enum CodingKeys: String, CodingKey {
             case _default = "default"
             case title = "title"
-            case options = "options"
+            case units = "options"
         }
     }
     
