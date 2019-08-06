@@ -21,12 +21,17 @@ class WeatherMapDataService {
         var httpMethod = "GET"
         let apiKey: String
         
+        enum URLs {
+            static let cities = "https://api.schedjoules.com/cities/cities_within_bounds"
+            static let settings = "https://api.schedjoules.com/cities/weather_settings"
+        }
+        
         init(apiKey: String) {
             self.apiKey = apiKey
         }
         
         func cities(northEastCoordinate: CLLocationCoordinate2D, southWestCoordinate: CLLocationCoordinate2D) -> URLRequest? {
-            var urlComponents = URLComponents(string: "https://api.schedjoules.com/cities/cities_within_bounds")
+            var urlComponents = URLComponents(string: URLs.cities)
             urlComponents?.queryItems = [
                 URLQueryItem(name: "ne", value: "\(northEastCoordinate.latitude),\(northEastCoordinate.longitude)"),
                 URLQueryItem(name: "sw", value: "\(southWestCoordinate.latitude),\(southWestCoordinate.longitude)")
@@ -42,7 +47,7 @@ class WeatherMapDataService {
         }
         
         func weatherSettings() -> URLRequest? {
-            var urlComponents = URLComponents(string: "https://api.schedjoules.com/cities/weather_settings")
+            var urlComponents = URLComponents(string: URLs.settings)
             urlComponents?.queryItems = [
                 URLQueryItem(name: "locale", value: SettingsManager.get(type: .language).code),
             ]
@@ -69,43 +74,53 @@ class WeatherMapDataService {
         
         DispatchQueue.global(qos: .background).async {
             let session = URLSession.shared
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
-                // check for any errors
-                
-                if let error = error {
-                    sjPrint("error:", error)
-                    return
+            
+            session.getTasksWithCompletionHandler({ (dataTasks, _, _) in
+                for dataTask in dataTasks {
+                    if let existingUrl = dataTask.originalRequest?.url,
+                        let newUrl = urlRequest.url,
+                        existingUrl.path == newUrl.path {
+                        dataTask.cancel()
+                    }
                 }
                 
-                guard let result = response as? HTTPURLResponse else {
-                    sjPrint("no response")
-                    return
-                }
-                
-                if result.statusCode == 200 {
-                    sjPrint("success")
-                } else {
-                    sjPrint("fail")
-                }
-                
-                guard let data = data else {
+                let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                    // check for any errors
+                    
+                    if let error = error {
+                        sjPrint("error:", error)
+                        return
+                    }
+                    
+                    guard let result = response as? HTTPURLResponse else {
+                        sjPrint("no response")
+                        return
+                    }
+                    
+                    if result.statusCode == 200 {
+                        sjPrint("success")
+                    } else {
+                        sjPrint("fail")
+                    }
+                    
+                    guard let data = data else {
+                        completion([], nil)
+                        return
+                    }
+                    
+                    do {
+                        let cities = try JSONDecoder().decode([WeatherAnnotation].self, from: data)
+                        completion(cities, nil)
+                        return
+                    } catch {
+                        sjPrint(error)
+                    }
+                    
                     completion([], nil)
-                    return
                 }
                 
-                do {
-                    let cities = try JSONDecoder().decode([WeatherAnnotation].self, from: data)
-                    completion(cities, nil)
-                    return
-                } catch {
-                    sjPrint(error)
-                }
-                
-                completion([], nil)
-            }
-            
-            task.resume()
-            
+                task.resume()
+            })
         }
     }
     
@@ -125,7 +140,7 @@ class WeatherMapDataService {
                 guard let result = response as? HTTPURLResponse else {
                     sjPrint("no response")
                     return
-                }                
+                }
                 
                 if result.statusCode == 200 {
                     sjPrint("success")
