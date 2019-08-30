@@ -24,7 +24,7 @@ class WeatherDetailViewController: UIViewController {
     let weatherAnnotation: WeatherAnnotation
     var weatherSettings: WeatherSettings!
     var selectedSetting: WeatherSettings.Setting?
-    let apiClient: ApiClient
+    let apiClient: Api
     let urlString: String
     
     
@@ -66,7 +66,7 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     
-    init(annotation: WeatherAnnotation, apiClient: ApiClient, url: String) {
+    init(annotation: WeatherAnnotation, apiClient: Api, url: String) {
         self.weatherAnnotation = annotation
         self.apiClient = apiClient
         self.urlString = url
@@ -92,15 +92,16 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private func setupProperties() {
-        WeatherMapDataService(apiKey: apiClient.key).getWeatherSettings(completion: { (settings, error) in
-            guard error == nil,
-                let settings = settings else {
-                    sjPrint("error loading settings")
-                    return
-            }
-            self.weatherSettings = settings
-            self.setup()
-        })
+        fatalError("weather")
+//        WeatherMapDataService(apiKey: apiClient.key).getWeatherSettings(completion: { (settings, error) in
+//            guard error == nil,
+//                let settings = settings else {
+//                    sjPrint("error loading settings")
+//                    return
+//            }
+//            self.weatherSettings = settings
+//            self.setup()
+//        })
     }
     
     private func setupUI() {
@@ -137,7 +138,8 @@ class WeatherDetailViewController: UIViewController {
             subscribeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
             ])
         
-        mapView.showAnnotations([weatherAnnotation], animated: true)
+        fatalError("no weather annotation")
+//        mapView.showAnnotations([weatherAnnotationNO], animated: true)
     }
     
     func setup() {
@@ -200,24 +202,25 @@ class WeatherDetailViewController: UIViewController {
     @objc func subscribeButtonPressed(_ sender: UIButton) {
         //First we check if the user has a valid subscription
         guard StoreManager.shared.isSubscriptionValid == false else {
-            let storeVC = StoreViewController(apiClient: self.apiClient.api)
+            let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
         
+        fatalError("weather")
         //Decompose the url for weather ot use user's settings
-        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherAnnotation.fo)")
-        customUrlString = customUrlString.replacingOccurrences(of: "{temp}", with: weatherSettings.temp._default)
-        customUrlString = customUrlString.replacingOccurrences(of: "{rain}", with: weatherSettings.rain._default)
-        customUrlString = customUrlString.replacingOccurrences(of: "{wind}", with: weatherSettings.wind._default)
-        customUrlString = customUrlString.replacingOccurrences(of: "{time}", with: weatherSettings.time._default)
-        
-        guard let webcal = customUrlString.webcalURL() else {
-            return
-        }
-        
-        //Open calendar to subscribe
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+//        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherAnnotation.fo)")
+//        customUrlString = customUrlString.replacingOccurrences(of: "{temp}", with: weatherSettings.temp._default)
+//        customUrlString = customUrlString.replacingOccurrences(of: "{rain}", with: weatherSettings.rain._default)
+//        customUrlString = customUrlString.replacingOccurrences(of: "{wind}", with: weatherSettings.wind._default)
+//        customUrlString = customUrlString.replacingOccurrences(of: "{time}", with: weatherSettings.time._default)
+//
+//        guard let webcal = customUrlString.webcalURL() else {
+//            return
+//        }
+//
+//        //Open calendar to subscribe
+//        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
 }

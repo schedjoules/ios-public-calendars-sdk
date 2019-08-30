@@ -15,7 +15,7 @@ class WeatherMapViewController: UIViewController {
     //Properties
     let locationManager = CLLocationManager()
     var locationDisplayed = false
-    let apiClient: ApiClient
+    let apiClient: Api
     let urlString: String
     var changedByUser: Bool = false
     
@@ -26,7 +26,7 @@ class WeatherMapViewController: UIViewController {
         return mapView
     }()
     
-    init(apiClient: ApiClient, url: String) {
+    init(apiClient: Api, url: String) {
         self.apiClient = apiClient
         self.urlString = url
         
@@ -122,15 +122,31 @@ class WeatherMapViewController: UIViewController {
                                         y: mapView.visibleMapRect.maxY)
         let southWestCoordinate = MKCoordinateForMapPoint(southWestPoint)
         
-        let dataService = WeatherMapDataService(apiKey: apiClient.key)
-        dataService.getWeatherPoints(northEastCoordinate: northEastCoordinate,
-                                     southWestCoordinate: southWestCoordinate) { (cities, error) in
-                                        DispatchQueue.main.async {
-                                            let allAnnotations = self.mapView.annotations
-                                            self.mapView.removeAnnotations(allAnnotations)
-                                            
-                                            self.mapView.addAnnotations(cities)
-                                        }
+        let weatherCitiesQuery = WeatherCitiesQuery(northEastCoordinate: northEastCoordinate,
+                                                    southWestCoordinate: southWestCoordinate)
+        
+        apiClient.execute(query: weatherCitiesQuery) { result in
+            switch result {
+            case let .success(resultInfo):
+                let cities = resultInfo.map({ (weatherAnnotation) -> MKPointAnnotation in
+                    let annotation = MKPointAnnotation()
+                    annotation.title = weatherAnnotation.name
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: weatherAnnotation.latitude,
+                                                                   longitude: weatherAnnotation.longitude)
+                    return annotation
+                })
+                
+                DispatchQueue.main.async {
+                    let allAnnotations = self.mapView.annotations
+                    self.mapView.removeAnnotations(allAnnotations)
+                    
+                    self.mapView.addAnnotations(cities)
+                }
+                break
+            case let .failure(error):
+                sjPrint(error.localizedDescription)
+                break
+            }
         }
     }
     

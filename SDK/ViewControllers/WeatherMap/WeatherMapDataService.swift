@@ -69,7 +69,7 @@ class WeatherMapDataService {
         self.apiKey = apiKey
     }
     
-    func getWeatherPoints(northEastCoordinate: CLLocationCoordinate2D, southWestCoordinate: CLLocationCoordinate2D, completion: @escaping (_ array: [WeatherAnnotation], _ error: Error?) -> Void) {
+    func getWeatherPoints(northEastCoordinate: CLLocationCoordinate2D, southWestCoordinate: CLLocationCoordinate2D, completion: @escaping (_ array: [WeatherAnnotationNO], _ error: Error?) -> Void) {
         guard let urlRequest = WeatherMapRequest(apiKey: self.apiKey).cities(northEastCoordinate: northEastCoordinate, southWestCoordinate: southWestCoordinate) else { return }
         
         DispatchQueue.global(qos: .background).async {
@@ -109,7 +109,7 @@ class WeatherMapDataService {
                     }
                     
                     do {
-                        let cities = try JSONDecoder().decode([WeatherAnnotation].self, from: data)
+                        let cities = try JSONDecoder().decode([WeatherAnnotationNO].self, from: data)
                         completion(cities, nil)
                         return
                     } catch {

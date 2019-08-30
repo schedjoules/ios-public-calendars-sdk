@@ -46,7 +46,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     private var tempPage: Page?
     
     /// The Api client.
-    private let apiClient: ApiClient
+    private let apiClient: Api
     
     /// The table view for presenting the pages.
     private var tableView: UITableView!
@@ -75,12 +75,12 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     /**
-     Initialize with a Page query and an ApiClient.
+     Initialize with a Page query and an Api.
      - parameter apiClient: The API Key (access token) for the **SchedJoules API**.
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: ApiClient, pageQuery: PageQuery, searchEnabled: Bool = false) {
+    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
@@ -146,7 +146,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     @objc private func fetchPages() {
         // Execute the query
         
-        apiClient.api.execute(query: pageQuery, completion: { result in
+        apiClient.execute(query: pageQuery, completion: { result in
             switch result {
             case let .success(page):
                 // Set the Page variable to the just fecthed Page object
@@ -181,7 +181,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         //First we check if the user has a valid subscription
         guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient.api)
+            let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
@@ -248,7 +248,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
             calendarVC.icsURL = URL(string: item.url)
             calendarVC.title = item.name
-            calendarVC.apiClient = apiClient.api
+            calendarVC.apiClient = apiClient
             navigationController?.pushViewController(calendarVC, animated: true)
         }
     }
@@ -374,7 +374,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     
         // Only search if more than 2 charachters were entered
         if queryText.count > 2 {
-            apiClient.api.execute(query: SearchQuery(query: queryText), completion: { result in
+            apiClient.execute(query: SearchQuery(query: queryText), completion: { result in
                 switch result {
                 case let .success(searchPage):
                     self.page = searchPage

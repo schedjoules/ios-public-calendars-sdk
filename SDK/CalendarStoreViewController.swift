@@ -32,8 +32,8 @@ public final class CalendarStoreViewController: UITabBarController {
         public static let red = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1)
     }
     
-    /// The ApiClient to be used by the view controllers.
-    private let apiClient: ApiClient
+    /// The Api to be used by the view controllers.
+    private let apiClient: Api
     
     /// The page identifier to be passed to the home page.
     private let pageIdentifier: String?
@@ -65,7 +65,7 @@ public final class CalendarStoreViewController: UITabBarController {
      */
     public init(apiKey: String, pageIdentifier: String?, title: String?) {
         // Initialization
-        self.apiClient = ApiClient(api: SchedJoulesApi(accessToken: apiKey), key: apiKey)
+        self.apiClient = SchedJoulesApi(accessToken: apiKey)
         self.pageIdentifier = pageIdentifier
         self.largeTitle = true
         self.tintColor = ColorPalette.red
@@ -163,7 +163,7 @@ public final class CalendarStoreViewController: UITabBarController {
         // Create settings page
         let storyBoard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
         let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        settingsVC.apiClient = apiClient.api
+        settingsVC.apiClient = apiClient
         settingsVC.title = "Settings"
         settingsVC.tabBarItem.image = UIImage(named: "Settings", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(settingsVC)

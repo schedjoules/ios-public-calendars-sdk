@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class WeatherAnnotation: MKPointAnnotation, Codable {
+class WeatherAnnotationNO: MKPointAnnotation, Codable {
     
     let fo: Int
     let la: Double
