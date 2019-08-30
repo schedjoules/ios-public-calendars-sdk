@@ -124,17 +124,10 @@ class WeatherMapViewController: UIViewController {
         
         let weatherCitiesQuery = WeatherCitiesQuery(northEastCoordinate: northEastCoordinate,
                                                     southWestCoordinate: southWestCoordinate)
-        
         apiClient.execute(query: weatherCitiesQuery) { result in
             switch result {
             case let .success(resultInfo):
-                let cities = resultInfo.map({ (weatherAnnotation) -> MKPointAnnotation in
-                    let annotation = MKPointAnnotation()
-                    annotation.title = weatherAnnotation.name
-                    annotation.coordinate = CLLocationCoordinate2D(latitude: weatherAnnotation.latitude,
-                                                                   longitude: weatherAnnotation.longitude)
-                    return annotation
-                })
+                let cities = resultInfo.map({ WeatherPointAnnotation(annotation: $0) })
                 
                 DispatchQueue.main.async {
                     let allAnnotations = self.mapView.annotations
@@ -162,7 +155,7 @@ class WeatherMapViewController: UIViewController {
 extension WeatherMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is WeatherAnnotation else { return nil }
+        guard annotation is WeatherPointAnnotation else { return nil }
         
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -180,7 +173,7 @@ extension WeatherMapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation as? WeatherAnnotation else { return }
+        guard let annotation = view.annotation as? WeatherPointAnnotation else { return }
         
         presentDetails(annotation)
     }

@@ -18,7 +18,7 @@
 		4610CD16228DD54800CE25C2 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610CD15228DD53F00CE25C2 /* Reach.swift */; };
 		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
 		4643FF5022CBFE9800A2FE41 /* WeatherMapDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF4F22CBFE9800A2FE41 /* WeatherMapDataService.swift */; };
-		4643FF5722CDC10700A2FE41 /* WeatherAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5622CDC10700A2FE41 /* WeatherAnnotation.swift */; };
+		4643FF5722CDC10700A2FE41 /* WeatherPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5622CDC10700A2FE41 /* WeatherPointAnnotation.swift */; };
 		4643FF5922CDCEE400A2FE41 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5822CDCEE400A2FE41 /* WeatherDetailViewController.swift */; };
 		4643FF5B22CF0E9B00A2FE41 /* WeatherSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4643FF5A22CF0E9B00A2FE41 /* WeatherSettings.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
@@ -78,7 +78,7 @@
 		4610CD15228DD53F00CE25C2 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		4643FF4F22CBFE9800A2FE41 /* WeatherMapDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapDataService.swift; sourceTree = "<group>"; };
-		4643FF5622CDC10700A2FE41 /* WeatherAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAnnotation.swift; sourceTree = "<group>"; };
+		4643FF5622CDC10700A2FE41 /* WeatherPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPointAnnotation.swift; sourceTree = "<group>"; };
 		4643FF5822CDCEE400A2FE41 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		4643FF5A22CF0E9B00A2FE41 /* WeatherSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSettings.swift; sourceTree = "<group>"; };
 		464F7BCA2233D1AE00907906 /* iOS-SDK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-SDK.entitlements"; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				460015472208987300C6E9F2 /* SettingsObject.swift */,
-				4643FF5622CDC10700A2FE41 /* WeatherAnnotation.swift */,
+				4643FF5622CDC10700A2FE41 /* WeatherPointAnnotation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -510,7 +510,7 @@
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
 				46F102F122D0618D00EA0E4B /* WeatherUnitCollectionViewCell.swift in Sources */,
 				46F102ED22D0219E00EA0E4B /* StringExtension.swift in Sources */,
-				4643FF5722CDC10700A2FE41 /* WeatherAnnotation.swift in Sources */,
+				4643FF5722CDC10700A2FE41 /* WeatherPointAnnotation.swift in Sources */,
 				46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
 				460015532208987300C6E9F2 /* Config.swift in Sources */,
