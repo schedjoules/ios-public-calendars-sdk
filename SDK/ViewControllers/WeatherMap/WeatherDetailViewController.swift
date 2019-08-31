@@ -211,7 +211,7 @@ class WeatherDetailViewController: UIViewController {
     
     @objc func subscribeButtonPressed(_ sender: UIButton) {
         //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == false else {
+        guard StoreManager.shared.isSubscriptionValid == true else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
