@@ -19,6 +19,7 @@ This pod contains classes which make it easier to interact with the SchedJoules 
     'SchedJoulesSDK' => ['SDK/*/*.{xib,storyboard,xcassets}']
   }
 
+  s.dependency 'Firebase/Core'
   s.dependency 'SDWebImage', '~> 4.0'
   s.dependency 'SchedJoulesApiClient'
  
