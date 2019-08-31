@@ -92,70 +92,19 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private func setupProperties() {
-        
-//        let query = WeatherSettingsQuery()
-//        apiClient.execute(query: query, completion: { result in
-//            switch result {
-//            case let .success(value):
-//
-//
-//                print(value)
-//
-////                print(value.rain)
-////                print(value.wind)
-////                print(value.temp)
-//                print("value.time: \(value.time)")
-//                self.weatherSettings = value
-//
-//                self.setup()
-//
-//                break
-//            case let .failure(apiError):
-//                print(apiError)
-//                break
-//            }
-//        })
-        
-        print(SettingsManager.get(type: .language).code)
-        print(SettingsManager.get(type: .country).code)
-        
         let weatherSettingsQuery = WeatherSettingsQuery(locale: SettingsManager.get(type: .language).code,
                                                         location: SettingsManager.get(type: .country).code)
         apiClient.execute(query: weatherSettingsQuery) { result in
             switch result {
             case let .success(resultInfo):
-
-                print(resultInfo.rain)
-                print(resultInfo.time)
-                print(resultInfo.wind)
-                print(resultInfo.wind.title)
-                print(resultInfo.temp)
-
                 self.weatherSettings = resultInfo
-                            self.setup()
-
-
-                print(self.weatherSettings)
-                print(self.weatherSettings?.time)
-
+                self.setup()
                 break
             case let .failure(error):
                 print(error)
                 break
             }
         }
-        
-        
-//        fatalError("weather")
-//        WeatherMapDataService(apiKey: apiClient.key).getWeatherSettings(completion: { (settings, error) in
-//            guard error == nil,
-//                let settings = settings else {
-//                    sjPrint("error loading settings")
-//                    return
-//            }
-//            self.weatherSettings = settings
-//            self.setup()
-//        })
     }
     
     private func setupUI() {
@@ -206,11 +155,11 @@ class WeatherDetailViewController: UIViewController {
             let rainLabel = WeatherSettingsView(setting: weatherSettings.rain)
             rainLabel.delegate = self
             self.stackView.addArrangedSubview(rainLabel)
-
+            
             let windLabel = WeatherSettingsView(setting: weatherSettings.wind)
             windLabel.delegate = self
             self.stackView.addArrangedSubview(windLabel)
-
+            
             let temperatureLabel = WeatherSettingsView(setting: weatherSettings.temp)
             temperatureLabel.delegate = self
             self.stackView.addArrangedSubview(temperatureLabel)
@@ -230,12 +179,12 @@ class WeatherDetailViewController: UIViewController {
         
         if let updatedSetting = selectedSetting {
             switch updatedSetting.title {
-//            case weatherSettings.rain.title:
-//                weatherSettings.rain = updatedSetting
-//            case weatherSettings.wind.title:
-//                weatherSettings.wind = updatedSetting
-//            case weatherSettings.temp.title:
-//                weatherSettings.temp = updatedSetting
+            case weatherSettings.rain.title:
+                weatherSettings.rain = updatedSetting
+            case weatherSettings.wind.title:
+                weatherSettings.wind = updatedSetting
+            case weatherSettings.temp.title:
+                weatherSettings.temp = updatedSetting
             case weatherSettings.time.title:
                 weatherSettings.time = updatedSetting
             default:
@@ -276,11 +225,11 @@ class WeatherDetailViewController: UIViewController {
             customUrlString = customUrlString.replacingOccurrences(of: "{wind}", with: weatherSettings.wind._default)
             customUrlString = customUrlString.replacingOccurrences(of: "{time}", with: weatherSettings.time._default)
         }
-
+        
         guard let webcal = customUrlString.webcalURL() else {
             return
         }
-
+        
         //Open calendar to subscribe
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
