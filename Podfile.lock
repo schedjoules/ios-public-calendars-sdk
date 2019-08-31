@@ -61,7 +61,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Firebase/Core
-  - SchedJoulesApiClient (~> 0.7)
+  - "SchedJoulesApiClient (from `https://github.com/schedjoules/swift-api-client.git`, branch `#82-Weather-2`)"
   - SDWebImage (~> 4.0)
 
 SPEC REPOS:
@@ -75,8 +75,17 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
     - Result
-    - SchedJoulesApiClient
     - SDWebImage
+
+EXTERNAL SOURCES:
+  SchedJoulesApiClient:
+    :branch: "#82-Weather-2"
+    :git: https://github.com/schedjoules/swift-api-client.git
+
+CHECKOUT OPTIONS:
+  SchedJoulesApiClient:
+    :commit: b53ce94aaaa7edf6bf6dee25f660da11936117f6
+    :git: https://github.com/schedjoules/swift-api-client.git
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
@@ -91,6 +100,6 @@ SPEC CHECKSUMS:
   SchedJoulesApiClient: 53c28d792e9cd206b4965647feafea5506765294
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
 
-PODFILE CHECKSUM: 1839d2090d02988be7d77ada4a4e6d0138a83147
+PODFILE CHECKSUM: f51a8d55254571d7cf28d398068ccb83f0944683
 
 COCOAPODS: 1.7.5
