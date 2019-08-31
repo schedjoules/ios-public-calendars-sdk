@@ -23,7 +23,7 @@ extension Date {
         dateComponentsFormatter.calendar = calendar
         
         //Create date components to set the units in which the time left will be measured
-        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: self)        
         if let day = components.day, day > 0 {
             dateComponentsFormatter.allowedUnits = .day
         } else if let hour = components.hour, hour > 0 {
@@ -35,7 +35,7 @@ extension Date {
         }
         
         //Format the time left
-        let time = dateComponentsFormatter.string(from: self, to: Date())
+        let time = dateComponentsFormatter.string(from: Date(), to: self)
         return time ?? ""        
     }
     
