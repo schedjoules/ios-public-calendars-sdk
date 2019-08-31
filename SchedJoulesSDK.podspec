@@ -20,8 +20,6 @@ This pod contains classes which make it easier to interact with the SchedJoules 
   }
 
   s.dependency 'SDWebImage', '~> 4.0'
-  s.dependency 'Alamofire', '~> 4.5'
-  s.dependency 'Result', '~> 3.0.0'
   s.dependency 'SchedJoulesApiClient'
  
 end
