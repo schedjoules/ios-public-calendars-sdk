@@ -18,12 +18,11 @@ This pod contains classes which make it easier to interact with the SchedJoules 
   s.resource_bundles = {
     'SchedJoulesSDK' => ['SDK/*/*.{xib,storyboard,xcassets}']
   }
-  s.public_header_files = 'path/to/headers/*.h'
+
+  s.static_framework = true
 
   s.dependency 'Firebase/Core'
   s.dependency 'SDWebImage', '~> 4.0'
   s.dependency 'SchedJoulesApiClient'
 
-  s.static_framework = true
- 
 end
