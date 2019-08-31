@@ -143,7 +143,7 @@ class WeatherMapViewController: UIViewController {
         }
     }
     
-    private func presentDetails(_ annotation: WeatherAnnotation) {
+    private func presentDetails(_ annotation: WeatherPointAnnotation) {
         let detailViewController = WeatherDetailViewController(annotation: annotation,
                                                                apiClient: apiClient,
                                                                url: urlString)

@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import SchedJoulesApiClient
 
 protocol WeatherSettingsViewDelegate: class {
-    func open(setting: WeatherSettings.Setting)
+    func open(setting: WeatherSettingsItem)
 }
 
 class WeatherSettingsView: UIView {
     
     weak var delegate: WeatherSettingsViewDelegate?
-    private var _setting: WeatherSettings.Setting
-    var setting: WeatherSettings.Setting {
+    private var _setting: WeatherSettingsItem
+    var setting: WeatherSettingsItem {
         get {
             return _setting
         }
@@ -37,7 +38,7 @@ class WeatherSettingsView: UIView {
     }()
     
     
-    init(setting: WeatherSettings.Setting) {
+    init(setting: WeatherSettingsItem) {
         self._setting = setting
         
         super.init(frame: .zero)
@@ -74,7 +75,7 @@ class WeatherSettingsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(setting: WeatherSettings.Setting) {
+    func update(setting: WeatherSettingsItem) {
         self._setting = setting
         unitLabel.text = setting.units[setting._default] ?? ""
     }

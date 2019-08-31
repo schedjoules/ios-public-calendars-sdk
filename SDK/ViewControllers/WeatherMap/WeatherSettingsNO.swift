@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherSettings: Codable {
+struct WeatherSettingsNO: Codable {
     
     struct Setting: Codable {
         var _default: String

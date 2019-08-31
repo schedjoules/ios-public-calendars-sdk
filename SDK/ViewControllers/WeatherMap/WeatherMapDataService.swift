@@ -124,7 +124,7 @@ class WeatherMapDataService {
         }
     }
     
-    func getWeatherSettings(completion: @escaping (_ array: WeatherSettings?, _ error: Error?) -> Void) {
+    func getWeatherSettings(completion: @escaping (_ array: WeatherSettingsNO?, _ error: Error?) -> Void) {
         guard let urlRequest = WeatherMapRequest(apiKey: self.apiKey).weatherSettings() else { return }
         
         DispatchQueue.global(qos: .background).async {
@@ -155,7 +155,7 @@ class WeatherMapDataService {
                 }
                 
                 do {
-                    let settings = try JSONDecoder().decode(WeatherSettings.self, from: data)
+                    let settings = try JSONDecoder().decode(WeatherSettingsNO.self, from: data)
                     completion(settings, nil)
                     return
                 } catch {

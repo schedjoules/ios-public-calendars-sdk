@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import SchedJoulesApiClient
 
 protocol WeatherUnitsDelegate: class {
-    func save(updated setting: WeatherSettings.Setting)
+    func save(updated setting: WeatherSettingsItem)
 }
 
 class WeatherUnitsViewController: UIViewController {
@@ -24,7 +25,7 @@ class WeatherUnitsViewController: UIViewController {
         static let cellIdentifier = "cell"
     }
     
-    var setting: WeatherSettings.Setting
+    var setting: WeatherSettingsItem
     
     //UI
     var collectionView: UICollectionView = {
@@ -41,7 +42,7 @@ class WeatherUnitsViewController: UIViewController {
     }()
     
     
-    init(setting: WeatherSettings.Setting) {
+    init(setting: WeatherSettingsItem) {
         self.setting = setting
         
         super.init(nibName: nil, bundle: nil)

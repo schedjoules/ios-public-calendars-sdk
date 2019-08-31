@@ -21,9 +21,9 @@ class WeatherDetailViewController: UIViewController {
         static let cellIdentifier = "cell"
     }
     
-    let weatherAnnotation: WeatherAnnotation
-    var weatherSettings: WeatherSettings!
-    var selectedSetting: WeatherSettings.Setting?
+    let weatherPointAnnotation: WeatherPointAnnotation
+    var weatherSettings: WeatherSettings?
+    var selectedSetting: WeatherSettingsItem?
     let apiClient: Api
     let urlString: String
     
@@ -66,8 +66,8 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     
-    init(annotation: WeatherAnnotation, apiClient: Api, url: String) {
-        self.weatherAnnotation = annotation
+    init(annotation: WeatherPointAnnotation, apiClient: Api, url: String) {
+        self.weatherPointAnnotation = annotation
         self.apiClient = apiClient
         self.urlString = url
         
@@ -92,7 +92,61 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private func setupProperties() {
-        fatalError("weather")
+        
+//        let query = WeatherSettingsQuery()
+//        apiClient.execute(query: query, completion: { result in
+//            switch result {
+//            case let .success(value):
+//
+//
+//                print(value)
+//
+////                print(value.rain)
+////                print(value.wind)
+////                print(value.temp)
+//                print("value.time: \(value.time)")
+//                self.weatherSettings = value
+//
+//                self.setup()
+//
+//                break
+//            case let .failure(apiError):
+//                print(apiError)
+//                break
+//            }
+//        })
+        
+        print(SettingsManager.get(type: .language).code)
+        print(SettingsManager.get(type: .country).code)
+        
+        let weatherSettingsQuery = WeatherSettingsQuery(locale: SettingsManager.get(type: .language).code,
+                                                        location: SettingsManager.get(type: .country).code)
+        apiClient.execute(query: weatherSettingsQuery) { result in
+            switch result {
+            case let .success(resultInfo):
+
+                print(resultInfo.rain)
+                print(resultInfo.time)
+                print(resultInfo.wind)
+                print(resultInfo.wind.title)
+                print(resultInfo.temp)
+
+                self.weatherSettings = resultInfo
+                            self.setup()
+
+
+                print(self.weatherSettings)
+                print(self.weatherSettings?.time)
+
+                break
+            case let .failure(error):
+                print(error)
+                break
+            }
+        }
+        
+        
+//        fatalError("weather")
 //        WeatherMapDataService(apiKey: apiClient.key).getWeatherSettings(completion: { (settings, error) in
 //            guard error == nil,
 //                let settings = settings else {
@@ -138,27 +192,30 @@ class WeatherDetailViewController: UIViewController {
             subscribeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
             ])
         
-        fatalError("no weather annotation")
-//        mapView.showAnnotations([weatherAnnotationNO], animated: true)
+        mapView.showAnnotations([weatherPointAnnotation], animated: true)
     }
     
     func setup() {
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
             
-            let rainLabel = WeatherSettingsView(setting: self.weatherSettings.rain)
+            guard let weatherSettings = self.weatherSettings else {
+                return
+            }
+            
+            let rainLabel = WeatherSettingsView(setting: weatherSettings.rain)
             rainLabel.delegate = self
             self.stackView.addArrangedSubview(rainLabel)
-            
-            let windLabel = WeatherSettingsView(setting: self.weatherSettings.wind)
+
+            let windLabel = WeatherSettingsView(setting: weatherSettings.wind)
             windLabel.delegate = self
             self.stackView.addArrangedSubview(windLabel)
-            
-            let temperatureLabel = WeatherSettingsView(setting: self.weatherSettings.temp)
+
+            let temperatureLabel = WeatherSettingsView(setting: weatherSettings.temp)
             temperatureLabel.delegate = self
             self.stackView.addArrangedSubview(temperatureLabel)
             
-            let timeLabel = WeatherSettingsView(setting: self.weatherSettings.time)
+            let timeLabel = WeatherSettingsView(setting: weatherSettings.time)
             timeLabel.delegate = self
             self.stackView.addArrangedSubview(timeLabel)
             
@@ -167,14 +224,18 @@ class WeatherDetailViewController: UIViewController {
     
     func dismissOptionsView() {
         //Update the setting with the new data
+        guard var weatherSettings = self.weatherSettings else {
+            return
+        }
+        
         if let updatedSetting = selectedSetting {
             switch updatedSetting.title {
-            case weatherSettings.rain.title:
-                weatherSettings.rain = updatedSetting
-            case weatherSettings.wind.title:
-                weatherSettings.wind = updatedSetting
-            case weatherSettings.temp.title:
-                weatherSettings.temp = updatedSetting
+//            case weatherSettings.rain.title:
+//                weatherSettings.rain = updatedSetting
+//            case weatherSettings.wind.title:
+//                weatherSettings.wind = updatedSetting
+//            case weatherSettings.temp.title:
+//                weatherSettings.temp = updatedSetting
             case weatherSettings.time.title:
                 weatherSettings.time = updatedSetting
             default:
@@ -207,27 +268,27 @@ class WeatherDetailViewController: UIViewController {
             return
         }
         
-        fatalError("weather")
         //Decompose the url for weather ot use user's settings
-//        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherAnnotation.fo)")
-//        customUrlString = customUrlString.replacingOccurrences(of: "{temp}", with: weatherSettings.temp._default)
-//        customUrlString = customUrlString.replacingOccurrences(of: "{rain}", with: weatherSettings.rain._default)
-//        customUrlString = customUrlString.replacingOccurrences(of: "{wind}", with: weatherSettings.wind._default)
-//        customUrlString = customUrlString.replacingOccurrences(of: "{time}", with: weatherSettings.time._default)
-//
-//        guard let webcal = customUrlString.webcalURL() else {
-//            return
-//        }
-//
-//        //Open calendar to subscribe
-//        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.name)")
+        if let weatherSettings = self.weatherSettings {
+            customUrlString = customUrlString.replacingOccurrences(of: "{temp}", with: weatherSettings.temp._default)
+            customUrlString = customUrlString.replacingOccurrences(of: "{rain}", with: weatherSettings.rain._default)
+            customUrlString = customUrlString.replacingOccurrences(of: "{wind}", with: weatherSettings.wind._default)
+            customUrlString = customUrlString.replacingOccurrences(of: "{time}", with: weatherSettings.time._default)
+        }
+
+        guard let webcal = customUrlString.webcalURL() else {
+            return
+        }
+
+        //Open calendar to subscribe
+        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
 }
 
 extension WeatherDetailViewController: WeatherSettingsViewDelegate {
-    
-    func open(setting: WeatherSettings.Setting) {
+    func open(setting: WeatherSettingsItem) {
         selectedSetting = setting
         
         let unitsViewController = WeatherUnitsViewController(setting: setting)
@@ -239,7 +300,7 @@ extension WeatherDetailViewController: WeatherSettingsViewDelegate {
 
 extension WeatherDetailViewController: WeatherUnitsDelegate {
     
-    func save(updated setting: WeatherSettings.Setting) {
+    func save(updated setting: WeatherSettingsItem) {
         selectedSetting = setting
         dismissOptionsView()
     }
