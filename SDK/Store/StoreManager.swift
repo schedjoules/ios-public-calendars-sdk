@@ -315,11 +315,12 @@ extension StoreManager: SKPaymentTransactionObserver {
         var errorDescription: String?
         
         if let error = transaction.error as NSError? {
+            sjPrint(error.localizedDescription)
             if error.domain == SKErrorDomain {
                 // handle all possible errors
                 switch (error.code) {
                 case SKError.unknown.rawValue:
-                    errorDescription = "Unknown error"
+                    errorDescription = error.localizedDescription
                 case SKError.clientInvalid.rawValue:
                     errorDescription = "Client is not allowed to issue the request"
                 case SKError.paymentCancelled.rawValue:
@@ -329,6 +330,7 @@ extension StoreManager: SKPaymentTransactionObserver {
                 case SKError.paymentNotAllowed.rawValue:
                     errorDescription = "This device is not allowed to make the payment"
                 default:
+                    errorDescription = "Unknown error"
                     break;
                 }
             }

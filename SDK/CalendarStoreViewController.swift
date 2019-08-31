@@ -32,7 +32,7 @@ public final class CalendarStoreViewController: UITabBarController {
         public static let red = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1)
     }
     
-    /// The ApiClient to be used by the view controllers.
+    /// The Api to be used by the view controllers.
     private let apiClient: Api
     
     /// The page identifier to be passed to the home page.
