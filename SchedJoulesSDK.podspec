@@ -21,6 +21,7 @@ This pod contains classes which make it easier to interact with the SchedJoules 
 
   s.static_framework = true
 
+  s.dependency 'Firebase'
   s.dependency 'Firebase/Core'
   s.dependency 'SDWebImage', '~> 4.0'
   s.dependency 'SchedJoulesApiClient'

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import SchedJoulesApiClient
-import Firebase
+import FirebaseCore
 
 class AnalyticsTracker: NSObject {
     
