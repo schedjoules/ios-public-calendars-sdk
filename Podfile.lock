@@ -1,49 +1,61 @@
 PODS:
-  - Alamofire (4.8.2)
-  - Firebase/Core (6.1.0):
+  - Alamofire (4.9.0)
+  - Firebase/Core (6.7.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.0.1)
-  - Firebase/CoreOnly (6.1.0):
-    - FirebaseCore (= 6.0.1)
-  - FirebaseAnalytics (6.0.1):
-    - FirebaseCore (~> 6.0)
-    - FirebaseInstanceID (~> 4.1)
-    - GoogleAppMeasurement (= 6.0.1)
+    - FirebaseAnalytics (= 6.1.1)
+  - Firebase/CoreOnly (6.7.0):
+    - FirebaseCore (= 6.2.1)
+  - FirebaseAnalytics (6.1.1):
+    - FirebaseCore (~> 6.2)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleAppMeasurement (= 6.1.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - FirebaseCore (6.0.1):
-    - GoogleUtilities/Environment (~> 6.0)
-    - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseInstanceID (4.1.0):
+  - FirebaseCore (6.2.1):
+    - FirebaseCoreDiagnostics (~> 1.0)
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCoreDiagnostics (1.0.1):
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCoreDiagnosticsInterop (1.0.0)
+  - FirebaseInstanceID (4.2.3):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
-  - GoogleAppMeasurement (6.0.1):
+  - GoogleAppMeasurement (6.1.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (6.2.0):
+  - GoogleDataTransport (1.1.3)
+  - GoogleDataTransportCCTSupport (1.0.2):
+    - GoogleDataTransport (~> 1.1)
+    - nanopb
+  - GoogleUtilities/AppDelegateSwizzler (6.2.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.2.0)
-  - GoogleUtilities/Logger (6.2.0):
+  - GoogleUtilities/Environment (6.2.5)
+  - GoogleUtilities/Logger (6.2.5):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.2.0):
+  - GoogleUtilities/MethodSwizzler (6.2.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.2.0):
+  - GoogleUtilities/Network (6.2.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.2.0)"
-  - GoogleUtilities/Reachability (6.2.0):
+  - "GoogleUtilities/NSData+zlib (6.2.5)"
+  - GoogleUtilities/Reachability (6.2.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.2.0):
+  - GoogleUtilities/UserDefaults (6.2.5):
     - GoogleUtilities/Logger
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -51,17 +63,17 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Result (4.0.1)
-  - SchedJoulesApiClient (0.7.4):
+  - SchedJoulesApiClient (0.7.6):
     - Alamofire (~> 4.5)
     - Result (~> 4.0.0)
-  - SDWebImage (4.4.6):
-    - SDWebImage/Core (= 4.4.6)
-  - SDWebImage/Core (4.4.6)
+  - SDWebImage (4.4.7):
+    - SDWebImage/Core (= 4.4.7)
+  - SDWebImage/Core (4.4.7)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Firebase/Core
-  - "SchedJoulesApiClient (from `https://github.com/schedjoules/swift-api-client.git`, branch `#82-Weather-2`)"
+  - SchedJoulesApiClient
   - SDWebImage (~> 4.0)
 
 SPEC REPOS:
@@ -70,36 +82,35 @@ SPEC REPOS:
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
     - FirebaseInstanceID
     - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - nanopb
     - Result
+    - SchedJoulesApiClient
     - SDWebImage
 
-EXTERNAL SOURCES:
-  SchedJoulesApiClient:
-    :branch: "#82-Weather-2"
-    :git: https://github.com/schedjoules/swift-api-client.git
-
-CHECKOUT OPTIONS:
-  SchedJoulesApiClient:
-    :commit: b53ce94aaaa7edf6bf6dee25f660da11936117f6
-    :git: https://github.com/schedjoules/swift-api-client.git
-
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
-  FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
-  FirebaseCore: 66bdef3b310a026880e2a5bc8aa586ab62ce4543
-  FirebaseInstanceID: 27bed93a59b6685f5c3e0c028a878a764fd75c33
-  GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
-  GoogleUtilities: 996e0db07153674fd1b54b220fda3a3dc3547cba
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  Firebase: 291d7b0a7b393f252358083b5d224884126fa46d
+  FirebaseAnalytics: 843c7f64a8f9c79f0d03281197ebe7bb1d58d477
+  FirebaseCore: 32b48f41c84a56fbde73b35ed01a830b3b6dc048
+  FirebaseCoreDiagnostics: 4c04ae09d0ab027c30179828c6bb47764df1bd13
+  FirebaseCoreDiagnosticsInterop: 6829da2b8d1fc795ff1bd99df751d3788035d2cb
+  FirebaseInstanceID: 8b42755db950682e7de0d167bc6fb26a57b244af
+  GoogleAppMeasurement: 86a82f0e1f20b8eedf8e20326530138fd71409de
+  GoogleDataTransport: 91e682bd60a49d3f8f69f2e909a66efaed5a1e7a
+  GoogleDataTransportCCTSupport: 6b545f7149111180763dc18c6f372c963de4a310
+  GoogleUtilities: e7dc37039b19df7fe543479d3e4a02ac8d11bb69
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Result: a6e784bebf48b471d59cddc1adb81f41f678c487
-  SchedJoulesApiClient: 53c28d792e9cd206b4965647feafea5506765294
-  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  SchedJoulesApiClient: 65afae361a6a2993b4e654a64b52ad81b6943dc7
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
 
-PODFILE CHECKSUM: f51a8d55254571d7cf28d398068ccb83f0944683
+PODFILE CHECKSUM: fabf8b8657dd42d5807f2933dd29190b103dedc0
 
 COCOAPODS: 1.7.5

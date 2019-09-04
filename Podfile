@@ -8,7 +8,7 @@ target 'iOS-SDK' do
   # Pods for iOS-SDK
   pod 'Alamofire', '~> 4.5'
   pod 'Firebase/Core'
-  pod 'SchedJoulesApiClient', :git => 'https://github.com/schedjoules/swift-api-client.git', :branch => '#82-Weather-2'
+  pod 'SchedJoulesApiClient'
   pod 'SDWebImage', '~> 4.0'
   
 end
