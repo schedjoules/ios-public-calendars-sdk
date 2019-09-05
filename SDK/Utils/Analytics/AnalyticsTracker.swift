@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SchedJoulesApiClient
-import Firebase
 
 class AnalyticsTracker: NSObject {
     
@@ -60,7 +59,6 @@ class AnalyticsTracker: NSObject {
     
     public func launch(with apiKey: String) {
         self.apiKey = apiKey
-        FirebaseApp.configure()
         loopHits()
     }
     
