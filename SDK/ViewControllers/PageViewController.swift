@@ -75,7 +75,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     /**
-     Initialize with a Page query and an ApiClient.
+     Initialize with a Page query and an Api.
      - parameter apiClient: The API Key (access token) for the **SchedJoules API**.
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
@@ -145,6 +145,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     /// Execute the Page query and handle the result.
     @objc private func fetchPages() {
         // Execute the query
+        
         apiClient.execute(query: pageQuery, completion: { result in
             switch result {
             case let .success(page):
@@ -187,9 +188,11 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         let pageSection = page!.sections[indexPath.section]
         let item = pageSection.items[indexPath.row]
-        let urlBegin = item.url.range(of: "://")!.upperBound
-        let urlString = item.url[urlBegin..<item.url.endIndex]
-        let webcal = URL(string: "webcal://\(urlString)")!
+        guard let webcal = item.url.webcalURL() else {
+            open(item: item)
+            return
+        }
+        
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
@@ -234,6 +237,22 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             }
         }
     }
+    
+    //Open calendar details
+    func open(item: PageItem) {
+        if item.url.contains("weather") {
+            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url)
+            navigationController?.pushViewController(weatherViewController, animated: true)
+        } else {
+            let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
+            let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
+            calendarVC.icsURL = URL(string: item.url)
+            calendarVC.title = item.name
+            calendarVC.apiClient = apiClient
+            navigationController?.pushViewController(calendarVC, animated: true)
+        }
+    }
+    
     
     /// Show the load error view and hide the refresh control
     private func showErrorView(){
@@ -334,12 +353,8 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             navigationController?.pushViewController(pageVC, animated: true)
         // Show the selected calendar
         } else {
-            let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
-            let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarItemViewController") as! CalendarItemViewController
-            calendarVC.icsURL = URL(string: pageSection.items[indexPath.row].url)
-            calendarVC.title = pageSection.items[indexPath.row].name
-            calendarVC.apiClient = apiClient
-            navigationController?.pushViewController(calendarVC, animated: true)
+            let item = pageSection.items[indexPath.row]
+            open(item: item)
         }
     }
     
