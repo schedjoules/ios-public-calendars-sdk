@@ -280,11 +280,11 @@
 		B6EF1C3820780879003E0095 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				469AA79A23215C830092CBA1 /* WeatherMap */,
 				B69268862089F32A003456FB /* PageViewController.swift */,
 				B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */,
 				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
 				B6EF1C3920780879003E0095 /* Settings */,
+				469AA79A23215C830092CBA1 /* WeatherMap */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
