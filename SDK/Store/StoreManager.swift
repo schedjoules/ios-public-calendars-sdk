@@ -116,7 +116,7 @@ class StoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    func restorePurchases() {        
+    func restorePurchases() {
         //1.
         //If needed get the list of products from the backend
         if self.iapProduct != nil {
@@ -148,8 +148,8 @@ class StoreManager: NSObject {
         
         let receipt = receiptData.base64EncodedString(options: [])
         let subscriptionQuery = SubscriptionQuery(transaction: transaction,
-                                           product: validProduct,
-                                           receipt: receipt)
+                                                  product: validProduct,
+                                                  receipt: receipt)
         apiClient.execute(query: subscriptionQuery, completion: { result in
             switch result {
             case let .success(resultInfo):
@@ -315,11 +315,12 @@ extension StoreManager: SKPaymentTransactionObserver {
         var errorDescription: String?
         
         if let error = transaction.error as NSError? {
+            sjPrint(error.localizedDescription)
             if error.domain == SKErrorDomain {
                 // handle all possible errors
                 switch (error.code) {
                 case SKError.unknown.rawValue:
-                    errorDescription = "Unknown error"
+                    errorDescription = error.localizedDescription
                 case SKError.clientInvalid.rawValue:
                     errorDescription = "Client is not allowed to issue the request"
                 case SKError.paymentCancelled.rawValue:
@@ -329,6 +330,7 @@ extension StoreManager: SKPaymentTransactionObserver {
                 case SKError.paymentNotAllowed.rawValue:
                     errorDescription = "This device is not allowed to make the payment"
                 default:
+                    errorDescription = "Unknown error"
                     break;
                 }
             }
