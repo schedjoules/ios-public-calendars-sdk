@@ -327,7 +327,7 @@
 				B6D3E034204D97570044C800 /* Frameworks */,
 				B6D3E035204D97570044C800 /* Resources */,
 				464F7BD52248B62700907906 /* ShellScript */,
-				A88A0DB2EA7AA37C0B684B2F /* [CP] Embed Pods Frameworks */,
+				54B00ED1695F2B9D6231B8D5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -458,10 +458,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
+			shellScript = "\n";
 		};
-		A88A0DB2EA7AA37C0B684B2F /* [CP] Embed Pods Frameworks */ = {
+		54B00ED1695F2B9D6231B8D5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

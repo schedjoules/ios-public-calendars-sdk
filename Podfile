@@ -6,7 +6,7 @@ target 'iOS-SDK' do
   use_frameworks!
 
   # Pods for iOS-SDK
-  pod 'SchedJoulesApiClient', :git => 'https://github.com/schedjoules/swift-api-client', :branch => '91-No-access-to-calendar'
+  pod 'SchedJoulesApiClient', '~> 0.7'
   pod 'SDWebImage', '~> 4.0'
   
 end

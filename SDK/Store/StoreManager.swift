@@ -38,6 +38,7 @@ class StoreManager: NSObject {
     
     var isSubscriptionValid: Bool {
         get {
+            return true
             guard let expirationDate = UserDefaults.standard.subscriptionExpirationDate else {
                 return false
             }

@@ -118,9 +118,9 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        let urlBegin = icsURL.absoluteString.range(of: "://")?.upperBound
-        let urlString = icsURL.absoluteString[urlBegin!..<icsURL.absoluteString.endIndex]
-        let webcal = URL(string: "webcal://\(urlString)")!
+        guard let webcal = icsURL.absoluteString.webcalURL() else {
+            return
+        }        
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
