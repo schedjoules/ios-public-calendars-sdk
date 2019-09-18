@@ -94,13 +94,13 @@ final class SettingsViewController: UIViewController {
     
     private let purchasesItems = [Item(title: "Restore Purchases")]
     
-    /// Contact menu items.
+    private static let supportEmail: String = Bundle.main.object(forInfoDictionaryKey: "CalendarStoreFeedbackEmailAddress") as? String ?? "support@schedjoules.com"
     private let contactItems = [Item(title: "FAQ",
                                      details: nil,
                                      data: URL(string: "https://cms.schedjoules.com/static_pages/help_\(Locale.preferredLanguages[0].components(separatedBy: "-")[0]).html")),
                                 Item(title: "e-mail",
-                                     details: "support@schedjoules.com",
-                                     data: "support@schedjoules.com"),
+                                     details: supportEmail,
+                                     data: supportEmail),
                                 Item(title: "Twitter",
                                      details: "@schedjoules",
                                      data: URL(string:"https://twitter.com/SchedJoules")),
