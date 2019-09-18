@@ -70,7 +70,7 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
     public convenience init(apiKey: String, pageIdentifier: String, title: String) {
-        self.init(apiClient: SchedJoulesApi(accessToken: apiKey), pageIdentifier: pageIdentifier, title: title)
+        self.init(apiClient: SchedJoulesApi(accessToken: apiKey, userId: Config.uuid), pageIdentifier: pageIdentifier, title: title)
     }
     
 }

@@ -50,7 +50,7 @@ final class CalendarItemViewController: UIViewController {
     
     // Load error view
     private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
-
+    
     // - MARK: ViewController Methods
     
     override func viewDidLoad() {
@@ -85,7 +85,7 @@ final class CalendarItemViewController: UIViewController {
     }
     
     // - MARK: Helper Methods
-
+    
     // Fetch and parse the ics file
     func loadICS(){
         apiClient.execute(query: CalendarQuery(url: icsURL), completion: { result in
@@ -118,9 +118,10 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        let urlBegin = icsURL.absoluteString.range(of: "://")?.upperBound
-        let urlString = icsURL.absoluteString[urlBegin!..<icsURL.absoluteString.endIndex]
-        let webcal = URL(string: "webcal://\(urlString)")!
+        guard let webcal = icsURL.absoluteString.webcalURL() else {
+            return
+        }
+        
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
     }
     
@@ -203,7 +204,7 @@ extension CalendarItemViewController: UITableViewDataSource {
         // Make time string bold
         let boldAttributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
         let boldTimeString = NSMutableAttributedString(string:timeString, attributes:boldAttributes)
-
+        
         // Format the date of the event
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"

@@ -65,7 +65,7 @@ public final class CalendarStoreViewController: UITabBarController {
      */
     public init(apiKey: String, pageIdentifier: String?, title: String?) {
         // Initialization
-        self.apiClient = SchedJoulesApi(accessToken: apiKey)
+        self.apiClient = SchedJoulesApi(accessToken: apiKey, userId: Config.uuid)
         self.pageIdentifier = pageIdentifier
         self.largeTitle = true
         self.tintColor = ColorPalette.red
