@@ -49,6 +49,9 @@ public final class CalendarStoreViewController: UITabBarController {
      */
     private let largeTitle: Bool
     
+    /// The indication to know if we should add a cancel button at the top to dismiss the vc
+    private let showCloseButton: Bool
+    
     // - MARK: Initialization
     
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`.
@@ -63,13 +66,14 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public init(apiKey: String, pageIdentifier: String?, title: String?) {
+    public init(apiKey: String, pageIdentifier: String?, title: String?, showCloseButton: Bool = true) {
         // Initialization
-        self.apiClient = SchedJoulesApi(accessToken: apiKey)
+        self.apiClient = SchedJoulesApi(accessToken: apiKey, userId: Config.uuid)
         self.pageIdentifier = pageIdentifier
         self.largeTitle = true
         self.tintColor = ColorPalette.red
         homePageTitle = title
+        self.showCloseButton = showCloseButton
         super.init(nibName: nil, bundle: nil)
         
         // Set tab bar tint color
@@ -175,7 +179,24 @@ public final class CalendarStoreViewController: UITabBarController {
             if #available(iOS 11.0, *) {
                 navigationController.navigationBar.prefersLargeTitles = largeTitle
             }
+            
+            if showCloseButton == true &&
+                $0.title == homePageTitle {
+                let doneButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                                 target: self,
+                                                 action: #selector(close))
+                $0.navigationItem.rightBarButtonItem = doneButton
+            }
+            
             return navigationController
+        }
+    }
+    
+    @objc private func close() {
+        if navigationController != nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
         }
     }
     
