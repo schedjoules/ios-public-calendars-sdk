@@ -154,12 +154,6 @@ public final class CalendarStoreViewController: UITabBarController {
         newVC.tabBarItem.image = UIImage(named: "New", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(newVC)
         
-        // Create next page
-        let nextVC = PageViewController(apiClient: apiClient, pageQuery: NextPageQuery(numberOfItems: 12, locale: languageSetting.code))
-        nextVC.title = "Next"
-        nextVC.tabBarItem.image = UIImage(named: "Next", in: Bundle.resourceBundle, compatibleWith: nil)
-        tabViewControllers.append(nextVC)
-        
         // Create settings page
         let storyBoard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
         let settingsVC = storyBoard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
