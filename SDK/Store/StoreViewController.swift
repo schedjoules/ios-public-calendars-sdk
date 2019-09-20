@@ -266,11 +266,11 @@ class StoreViewController: UIViewController {
             priceLabel.heightAnchor.constraint(equalToConstant: 50),
             priceLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
-
+            
             tosLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8),
             tosLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
             tosLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
-
+            
             tosLinkLabel.topAnchor.constraint(equalTo: tosLabel.bottomAnchor, constant: 8),
             tosLinkLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
             tosLinkLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
@@ -279,7 +279,7 @@ class StoreViewController: UIViewController {
             
             productActivityIndicator.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
             productActivityIndicator.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor)
-            ])
+        ])
         
         let tosTap = UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:)))
         tosLinkLabel.addGestureRecognizer(tosTap)
@@ -334,22 +334,24 @@ extension StoreViewController: InteractableStoreManager {
         
         
         guard let subscription = self.subscriptionIAP,
-        let currencySymbol = product.priceLocale.currencySymbol
-        else { return }
+            let currencySymbol = product.priceLocale.currencySymbol
+            else { return }
         
-        productActivityIndicator.stopAnimating()
-        
-        let priceString = subscription.localizedPriceInfo.replacingOccurrences(of: "%{price}",
-                                                                                       with: "\(currencySymbol) \(product.price)")
-        priceLabel.text = priceString
-        
-        purchaseButton.setTitle(subscription.localizedUpgradeButtonText, for: .normal)
-        
-        UIView.animate(withDuration: 0.2) {
-            self.purchaseButton.alpha = 1.0
-            self.priceLabel.alpha = 1.0
-            self.tosLabel.alpha = 1.0
-            self.tosLinkLabel.alpha = 1.0
+        DispatchQueue.main.async {
+            self.productActivityIndicator.stopAnimating()
+            
+            let priceString = subscription.localizedPriceInfo.replacingOccurrences(of: "%{price}",
+                                                                                   with: "\(currencySymbol) \(product.price)")
+            self.priceLabel.text = priceString
+            
+            self.purchaseButton.setTitle(subscription.localizedUpgradeButtonText, for: .normal)
+            
+            UIView.animate(withDuration: 0.2) {
+                self.purchaseButton.alpha = 1.0
+                self.priceLabel.alpha = 1.0
+                self.tosLabel.alpha = 1.0
+                self.tosLinkLabel.alpha = 1.0
+            }
         }
     }
     
