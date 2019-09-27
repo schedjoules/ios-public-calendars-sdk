@@ -230,7 +230,8 @@ extension StoreManager: SKPaymentTransactionObserver {
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         if isRestoringPurchases == true {
-            let restoreTransactions = transactions.filter({ $0.transactionState == .restored })
+            let allRestoreTransactions = transactions.filter({ $0.transactionState == .restored })
+            let restoreTransactions = allRestoreTransactions.filter({ $0.payment.productIdentifier.hasPrefix("com.schedjoules") })
             let sortedTransactions = restoreTransactions.sorted(by: {
                 let firstTimeInterval = $0.transactionDate?.timeIntervalSince1970 ?? 0
                 let secondTimeInterval = $1.transactionDate?.timeIntervalSince1970 ?? 0
