@@ -46,5 +46,7 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To show you the weather map</string>
+	<key>CalendarStoreFeedbackEmailAddress</key>
+	<string>support@schedjoules.com</string>
 </dict>
 </plist>
