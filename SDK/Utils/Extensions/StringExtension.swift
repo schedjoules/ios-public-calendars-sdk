@@ -14,8 +14,10 @@ extension String {
     func webcalURL() -> URL? {
         let urlBegin = self.range(of: "://")!.upperBound
         let urlString = self[urlBegin..<self.endIndex]
-        let webcal = URL(string: "webcal://\(urlString)")
-        return webcal
+        
+        var urlComponents = URLComponents(string: "webcal://\(urlString)")
+        urlComponents?.queryItems?.append(URLQueryItem(name: "u", value: Config.uuid))
+        return urlComponents?.url
     }
     
 }
