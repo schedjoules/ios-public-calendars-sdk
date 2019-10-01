@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize the calendar store
         let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
+        calendarVC.calendarStoreDelegate = self
         
         // Show the calendar store
         window?.rootViewController = calendarVC
@@ -55,4 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+
+extension AppDelegate: CalendarStoreDelegate {
+    
+    func calendarStoreDidClose() {
+        sjPrint("Delegate did close")
+    }
 }
