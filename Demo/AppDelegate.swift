@@ -25,11 +25,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
         calendarVC.calendarStoreDelegate = self
         
+        //Add observer to listen for subscribe notifications
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(subscribedToCalendar(_:)),
+                                               name: .subscribedToCalendar,
+                                               object: nil)
+        
         // Show the calendar store
         window?.rootViewController = calendarVC
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    @objc private func subscribedToCalendar(_ notification: Notification) {
+        sjPrint(notification)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
