@@ -366,24 +366,26 @@ extension StoreViewController: InteractableStoreManager {
     }
     
     func purchaseFailed(errorDescription: String?) {
-        mainActivityIndicator.stopAnimating()
-        productActivityIndicator.stopAnimating()
-        
-        let message = errorDescription ?? "Your request failed"
-        
-        let alertController = UIAlertController(title: "Error",
-                                                message: message,
-                                                preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Dismiss",
-                                     style: .default) { (action) in
-                                        self.dismiss()
-                                        alertController.dismiss(animated: true, completion: {
-                                            self.tapCloseButton()
-                                        })
+        DispatchQueue.main.async {
+            self.mainActivityIndicator.stopAnimating()
+            self.productActivityIndicator.stopAnimating()
+            
+            let message = errorDescription ?? "Your request failed"
+            
+            let alertController = UIAlertController(title: "Error",
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Dismiss",
+                                         style: .default) { (action) in
+                                            self.dismiss()
+                                            alertController.dismiss(animated: true, completion: {
+                                                self.tapCloseButton()
+                                            })
+            }
+            alertController.addAction(okAction)
+            
+            self.present(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(okAction)
-        
-        present(alertController, animated: true, completion: nil)
     }
     
 }
