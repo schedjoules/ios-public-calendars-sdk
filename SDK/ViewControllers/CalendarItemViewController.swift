@@ -123,6 +123,7 @@ final class CalendarItemViewController: UIViewController {
         }
         
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
     }
     
     // Show network indicator and activity indicator

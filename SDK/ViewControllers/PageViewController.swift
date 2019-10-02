@@ -194,6 +194,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         }
         
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
     }
     
     /// Set up the activity indicator in the view and start loading

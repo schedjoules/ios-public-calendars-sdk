@@ -26,7 +26,14 @@
 import UIKit
 import SchedJoulesApiClient
 
+@objc protocol CalendarStoreDelegate: class {
+    func calendarStoreDidClose()
+}
+
 public final class CalendarStoreViewController: UITabBarController {
+    /// Delegate
+    weak var calendarStoreDelegate: CalendarStoreDelegate?
+    
     /// Colors used by the SDK.
     public struct ColorPalette {
         public static let red = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1)
@@ -187,6 +194,8 @@ public final class CalendarStoreViewController: UITabBarController {
     }
     
     @objc private func close() {
+        calendarStoreDelegate?.calendarStoreDidClose()
+        
         if navigationController != nil {
             navigationController?.popViewController(animated: true)
         } else {

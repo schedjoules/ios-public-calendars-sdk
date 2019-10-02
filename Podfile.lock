@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.0)
   - Result (4.0.1)
-  - SchedJoulesApiClient (0.7.7):
+  - SchedJoulesApiClient (0.7.8):
     - Alamofire (~> 4.5)
     - Result (~> 4.0.0)
   - SDWebImage (4.4.7):
@@ -22,7 +22,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   Result: a6e784bebf48b471d59cddc1adb81f41f678c487
-  SchedJoulesApiClient: 7c98cb606d925fe80be3af6d9cbefd13ce6f3d59
+  SchedJoulesApiClient: 0c37cbb48f9220e085d119b9f580a04cc3b9a7a3
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
 
 PODFILE CHECKSUM: 019309180a8611256af3fcbc7c19231a65102d26
