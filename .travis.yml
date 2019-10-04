@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode11.0
+osx_image: xcode11
 xcode_workspace: iOS-SDK.xcworkspace
 xcode_scheme: iOS-SDK
-xcode_sdk: iphonesimulator11.0
+xcode_sdk: iphonesimulator11
