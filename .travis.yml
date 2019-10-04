@@ -2,6 +2,6 @@ language: objective-c
 osx_image: xcode11
 xcode_workspace: iOS-SDK.xcworkspace
 xcode_scheme: iOS-SDK
-xcode_sdk: iphonesimulator11
+xcode_sdk: iphonesimulator13
 before_install:
 - pod repo update
