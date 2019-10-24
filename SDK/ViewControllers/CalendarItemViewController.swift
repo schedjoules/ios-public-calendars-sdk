@@ -90,8 +90,10 @@ final class CalendarItemViewController: UIViewController {
     func loadICS(){
         apiClient.execute(query: CalendarQuery(url: icsURL), completion: { result in
             switch result {
-            case let .success(calendar):
-                self.calendar = calendar
+            case let .success(calendar):                
+                let upcomingEvents = calendar.events.filter({ $0.startDate > Date() })
+                let upcomingCalendar = ICalendar(events: upcomingEvents)
+                self.calendar = upcomingCalendar
                 
                 AnalyticsTracker.shared().trackScreen(name: self.title, page: nil, url: self.icsURL)
                 
