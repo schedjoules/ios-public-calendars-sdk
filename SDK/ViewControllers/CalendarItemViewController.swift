@@ -90,15 +90,14 @@ final class CalendarItemViewController: UIViewController {
     func loadICS(){
         apiClient.execute(query: CalendarQuery(url: icsURL), completion: { result in
             switch result {
-            case let .success(calendar):                
-                let upcomingEvents = calendar.events.filter({ $0.startDate > Date() })
-                let upcomingCalendar = ICalendar(events: upcomingEvents)
-                self.calendar = upcomingCalendar
+            case let .success(calendar):
+                self.calendar = calendar
                 
                 AnalyticsTracker.shared().trackScreen(name: self.title, page: nil, url: self.icsURL)
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.scrollToNextEvent(in: calendar)
                 }
             case .failure:
                 DispatchQueue.main.async {
@@ -109,6 +108,17 @@ final class CalendarItemViewController: UIViewController {
                 self.stopLoading()
             }
         })
+    }
+    
+    //Scroll to the next upcoming Event
+    private func scrollToNextEvent(in calendar: ICalendar?) {
+        guard let nextUpcomingEvent = calendar?.events.filter({ $0.startDate > Date() }).first else { return }
+            
+        let indexOfUpcomingEvent = calendar?.events.firstIndex { (event) -> Bool in
+                event.startDate == nextUpcomingEvent.startDate
+            }
+            
+            self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
     }
     
     // Subscribe button pressed
