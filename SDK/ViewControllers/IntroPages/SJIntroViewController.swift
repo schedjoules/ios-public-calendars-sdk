@@ -100,6 +100,7 @@ class SJIntroViewController: UIViewController {
     @objc func goToNextPage() {
         if lastViewReached == true {
             self.dismiss(animated: true, completion: nil)
+            UserDefaults.standard.hasSeenIntro = true
         } else {
             pageViewController.slideToNextPage()
         }

@@ -126,17 +126,14 @@ public final class CalendarStoreViewController: UITabBarController {
         Reach().monitorReachabilityChanges()
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let introPages = SJIntroViewController()
-        present(introPages, animated: true)
-    }
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        if UserDefaults.standard.hasSeenIntro == false {
+            let introPages = SJIntroViewController()
+            present(introPages, animated: true)
+        }
         
-        let introPages = SJIntroViewController()
-        present(introPages, animated: true, completion: nil)
     }
     
     // - MARK: Helper Methods
