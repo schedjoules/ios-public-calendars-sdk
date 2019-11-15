@@ -11,6 +11,10 @@ import UIKit
 
 class SJIntroViewController: UIViewController {
     
+    //Properties
+    var lastViewReached = false
+    
+    
     //UI
     let stackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -39,7 +43,7 @@ class SJIntroViewController: UIViewController {
     let topContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .sjBlueLight
+        view.backgroundColor = .sjIntroBackground
         return view
     }()
     
@@ -57,9 +61,6 @@ class SJIntroViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func goToNextPage() {
-        pageViewController.goToNextPage()
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,6 +74,7 @@ class SJIntroViewController: UIViewController {
         topContainerView.addSubview(pageViewController.view)
         addChildViewController(pageViewController)
         pageViewController.didMove(toParentViewController: self)
+        pageViewController.sjIntroPageDelegate = self
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -81,7 +83,7 @@ class SJIntroViewController: UIViewController {
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             nextButton.heightAnchor.constraint(equalToConstant: 64),
-            nextButton.topAnchor.constraint(equalTo: bottomContainerView.topAnchor, constant: 24),
+            nextButton.topAnchor.constraint(equalTo: bottomContainerView.topAnchor),
             nextButton.leadingAnchor.constraint(equalTo: bottomContainerView.leadingAnchor, constant: 64),
             nextButton.trailingAnchor.constraint(equalTo: bottomContainerView.trailingAnchor, constant: -64),
             nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
@@ -93,14 +95,34 @@ class SJIntroViewController: UIViewController {
         ])
     }
     
+    //MARK: Actions
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    @objc func goToNextPage() {
+        if lastViewReached == true {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            pageViewController.slideToNextPage()
+        }
+    }
+    
+}
+
+
+extension SJIntroViewController: SJIntroPageDelegate {
+    
+    func lastViewReached(result: Bool) {
+        self.lastViewReached = result
         
-        topContainerView.subviews.forEach { (sv) in
-            print("SJIntroViewController: \(sv)")
+        var newTitle = "Next"
+        if result == true {
+            newTitle = "Start"
         }
         
+        guard newTitle != nextButton.currentTitle else {
+            return
+        }
+        
+        nextButton.setTitle(newTitle, for: .normal)
     }
     
 }

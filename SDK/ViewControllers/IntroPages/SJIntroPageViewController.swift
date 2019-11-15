@@ -8,19 +8,21 @@
 
 import UIKit
 
+protocol SJIntroPageDelegate: class {
+    func lastViewReached(result: Bool)
+}
 
 class SJIntroPageViewController: UIPageViewController {
     
     //Properties
-    private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [SJIntroPageContentViewController(color: .orange),
-                SJIntroPageContentViewController(color: .blue),
-                SJIntroPageContentViewController(color: .green)]
-    }()
+    weak var sjIntroPageDelegate: SJIntroPageDelegate?
     
-    private func newColoredViewController(color: UIColor) -> UIViewController {
-        return SJIntroPageContentViewController(color: color)
-    }
+    private(set) lazy var orderedViewControllers: [UIViewController] = {
+        return [SJIntroPageContentViewController(.discover),
+                SJIntroPageContentViewController(.subscribe),
+                SJIntroPageContentViewController(.enjoy),
+                SJIntroPageContentViewController(.freeTrial)]
+    }()
     
     private var currentIndex: Int = 0
     
@@ -31,6 +33,10 @@ class SJIntroPageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         setupProperties()
         setupUI()
@@ -54,7 +60,7 @@ class SJIntroPageViewController: UIPageViewController {
     }
     
     func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .sjIntroBackground
     }
     
     
@@ -62,11 +68,16 @@ class SJIntroPageViewController: UIPageViewController {
 }
 
 extension SJIntroPageViewController {
-    func goToNextPage() {
+    
+    func slideToNextPage() {
+        guard let currentViewController = self.viewControllers?.first else {
+            return
+        }
 
-        guard let currentViewController = self.viewControllers?.first else { return }
-
-        guard let nextViewController = dataSource?.pageViewController( self, viewControllerAfter: currentViewController ) else { return }
+        guard let nextViewController = dataSource?.pageViewController(self,
+                                                                      viewControllerAfter: currentViewController ) else {
+            return
+        }
 
         setViewControllers([nextViewController], direction: .forward, animated: true, completion: nil)
         setViewControllers([nextViewController], direction: .forward, animated: true) { (completed) in
@@ -75,14 +86,20 @@ extension SJIntroPageViewController {
                                                previousViewControllers: [],
                                                transitionCompleted: completed)
         }
-
+        
+        sjIntroPageDelegate?.lastViewReached(result: currentIndex == (orderedViewControllers.count - 1))
     }
+    
 }
 
 
 // MARK: UIPageViewControllerDataSource
 
 extension SJIntroPageViewController: UIPageViewControllerDelegate {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        sjIntroPageDelegate?.lastViewReached(result: orderedViewControllers.last == pendingViewControllers.first)
+    }
 }
 
 
