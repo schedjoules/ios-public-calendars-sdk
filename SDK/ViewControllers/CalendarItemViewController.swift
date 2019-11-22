@@ -112,11 +112,11 @@ final class CalendarItemViewController: UIViewController {
     // Subscribe button pressed
     @IBAction func subscribeButtonPressed(_ sender: UIButton) {
         //First we check if the user has a valid subscription
-//        guard StoreManager.shared.isSubscriptionValid == true else {
-//            let storeVC = StoreViewController(apiClient: self.apiClient)
-//            self.present(storeVC, animated: true, completion: nil)
-//            return
-//        }
+        guard StoreManager.shared.isSubscriptionValid == true else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
         
         guard let webcal = icsURL.absoluteString.webcalURL() else {
             return
