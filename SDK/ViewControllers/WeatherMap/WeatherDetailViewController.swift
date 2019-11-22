@@ -211,11 +211,11 @@ class WeatherDetailViewController: UIViewController {
     
     @objc func subscribeButtonPressed(_ sender: UIButton) {
         //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
+//        guard StoreManager.shared.isSubscriptionValid == true else {
+//            let storeVC = StoreViewController(apiClient: self.apiClient)
+//            self.present(storeVC, animated: true, completion: nil)
+//            return
+//        }
         
         //Decompose the url for weather ot use user's settings
         var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.name)")
