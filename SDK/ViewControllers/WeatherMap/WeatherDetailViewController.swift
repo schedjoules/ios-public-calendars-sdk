@@ -218,7 +218,7 @@ class WeatherDetailViewController: UIViewController {
         }
         
         //Decompose the url for weather ot use user's settings
-        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.name)")
+        var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.id)")
         if let weatherSettings = self.weatherSettings {
             customUrlString = customUrlString.replacingOccurrences(of: "{temp}", with: weatherSettings.temp._default)
             customUrlString = customUrlString.replacingOccurrences(of: "{rain}", with: weatherSettings.rain._default)
