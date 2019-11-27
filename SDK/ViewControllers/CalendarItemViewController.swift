@@ -112,13 +112,21 @@ final class CalendarItemViewController: UIViewController {
     
     //Scroll to the next upcoming Event
     private func scrollToNextEvent(in calendar: ICalendar?) {
-        guard let nextUpcomingEvent = calendar?.events.filter({ $0.startDate > Date() }).first else { return }
-            
+        guard let nextUpcomingEvent = calendar?.events.filter({ (event) -> Bool in
+            //The SDK considers endDates as optionals, therefore if we can't compare an endDate we use startDate
+            let dateForFilter: Date = event.endDate ?? event.startDate
+            return Calendar.current.compare(dateForFilter,
+                                            to: Date(),
+                                            toGranularity: .hour) == .orderedDescending
+        }).first else {
+            return
+        }
+        
         let indexOfUpcomingEvent = calendar?.events.firstIndex { (event) -> Bool in
-                event.startDate == nextUpcomingEvent.startDate
-            }
-            
-            self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
+            event.startDate == nextUpcomingEvent.startDate
+        }
+        
+        self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
     }
     
     // Subscribe button pressed
