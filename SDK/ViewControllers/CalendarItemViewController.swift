@@ -97,6 +97,7 @@ final class CalendarItemViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.scrollToNextEvent(in: calendar)
                 }
             case .failure:
                 DispatchQueue.main.async {
@@ -107,6 +108,18 @@ final class CalendarItemViewController: UIViewController {
                 self.stopLoading()
             }
         })
+    }
+    
+    //Scroll to the next upcoming Event
+    private func scrollToNextEvent(in calendar: ICalendar?) {        
+        let indexOfUpcomingEvent = calendar?.events.firstIndex(where: { (event) -> Bool in
+            let dateForFilter: Date = event.endDate ?? event.startDate            
+            return Calendar.current.compare(dateForFilter,
+                                            to: Date(),
+                                            toGranularity: .second) == .orderedDescending
+        })
+        
+        self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
     }
     
     // Subscribe button pressed
