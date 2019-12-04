@@ -133,7 +133,7 @@ public final class CalendarStoreViewController: UITabBarController {
             let introPages = SJIntroViewController()
             present(introPages, animated: true)
         }
-        
+
     }
     
     // - MARK: Helper Methods
