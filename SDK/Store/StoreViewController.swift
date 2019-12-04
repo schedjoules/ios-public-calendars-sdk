@@ -100,7 +100,7 @@ class StoreViewController: UIViewController {
         button.setTitle("Purchase", for: .normal)
         button.addTarget(self, action: #selector(tapPurchaseButton), for: .touchUpInside)
         button.backgroundColor = .sjBlueLight
-        button.alpha = 0.0
+        button.alpha = 1.0
         return button
     }()
     
@@ -110,7 +110,8 @@ class StoreViewController: UIViewController {
         label.text = "Billed at 4534 per year there after"
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.alpha = 0.0
+        label.alpha = 1.0
+        label.textColor = .black
         return label
     }()
     
@@ -122,7 +123,8 @@ class StoreViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .justified
         label.adjustsFontSizeToFitWidth = true
-        label.alpha = 0.0
+        label.alpha = 1.0
+        label.textColor = .black
         return label
     }()
     
@@ -149,7 +151,7 @@ class StoreViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .justified
         label.adjustsFontSizeToFitWidth = true
-        label.alpha = 0.0
+        label.alpha = 1.0
         label.isUserInteractionEnabled = true
         return label
     }()
