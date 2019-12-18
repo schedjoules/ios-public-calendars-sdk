@@ -18,6 +18,7 @@
 		4610CD16228DD54800CE25C2 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610CD15228DD53F00CE25C2 /* Reach.swift */; };
 		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
 		4629919423435B8000CA8292 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4629919323435B8000CA8292 /* NotificationName.swift */; };
+		463432C623A3939700677588 /* iOS_SDKUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463432C523A3939700677588 /* iOS_SDKUITests.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */; };
 		4657B82322BCE174003A2AE4 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B82222BCE174003A2AE4 /* DateExtension.swift */; };
@@ -56,6 +57,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		463432C823A3939700677588 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6D3E02F204D97570044C800 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6D3E036204D97570044C800;
+			remoteInfo = "iOS-SDK";
+		};
 		B6D3E04C204D97570044C800 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B6D3E02F204D97570044C800 /* Project object */;
@@ -79,6 +87,9 @@
 		4610CD15228DD53F00CE25C2 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		4629919323435B8000CA8292 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
+		463432C323A3939700677588 /* iOS-SDKUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-SDKUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		463432C523A3939700677588 /* iOS_SDKUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_SDKUITests.swift; sourceTree = "<group>"; };
+		463432C723A3939700677588 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		464F7BCA2233D1AE00907906 /* iOS-SDK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-SDK.entitlements"; sourceTree = "<group>"; };
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -122,6 +133,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		463432C023A3939700677588 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6D3E034204D97570044C800 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +203,15 @@
 				460015502208987300C6E9F2 /* AnalyticsTracker.swift */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		463432C423A3939700677588 /* iOS-SDKUITests */ = {
+			isa = PBXGroup;
+			children = (
+				463432C523A3939700677588 /* iOS_SDKUITests.swift */,
+				463432C723A3939700677588 /* Info.plist */,
+			);
+			path = "iOS-SDKUITests";
 			sourceTree = "<group>";
 		};
 		4689B9042397D4190008F6F5 /* IntroPages */ = {
@@ -255,6 +282,7 @@
 				B6D3E05A204D97CE0044C800 /* SDK */,
 				B625A60020C038D000586F5E /* Demo */,
 				B6D3E04E204D97570044C800 /* iOS-SDKTests */,
+				463432C423A3939700677588 /* iOS-SDKUITests */,
 				B6D3E038204D97570044C800 /* Products */,
 				C50301A734A4DEE4227C09E3 /* Pods */,
 				8F02A3D2818F97746AAFE47C /* Frameworks */,
@@ -266,6 +294,7 @@
 			children = (
 				B6D3E037204D97570044C800 /* iOS-SDK.app */,
 				B6D3E04B204D97570044C800 /* iOS-SDKTests.xctest */,
+				463432C323A3939700677588 /* iOS-SDKUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,6 +367,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		463432C223A3939700677588 /* iOS-SDKUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 463432CC23A3939700677588 /* Build configuration list for PBXNativeTarget "iOS-SDKUITests" */;
+			buildPhases = (
+				463432BF23A3939700677588 /* Sources */,
+				463432C023A3939700677588 /* Frameworks */,
+				463432C123A3939700677588 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				463432C923A3939700677588 /* PBXTargetDependency */,
+			);
+			name = "iOS-SDKUITests";
+			productName = "iOS-SDKUITests";
+			productReference = 463432C323A3939700677588 /* iOS-SDKUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B6D3E036204D97570044C800 /* iOS-SDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6D3E054204D97570044C800 /* Build configuration list for PBXNativeTarget "iOS-SDK" */;
@@ -382,10 +429,15 @@
 		B6D3E02F204D97570044C800 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = SchedJoules;
 				TargetAttributes = {
+					463432C223A3939700677588 = {
+						CreatedOnToolsVersion = 11.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B6D3E036204D97570044C800;
+					};
 					B6D3E036204D97570044C800 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -417,11 +469,19 @@
 			targets = (
 				B6D3E036204D97570044C800 /* iOS-SDK */,
 				B6D3E04A204D97570044C800 /* iOS-SDKTests */,
+				463432C223A3939700677588 /* iOS-SDKUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		463432C123A3939700677588 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6D3E035204D97570044C800 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -508,6 +568,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		463432BF23A3939700677588 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				463432C623A3939700677588 /* iOS_SDKUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B6D3E033204D97570044C800 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -564,6 +632,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		463432C923A3939700677588 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6D3E036204D97570044C800 /* iOS-SDK */;
+			targetProxy = 463432C823A3939700677588 /* PBXContainerItemProxy */;
+		};
 		B6D3E04D204D97570044C800 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B6D3E036204D97570044C800 /* iOS-SDK */;
@@ -591,6 +664,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		463432CA23A3939700677588 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				INFOPLIST_FILE = "iOS-SDKUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huerdo.iOS-SDKUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "iOS-SDK";
+			};
+			name = Debug;
+		};
+		463432CB23A3939700677588 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				INFOPLIST_FILE = "iOS-SDKUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.huerdo.iOS-SDKUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "iOS-SDK";
+			};
+			name = Release;
+		};
 		B6D3E052204D97570044C800 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -785,6 +896,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		463432CC23A3939700677588 /* Build configuration list for PBXNativeTarget "iOS-SDKUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				463432CA23A3939700677588 /* Debug */,
+				463432CB23A3939700677588 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B6D3E032204D97570044C800 /* Build configuration list for PBXProject "iOS-SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

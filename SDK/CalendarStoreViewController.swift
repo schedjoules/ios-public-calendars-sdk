@@ -122,6 +122,8 @@ public final class CalendarStoreViewController: UITabBarController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        view.accessibilityIdentifier = "SJCalendarStore"
+        
         NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged(_:)), name: NSNotification.Name(rawValue: ReachabilityStatusChangedNotification), object: nil)
         Reach().monitorReachabilityChanges()
     }

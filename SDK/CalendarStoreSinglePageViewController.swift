@@ -73,4 +73,9 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
         self.init(apiClient: SchedJoulesApi(accessToken: apiKey, userId: Config.uuid), pageIdentifier: pageIdentifier, title: title)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.accessibilityIdentifier = "SJCalendarPage"
+    }
 }

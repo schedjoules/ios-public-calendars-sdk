@@ -55,6 +55,8 @@ final class CalendarItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.accessibilityIdentifier = "SJCalendarItem"
         
         // Set subscribe button image
         subscribeButton.setImage(UIImage(named: "Add_White", in: Bundle.resourceBundle, compatibleWith: nil), for: .normal)

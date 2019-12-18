@@ -59,6 +59,10 @@ class SJIntroPageContentViewController: UIViewController {
         setupProperties()
     }
     
+    override func viewDidLoad() {
+        view.accessibilityIdentifier = "SJIntroPages"
+    }
+    
     private func setupProperties() {
         titleLabel.text = content.title.uppercased()
         descriptionLabel.text = content.description

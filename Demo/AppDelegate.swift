@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let iapObserver = StoreManager.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        //For UI testing
+        if CommandLine.arguments.contains("--uitesting") {
+            resetState()
+        }
+        
         // Override point for customization after application launch.
         SKPaymentQueue.default().add(iapObserver)
         
@@ -74,4 +79,15 @@ extension AppDelegate: CalendarStoreDelegate {
     func calendarStoreDidClose() {
         sjPrint("Delegate did close")
     }
+}
+
+
+//UI Testing
+extension AppDelegate {
+    
+    func resetState() {
+        let defaultsName = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: defaultsName)
+    }
+    
 }
