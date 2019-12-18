@@ -137,11 +137,17 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     }
 
     // Show network indicator and activity indicator
-    func setUpActivityIndicator(){
+    func setUpActivityIndicator() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = navigationController?.navigationBar.tintColor
-        activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
+        
         startLoading()
     }
 

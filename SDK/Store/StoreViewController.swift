@@ -83,7 +83,6 @@ class StoreViewController: UIViewController {
         let image = UIImage(named: "purchase-intro-1", in: Bundle.resourceBundle, compatibleWith: nil)
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -107,7 +106,7 @@ class StoreViewController: UIViewController {
     var priceLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Billed at 4534 per year there after"
+        label.text = "Billed at _ per year there after"
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.alpha = 1.0
@@ -234,7 +233,6 @@ class StoreViewController: UIViewController {
         
         let layoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            
             closeButton.heightAnchor.constraint(equalToConstant: 44),
             closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
             closeButton.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 10),
@@ -250,7 +248,6 @@ class StoreViewController: UIViewController {
             
             imageView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 40),
-            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width - 40),
             
             bottomView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
@@ -282,6 +279,26 @@ class StoreViewController: UIViewController {
             productActivityIndicator.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
             productActivityIndicator.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor)
         ])
+        
+        //Adjust the imageview based on the device type
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) {
+            imageView.contentMode = .scaleAspectFit
+            NSLayoutConstraint.activate([
+                imageView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width - 40)
+            ])
+        } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) {
+            imageView.contentMode = .scaleAspectFill
+            imageView.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .horizontal)
+            imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 249), for: .horizontal)
+            imageView.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical)
+            imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 249), for: .vertical)
+            
+            NSLayoutConstraint.activate([                
+                imageView.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
+            ])
+        }
+        
+        
         
         let tosTap = UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:)))
         tosLinkLabel.addGestureRecognizer(tosTap)

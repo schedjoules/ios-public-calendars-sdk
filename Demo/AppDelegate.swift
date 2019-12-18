@@ -31,9 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                name: .subscribedToCalendar,
                                                object: nil)
         
+        //Launch modally to test constrains on iPad
+        let launcherVC = UIViewController(nibName: nil, bundle: nil)
+        if #available(iOS 13.0, *) {
+            launcherVC.view.backgroundColor = .systemBackground
+        } else {
+            launcherVC.view.backgroundColor = .white
+        }
+        
         // Show the calendar store
-        window?.rootViewController = calendarVC
+        window?.rootViewController = launcherVC
         window?.makeKeyAndVisible()
+        
+        launcherVC.present(calendarVC, animated: true)
         
         return true
     }
@@ -74,4 +84,15 @@ extension AppDelegate: CalendarStoreDelegate {
     func calendarStoreDidClose() {
         sjPrint("Delegate did close")
     }
+}
+
+
+//UI Testing
+extension AppDelegate {
+    
+    func resetState() {
+        let defaultsName = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: defaultsName)
+    }
+    
 }
