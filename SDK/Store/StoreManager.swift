@@ -100,8 +100,7 @@ class StoreManager: NSObject {
         self.subscriptionIAP = subscriptionIAP
         
         if SKPaymentQueue.canMakePayments() {
-            let request = SKProductsRequest(productIdentifiers:
-                identifers)
+            let request = SKProductsRequest(productIdentifiers: identifers)
             request.delegate = self
             request.start()
         } else {

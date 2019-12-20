@@ -286,19 +286,21 @@ extension SettingsViewController: UITableViewDelegate {
     }
     
     private func presentSubscriptionActive(restored: Bool) {
-        let message = restored == true ? "Your purchases are restored!" : "Your subscription is active!"
-        
-        let alertController = UIAlertController(title: "Great",
-                                                message: message,
-                                                preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok",
-                                     style: .default) { (action) in
-                                        alertController.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let message = restored == true ? "Your purchases are restored!" : "Your subscription is active!"
+            
+            let alertController = UIAlertController(title: "Great",
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok",
+                                         style: .default) { (action) in
+                                            alertController.dismiss(animated: true, completion: nil)
+            }
+            alertController.addAction(okAction)
+            
+            self.showLoader(animate: false)
+            self.present(alertController, animated: true, completion: nil)
         }
-        alertController.addAction(okAction)
-        
-        showLoader(animate: false)
-        present(alertController, animated: true, completion: nil)
     }
     
     
@@ -450,30 +452,33 @@ extension SettingsViewController: InteractableStoreManager {
     }
     
     func purchaseFailed(errorDescription: String?) {
-        if let message = errorDescription {
-            let alertController = UIAlertController(title: "Error",
-                                                    message: message,
-                                                    preferredStyle: .alert)
-            
-            let purchaseAction = UIAlertAction(title: "Get a Subscription",
-                                               style: .default) { (action) in
-                                                let storeVC = StoreViewController(apiClient: self.apiClient)
-                                                self.storeManager.isRestoringPurchases = false
-                                                self.present(storeVC, animated: true, completion: nil)
-                                                return
+        DispatchQueue.main.async {
+            if let message = errorDescription {
+                let alertController = UIAlertController(title: "Error",
+                                                        message: message,
+                                                        preferredStyle: .alert)
+                
+                let purchaseAction = UIAlertAction(title: "Get a Subscription",
+                                                   style: .default) { (action) in
+                                                    let storeVC = StoreViewController(apiClient: self.apiClient)
+                                                    self.storeManager.isRestoringPurchases = false
+                                                    self.present(storeVC, animated: true, completion: nil)
+                                                    return
+                }
+                alertController.addAction(purchaseAction)
+                
+                let dismissAction = UIAlertAction(title: "Dismisss",
+                                                  style: .cancel) { (action) in
+                                                    alertController.dismiss(animated: true, completion: nil)
+                }
+                alertController.addAction(dismissAction)
+                
+                self.present(alertController, animated: true, completion: nil)
             }
-            alertController.addAction(purchaseAction)
             
-            let dismissAction = UIAlertAction(title: "Dismisss",
-                                              style: .cancel) { (action) in
-                                                alertController.dismiss(animated: true, completion: nil)
-            }
-            alertController.addAction(dismissAction)
-            
-            present(alertController, animated: true, completion: nil)
+            self.showLoader(animate: false)
         }
         
-        showLoader(animate: false)
     }
     
 }
