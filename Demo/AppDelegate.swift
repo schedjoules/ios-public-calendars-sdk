@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize the calendar store
         let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
         calendarVC.calendarStoreDelegate = self
+        calendarVC.view.backgroundColor = .sjBackground
         
         //Add observer to listen for subscribe notifications
         NotificationCenter.default.addObserver(self,
@@ -33,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Show the calendar store to either iPhone or iPad
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) {
-            calendarVC.view.backgroundColor = .white
             window?.rootViewController = calendarVC
             window?.makeKeyAndVisible()
         } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) {

@@ -15,5 +15,14 @@ extension UIColor {
     static let sjGrayLight = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
     static let sjRed = UIColor(red: 241/255.0, green: 102/255.0, blue: 103/255.0, alpha: 1.0)
     static let sjIntroBackground = UIColor(red: 106/255.0, green: 202/255.0, blue: 202/255.0, alpha: 1.0)
+    static var sjBackground: UIColor {
+        get {
+            if #available(iOS 13.0, *) {
+                return .systemBackground
+            } else {
+                return .white
+            }
+        }
+    }
     
 }
