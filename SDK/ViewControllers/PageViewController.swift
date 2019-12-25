@@ -96,10 +96,18 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         fetchPages()
 
         // Create a table view
-        tableView = UITableView(frame: view.frame)
+        tableView = UITableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         
         // Set up the activity indicator
         setUpActivityIndicator()
@@ -198,11 +206,17 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     }
     
     /// Set up the activity indicator in the view and start loading
-    private func setUpActivityIndicator(){
+    private func setUpActivityIndicator() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = navigationController?.navigationBar.tintColor
-        activityIndicator.center = view.center
         view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
+        
         startLoading()
     }
     

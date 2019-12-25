@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize the calendar store
         let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
         calendarVC.calendarStoreDelegate = self
+        calendarVC.view.backgroundColor = .sjBackground
         
         //Add observer to listen for subscribe notifications
         NotificationCenter.default.addObserver(self,
@@ -31,9 +32,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                name: .subscribedToCalendar,
                                                object: nil)
         
-        // Show the calendar store
-        window?.rootViewController = calendarVC
-        window?.makeKeyAndVisible()
+        // Show the calendar store to either iPhone or iPad
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) {
+            window?.rootViewController = calendarVC
+            window?.makeKeyAndVisible()
+        } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) {
+            //Launch modally to test constrains on iPad
+            let launcherVC = UIViewController(nibName: nil, bundle: nil)
+            if #available(iOS 13.0, *) {
+                launcherVC.view.backgroundColor = .systemBackground
+            } else {
+                launcherVC.view.backgroundColor = .white
+            }
+            window?.rootViewController = launcherVC
+            window?.makeKeyAndVisible()
+            launcherVC.present(calendarVC, animated: true)
+        }
         
         return true
     }
@@ -74,4 +88,15 @@ extension AppDelegate: CalendarStoreDelegate {
     func calendarStoreDidClose() {
         sjPrint("Delegate did close")
     }
+}
+
+
+//UI Testing
+extension AppDelegate {
+    
+    func resetState() {
+        let defaultsName = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: defaultsName)
+    }
+    
 }

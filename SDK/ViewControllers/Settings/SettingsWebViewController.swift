@@ -60,11 +60,17 @@ final class SettingsWebViewController: UIViewController {
     // MARK: - Activity Indicator Methods
     
     // Show network indicator and activity indicator
-    func setUpActivityIndicator(){
+    func setUpActivityIndicator() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = navigationController?.navigationBar.tintColor
-        activityIndicator.center = view.center
         webView.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        ])
+        
         startLoading()
     }
     
