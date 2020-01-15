@@ -49,7 +49,7 @@ public class StoreManager: NSObject {
     /**
      Initialize StoreManager and load subscriptions SKProducts from Store
      */
-    static let shared = StoreManager()
+    public static let shared = StoreManager()
     
     func Begin(){
         sjPrint("StoreManager initialized")
