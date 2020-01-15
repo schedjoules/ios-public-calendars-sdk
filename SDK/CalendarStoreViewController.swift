@@ -26,13 +26,13 @@
 import UIKit
 import SchedJoulesApiClient
 
-@objc protocol CalendarStoreDelegate: class {
+@objc public protocol CalendarStoreDelegate: class {
     func calendarStoreDidClose()
 }
 
 public final class CalendarStoreViewController: UITabBarController {
     /// Delegate
-    weak var calendarStoreDelegate: CalendarStoreDelegate?
+    public weak var calendarStoreDelegate: CalendarStoreDelegate?
     
     /// Colors used by the SDK.
     public struct ColorPalette {
