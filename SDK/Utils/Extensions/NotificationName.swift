@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Notification.Name {
+public extension Notification.Name {
     static var subscribedToCalendar: Notification.Name {
         return .init("CalendarStore.subscribed")
     }
