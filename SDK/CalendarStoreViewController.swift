@@ -197,6 +197,8 @@ public final class CalendarStoreViewController: UITabBarController {
                                                  target: self,
                                                  action: #selector(close))
                 $0.navigationItem.rightBarButtonItem = doneButton
+                $0.navigationItem.rightBarButtonItem?.accessibilityIdentifier
+                    = "calStoreDoneButton"
             }
             
             return navigationController
