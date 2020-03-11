@@ -191,10 +191,7 @@ public final class CalendarStoreViewController: UITabBarController {
                 navigationController.navigationBar.prefersLargeTitles = largeTitle
             }
             if #available(iOS 13.0, *) {
-                navigationController.navigationBar.backgroundColor
-                    = .systemBackground
-            } else {
-                // Fallback on earlier versions
+                navigationController.navigationBar.backgroundColor = .systemBackground
             }
 
             if showCloseButton == true &&
