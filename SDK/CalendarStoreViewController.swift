@@ -190,7 +190,10 @@ public final class CalendarStoreViewController: UITabBarController {
             if #available(iOS 11.0, *) {
                 navigationController.navigationBar.prefersLargeTitles = largeTitle
             }
-            
+            if #available(iOS 13.0, *) {
+                navigationController.navigationBar.backgroundColor = .systemBackground
+            }
+
             if showCloseButton == true &&
                 $0.title == homePageTitle {
                 let doneButton = UIBarButtonItem(barButtonSystemItem: .done,
