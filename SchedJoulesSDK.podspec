@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SchedJoulesSDK'
-  s.version          = '0.9.9'
+  s.version          = '0.9.10'
   s.summary          = 'The SchedJoules iOS SDK, written in Swift.'
  
   s.description      = <<-DESC
