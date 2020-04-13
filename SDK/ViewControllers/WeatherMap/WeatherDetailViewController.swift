@@ -46,7 +46,6 @@ class WeatherDetailViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
-        button.addTarget(self, action: #selector(subscribeButtonPressed(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -142,6 +141,7 @@ class WeatherDetailViewController: UIViewController {
             ])
         
         mapView.showAnnotations([weatherPointAnnotation], animated: true)
+        subscribeButton.addTarget(self, action: #selector(subscribeButtonPressed(_:)), for: .touchUpInside)
     }
     
     func setup() {

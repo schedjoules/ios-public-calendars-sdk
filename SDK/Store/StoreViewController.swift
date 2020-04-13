@@ -52,7 +52,6 @@ class StoreViewController: UIViewController {
         var button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("x", for: .normal)
-        button.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
         return button
     }()
     
@@ -97,7 +96,6 @@ class StoreViewController: UIViewController {
         var button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Purchase", for: .normal)
-        button.addTarget(self, action: #selector(tapPurchaseButton), for: .touchUpInside)
         button.backgroundColor = .sjBlueLight
         button.alpha = 1.0
         return button
@@ -298,7 +296,8 @@ class StoreViewController: UIViewController {
             ])
         }
         
-        
+        closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
+        purchaseButton.addTarget(self, action: #selector(tapPurchaseButton), for: .touchUpInside)
         
         let tosTap = UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:)))
         tosLinkLabel.addGestureRecognizer(tosTap)
