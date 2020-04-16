@@ -189,6 +189,12 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         //First we check if the user has a valid subscription
         guard StoreManager.shared.isSubscriptionValid == true else {
+            
+            
+            
+            
+            
+            
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
