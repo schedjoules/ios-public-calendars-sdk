@@ -73,7 +73,11 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public init(apiKey: String, pageIdentifier: String?, title: String?, showCloseButton: Bool = true) {
+    public init(apiKey: String,
+                pageIdentifier: String?,
+                title: String?,
+                showCloseButton: Bool = true,
+                purchaseModel: SJPurchaseModel = .freeTrial) {
         // Initialization
         self.apiClient = SchedJoulesApi(accessToken: apiKey, userId: Config.uuid)
         self.pageIdentifier = pageIdentifier
