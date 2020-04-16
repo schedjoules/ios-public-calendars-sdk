@@ -11,6 +11,11 @@ import SchedJoulesApiClient
 import StoreKit
 import Alamofire
 
+@objc public enum SJPurchaseModel: Int {
+    case freeTrial
+    case freeCalendar
+}
+
 public protocol InteractableStoreManager: class {
     func show(subscription: SubscriptionIAP?, product: SKProduct)
     func purchaseFinished()

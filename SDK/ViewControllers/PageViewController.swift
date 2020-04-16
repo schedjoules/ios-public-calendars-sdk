@@ -179,6 +179,38 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         })
     }
     
+    /// Subscribe to a calendar
+    @objc private func subscribe(sender: UIButton){
+        let cell = sender.superview as! UITableViewCell
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            sjPrint("Could not get row")
+            return
+        }
+        
+        //First we check if the user has a valid subscription
+        guard StoreManager.shared.isSubscriptionValid == true else {
+            
+            
+            
+            
+            
+            
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
+        
+        let pageSection = page!.sections[indexPath.section]
+        let item = pageSection.items[indexPath.row]
+        guard let webcal = item.url.webcalURL() else {
+            open(item: item)
+            return
+        }
+        
+        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+    }
+    
     /// Set up the activity indicator in the view and start loading
     private func setUpActivityIndicator() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
