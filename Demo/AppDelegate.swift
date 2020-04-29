@@ -53,8 +53,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc private func subscribedToCalendar(_ notification: Notification) {
-        sjPrint(notification)
+        sjPrint("notification: ", notification)
+        
+        guard let calendarUrl = notification.object as? URL else {
+            fatalError("it's not a url")
+        }
+        
+        do {
+            let freeSubscriptionRecord = FreeSubscriptionRecord()
+            try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
+                                     account: freeSubscriptionRecord.account).savePassword(calendarUrl.absoluteString)
+        } catch {
+            sjPrint("Register Free Calendar Error: ", error)
+        }
     }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
