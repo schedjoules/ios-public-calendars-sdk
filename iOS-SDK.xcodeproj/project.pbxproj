@@ -15,12 +15,18 @@
 		460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015492208987300C6E9F2 /* ArrayExtension.swift */; };
 		460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */; };
 		460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015502208987300C6E9F2 /* AnalyticsTracker.swift */; };
+		460A554F2452EFF20075355D /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A554E2452EFF20075355D /* KeychainPasswordItem.swift */; };
+		460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A554E2452EFF20075355D /* KeychainPasswordItem.swift */; };
+		460A55522452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */; };
+		460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */; };
 		4610CD16228DD54800CE25C2 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610CD15228DD53F00CE25C2 /* Reach.swift */; };
 		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
 		4629919423435B8000CA8292 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4629919323435B8000CA8292 /* NotificationName.swift */; };
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */; };
 		4657B82322BCE174003A2AE4 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B82222BCE174003A2AE4 /* DateExtension.swift */; };
+		46800B6E245959470095B244 /* WebKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46800B6D245959470095B244 /* WebKitViewController.swift */; };
+		46800B6F245959470095B244 /* WebKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46800B6D245959470095B244 /* WebKitViewController.swift */; };
 		469AA7A023215C830092CBA1 /* WeatherUnitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79B23215C830092CBA1 /* WeatherUnitCollectionViewCell.swift */; };
 		469AA7A223215C830092CBA1 /* WeatherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79C23215C830092CBA1 /* WeatherSettingsView.swift */; };
 		469AA7A423215C830092CBA1 /* WeatherUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79D23215C830092CBA1 /* WeatherUnitsViewController.swift */; };
@@ -73,6 +79,8 @@
 		460015492208987300C6E9F2 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
 		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
+		460A554E2452EFF20075355D /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
+		460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeSubscriptionRecord.swift; sourceTree = "<group>"; };
 		4610CD15228DD53F00CE25C2 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		4629919323435B8000CA8292 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
@@ -80,6 +88,7 @@
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		4657B82222BCE174003A2AE4 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		46800B6D245959470095B244 /* WebKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKitViewController.swift; sourceTree = "<group>"; };
 		469AA79B23215C830092CBA1 /* WeatherUnitCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUnitCollectionViewCell.swift; sourceTree = "<group>"; };
 		469AA79C23215C830092CBA1 /* WeatherSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSettingsView.swift; sourceTree = "<group>"; };
 		469AA79D23215C830092CBA1 /* WeatherUnitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUnitsViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +190,16 @@
 			path = Analytics;
 			sourceTree = "<group>";
 		};
+		460A554D2452EFE20075355D /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				460A554E2452EFF20075355D /* KeychainPasswordItem.swift */,
+				460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */,
+				46800B6D245959470095B244 /* WebKitViewController.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
 		468B4E35221EB98900211C2A /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +285,7 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				460A554D2452EFE20075355D /* Keychain */,
 				468B4E35221EB98900211C2A /* Store */,
 				460015422208987300C6E9F2 /* Utils */,
 				B6EF1C3D20780879003E0095 /* CalendarStoreViewController.swift */,
@@ -518,11 +538,14 @@
 				46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */,
 				4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
+				460A55522452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
+				460A554F2452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
 				4610CD16228DD54800CE25C2 /* Reach.swift in Sources */,
 				460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
+				46800B6E245959470095B244 /* WebKitViewController.swift in Sources */,
 				4657B82322BCE174003A2AE4 /* DateExtension.swift in Sources */,
 				465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */,
 				B6EF1C5E20780879003E0095 /* SettingsDetailViewController.swift in Sources */,
@@ -538,6 +561,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
+				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
+				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
