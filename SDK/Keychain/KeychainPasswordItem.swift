@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KeychainPasswordItem {
+public struct KeychainPasswordItem {
   // MARK: Types
   
   enum KeychainError: Error {
@@ -67,7 +67,7 @@ struct KeychainPasswordItem {
     return password
   }
   
-  func savePassword(_ password: String) throws {
+  public func savePassword(_ password: String) throws {
     // Encode the password into an Data object.
     let encodedPassword = password.data(using: String.Encoding.utf8)!
     
