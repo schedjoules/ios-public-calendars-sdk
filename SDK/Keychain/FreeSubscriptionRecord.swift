@@ -12,9 +12,13 @@ public class FreeSubscriptionRecord {
     
     //Keychain setup
     public let serviceName = "SchedJoules"
-    public let account = "CalendarSubscription-Test2"
+    public let account = "CalendarSubscription-Test52"
     
     func canGetFreeCalendar() -> Bool {
+        guard UserDefaults.standard.sjPurchaseModel == .freeCalendar else {
+            return false
+        }
+        
         do {
             let calendar = try KeychainPasswordItem(service: serviceName,
                                                     account: account).readPassword()
