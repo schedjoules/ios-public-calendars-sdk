@@ -8,11 +8,11 @@
 
 import UIKit
 
-class FreeSubscriptionRecord {
+public class FreeSubscriptionRecord {
     
     //Keychain setup
-    let serviceName = "SchedJoules"
-    let account = "CalendarSubscription-Test2"
+    public let serviceName = "SchedJoules"
+    public let account = "CalendarSubscription-Test2"
     
     func canGetFreeCalendar() -> Bool {
         do {
