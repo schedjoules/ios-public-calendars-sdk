@@ -57,6 +57,6 @@ extension UserDefaults {
     
     var sjPurchaseModel: SJPurchaseModel {
         get { return SJPurchaseModel(rawValue: integer(forKey: #function)) ?? .freeTrial }
-        set { set(newValue.hashValue, forKey: #function) }
+        set { set(newValue.rawValue, forKey: #function) }
     }
 }
