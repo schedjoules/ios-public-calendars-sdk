@@ -28,7 +28,7 @@ public struct KeychainPasswordItem {
   
   // MARK: Intialization
   
-  init(service: String, account: String, accessGroup: String? = nil) {
+  public init(service: String, account: String, accessGroup: String? = nil) {
     self.service = service
     self.account = account
     self.accessGroup = accessGroup
