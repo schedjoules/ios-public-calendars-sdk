@@ -16,6 +16,8 @@ public class FreeSubscriptionRecord {
     
     public init() {}
     
+    public init() {}
+    
     func canGetFreeCalendar() -> Bool {
         guard UserDefaults.standard.sjPurchaseModel == .freeCalendar else {
             return false
