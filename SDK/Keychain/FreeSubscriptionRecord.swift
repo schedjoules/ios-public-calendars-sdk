@@ -12,7 +12,7 @@ public class FreeSubscriptionRecord {
     
     //Keychain setup
     public let serviceName = "SchedJoules"
-    public let account = "CalendarSubscription-Test52"
+    public let account = "SJCalendarSubscription-\(Config.appName)"
     
     public init() {}
     
