@@ -85,6 +85,7 @@ public final class CalendarStoreViewController: UITabBarController {
         self.tintColor = ColorPalette.red
         homePageTitle = title
         self.showCloseButton = showCloseButton
+        UserDefaults.standard.sjPurchaseModel = purchaseModel
         super.init(nibName: nil, bundle: nil)
         
         // Set tab bar tint color
