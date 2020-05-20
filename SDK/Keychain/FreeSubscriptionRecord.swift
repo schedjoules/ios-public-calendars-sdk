@@ -14,6 +14,8 @@ public class FreeSubscriptionRecord {
     public let serviceName = "SchedJoules"
     public let account = "CalendarSubscription-Test52"
     
+    public init() {}
+    
     func canGetFreeCalendar() -> Bool {
         guard UserDefaults.standard.sjPurchaseModel == .freeCalendar else {
             return false
