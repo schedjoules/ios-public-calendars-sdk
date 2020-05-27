@@ -58,7 +58,7 @@ class StoreViewController: UIViewController {
     var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "FREE TRIAL"
+        label.text = "Full Access"
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
@@ -69,12 +69,12 @@ class StoreViewController: UIViewController {
     var subTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "enjoy our 1 month free trial and get full access to all available calendars"
+        label.text = "Get full access to all available calendars"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: UIFont.systemFontSize)
         return label
     }()
     
@@ -101,14 +101,27 @@ class StoreViewController: UIViewController {
         return button
     }()
     
+    var freeTrialLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Enjoy 1 month free trial"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        //label.adjustsFontSizeToFitWidth = true
+        label.textColor = .black
+        label.font = .systemFont(ofSize: UIFont.systemFontSize)
+        return label
+    }()
+    
     var priceLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Billed at _ per year there after"
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
+        //label.adjustsFontSizeToFitWidth = true
         label.alpha = 1.0
         label.textColor = .black
+        label.font = .boldSystemFont(ofSize: UIFont.systemFontSize)
         return label
     }()
     
@@ -223,8 +236,9 @@ class StoreViewController: UIViewController {
         view.addSubview(bottomView)
         view.addSubview(mainActivityIndicator)
         
-        bottomView.addSubview(purchaseButton)
+        bottomView.addSubview(freeTrialLabel)
         bottomView.addSubview(priceLabel)
+        bottomView.addSubview(purchaseButton)
         bottomView.addSubview(tosLabel)
         bottomView.addSubview(tosLinkLabel)
         bottomView.addSubview(productActivityIndicator)
@@ -254,17 +268,21 @@ class StoreViewController: UIViewController {
             mainActivityIndicator.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
             mainActivityIndicator.centerYAnchor.constraint(equalTo: layoutGuide.centerYAnchor),
             
-            purchaseButton.heightAnchor.constraint(equalToConstant: 40),
-            purchaseButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
-            purchaseButton.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 40),
-            purchaseButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -40),
+            freeTrialLabel.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
+            freeTrialLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 40),
+            freeTrialLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -40),
             
-            priceLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 8),
-            priceLabel.heightAnchor.constraint(equalToConstant: 50),
+            priceLabel.topAnchor.constraint(equalTo: freeTrialLabel.bottomAnchor, constant: 8),
+            //priceLabel.heightAnchor.constraint(equalToConstant: 50),
             priceLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
             
-            tosLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8),
+            purchaseButton.heightAnchor.constraint(equalToConstant: 40),
+            purchaseButton.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 16),
+            purchaseButton.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 40),
+            purchaseButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -40),
+            
+            tosLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 16),
             tosLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
             tosLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
             
