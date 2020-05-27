@@ -23,7 +23,6 @@ extension String {
             urlComponents?.queryItems?.append(URLQueryItem(name: "sid", value: subscriptionId))
         }
         
-        print("webcalURL: ", urlComponents?.url)
         return urlComponents?.url
     }
     
