@@ -16,7 +16,13 @@ extension String {
         let urlString = self[urlBegin..<self.endIndex]
         
         var urlComponents = URLComponents(string: "webcal://\(urlString)")
+        //UUID
         urlComponents?.queryItems?.append(URLQueryItem(name: "u", value: Config.uuid))
+        //Subscription Id
+        if let subscriptionId = UserDefaults.standard.subscriptionId {
+            urlComponents?.queryItems?.append(URLQueryItem(name: "sid", value: subscriptionId))
+        }
+        
         return urlComponents?.url
     }
     
