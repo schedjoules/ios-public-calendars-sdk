@@ -21,14 +21,18 @@ public class FreeSubscriptionRecord {
             return false
         }
         
+        return freeCalendar() != nil
+    }
+    
+    func freeCalendar() -> String? {
         do {
             let calendar = try KeychainPasswordItem(service: serviceName,
                                                     account: account).readPassword()
             print("subscribed to calendar: ", calendar)
-            return false
+            return calendar
         } catch {
             print("keychain error: ", error)
-            return true
+            return nil
         }
     }
     
