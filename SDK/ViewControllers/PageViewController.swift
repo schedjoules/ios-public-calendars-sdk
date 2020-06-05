@@ -116,7 +116,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         tableView.tableFooterView = UIView(frame: .zero)
         
         // Register table cell for reuse
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(ItemCollectionViewCell.self, forCellReuseIdentifier: "Cell")
         
         // Set up the refresh control
         refreshControl.tintColor = navigationController?.navigationBar.tintColor
@@ -177,32 +177,6 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             self.tableView.reloadData()
             self.stopLoading()
         })
-    }
-    
-    /// Subscribe to a calendar
-    @objc private func subscribe(sender: UIButton){
-        let cell = sender.superview as! UITableViewCell
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            sjPrint("Could not get row")
-            return
-        }
-        
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
-        
-        let pageSection = page!.sections[indexPath.section]
-        let item = pageSection.items[indexPath.row]
-        guard let webcal = item.url.webcalURL() else {
-            open(item: item)
-            return
-        }
-        
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
     }
     
     /// Set up the activity indicator in the view and start loading
@@ -301,43 +275,20 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Dequeue a reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ItemCollectionViewCell
+        cell.delegate = self
         
         // Get the page section
         let pageSection = page?.sections[indexPath.section]
         
         // Get the page item from the given section
-        guard let item = pageSection?.items[indexPath.row] else {
+        guard let pageItem = pageSection?.items[indexPath.row] else {
             sjPrint("Could not get page item.")
             return cell
         }
         
-        // Set text label to the page item's name
-        cell.textLabel?.text = item.name
-        
-        // Set icon (if any)
-        if item.icon != nil{
-            cell.imageView!.sd_setImage(with: item.icon!, placeholderImage: UIImage(named: "Icon_Placeholder", in: Bundle.resourceBundle,
-                                                                                    compatibleWith: nil)
-)
-        } else {
-            cell.imageView!.image = nil
-        }
-        
-        // Add subscribe button if item is a calendar item
-        if item.itemClass == .calendar {
-            let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 28, height: 28))
-            addButton.setImage(UIImage(named: "Add", in: Bundle.resourceBundle,
-                                       compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
-            addButton.imageView?.tintColor = navigationController?.navigationBar.tintColor
-            addButton.addTarget(self, action: #selector(subscribe(sender:)), for: .touchUpInside)
-            cell.accessoryView = addButton
-            cell.isUserInteractionEnabled = true
-            cell.accessoryView?.isUserInteractionEnabled = true
-        // Else add a disclosure indicator
-        } else {
-            cell.accessoryType = .disclosureIndicator
-        }
+        cell.setup(pageItem: pageItem,
+                   tintColor: navigationController?.navigationBar.tintColor)
         
         return cell
     }
@@ -413,4 +364,26 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         startLoading()
         fetchPages()
     }
+}
+
+
+extension PageViewController: ItemCollectionViewCellDelegate {
+
+    /// Subscribe to a calendar
+    func subscribe(to pageItem: PageItem) {
+        guard let webcal = pageItem.url.webcalURL() else {
+            open(item: pageItem)
+            return
+        }
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+            NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
+    }
+    
 }

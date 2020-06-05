@@ -21,6 +21,10 @@
 		465569F321C537FA00FE7064 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465569F221C537FA00FE7064 /* SettingsManager.swift */; };
 		4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */; };
 		4657B82322BCE174003A2AE4 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657B82222BCE174003A2AE4 /* DateExtension.swift */; };
+		467C70EF248A475300674885 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467C70EE248A475300674885 /* ItemCollectionViewCell.swift */; };
+		467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467C70EE248A475300674885 /* ItemCollectionViewCell.swift */; };
+		46800B6E245959470095B244 /* WebKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46800B6D245959470095B244 /* WebKitViewController.swift */; };
+		46800B6F245959470095B244 /* WebKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46800B6D245959470095B244 /* WebKitViewController.swift */; };
 		469AA7A023215C830092CBA1 /* WeatherUnitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79B23215C830092CBA1 /* WeatherUnitCollectionViewCell.swift */; };
 		469AA7A223215C830092CBA1 /* WeatherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79C23215C830092CBA1 /* WeatherSettingsView.swift */; };
 		469AA7A423215C830092CBA1 /* WeatherUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79D23215C830092CBA1 /* WeatherUnitsViewController.swift */; };
@@ -80,6 +84,8 @@
 		465569F221C537FA00FE7064 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		4657B82222BCE174003A2AE4 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		467C70EE248A475300674885 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		46800B6D245959470095B244 /* WebKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKitViewController.swift; sourceTree = "<group>"; };
 		469AA79B23215C830092CBA1 /* WeatherUnitCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUnitCollectionViewCell.swift; sourceTree = "<group>"; };
 		469AA79C23215C830092CBA1 /* WeatherSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSettingsView.swift; sourceTree = "<group>"; };
 		469AA79D23215C830092CBA1 /* WeatherUnitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherUnitsViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +291,7 @@
 				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
 				B6EF1C3920780879003E0095 /* Settings */,
 				469AA79A23215C830092CBA1 /* WeatherMap */,
+				467C70EE248A475300674885 /* ItemCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -507,6 +514,7 @@
 				469AA7AD23215D7D0092CBA1 /* StringExtension.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
 				460015512208987300C6E9F2 /* UserDefaultsKeys.swift in Sources */,
+				467C70EF248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				469AA7A623215C830092CBA1 /* WeatherDetailViewController.swift in Sources */,
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
@@ -537,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
