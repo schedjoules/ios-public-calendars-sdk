@@ -21,7 +21,7 @@ public class FreeSubscriptionRecord {
             return false
         }
         
-        return freeCalendar() != nil
+        return freeCalendar() == nil
     }
     
     func freeCalendar() -> String? {
