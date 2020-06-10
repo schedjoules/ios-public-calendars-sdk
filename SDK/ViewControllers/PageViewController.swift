@@ -181,7 +181,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             self.stopLoading()
         })
     }
-    
+  
     ///Safaridelegate
     func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
         print("activityItemsFor: ", URL, title)
@@ -215,163 +215,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         print("createWebViewWith: ", windowFeatures)
         return nil
     }
-    
-    
-    
-    
-    
-    
-    //    optional func webViewDidClose(_ webView: WKWebView)
-    //
-    //
-    //    /** @abstract Displays a JavaScript alert panel.
-    //     @param webView The web view invoking the delegate method.
-    //     @param message The message to display.
-    //     @param frame Information about the frame whose JavaScript initiated this
-    //     call.
-    //     @param completionHandler The completion handler to call after the alert
-    //     panel has been dismissed.
-    //     @discussion For user security, your app should call attention to the fact
-    //     that a specific website controls the content in this panel. A simple forumla
-    //     for identifying the controlling website is frame.request.URL.host.
-    //     The panel should have a single OK button.
-    //
-    //     If you do not implement this method, the web view will behave as if the user selected the OK button.
-    //     */
-    //    @available(iOS 8.0, *)
-    //    optional func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void)
-    //
-    //
-    //    /** @abstract Displays a JavaScript confirm panel.
-    //     @param webView The web view invoking the delegate method.
-    //     @param message The message to display.
-    //     @param frame Information about the frame whose JavaScript initiated this call.
-    //     @param completionHandler The completion handler to call after the confirm
-    //     panel has been dismissed. Pass YES if the user chose OK, NO if the user
-    //     chose Cancel.
-    //     @discussion For user security, your app should call attention to the fact
-    //     that a specific website controls the content in this panel. A simple forumla
-    //     for identifying the controlling website is frame.request.URL.host.
-    //     The panel should have two buttons, such as OK and Cancel.
-    //
-    //     If you do not implement this method, the web view will behave as if the user selected the Cancel button.
-    //     */
-    //    @available(iOS 8.0, *)
-    //    optional func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void)
-    //
-    //
-    //    /** @abstract Displays a JavaScript text input panel.
-    //     @param webView The web view invoking the delegate method.
-    //     @param prompt The prompt to display.
-    //     @param defaultText The initial text to display in the text entry field.
-    //     @param frame Information about the frame whose JavaScript initiated this call.
-    //     @param completionHandler The completion handler to call after the text
-    //     input panel has been dismissed. Pass the entered text if the user chose
-    //     OK, otherwise nil.
-    //     @discussion For user security, your app should call attention to the fact
-    //     that a specific website controls the content in this panel. A simple forumla
-    //     for identifying the controlling website is frame.request.URL.host.
-    //     The panel should have two buttons, such as OK and Cancel, and a field in
-    //     which to enter text.
-    //
-    //     If you do not implement this method, the web view will behave as if the user selected the Cancel button.
-    //     */
-    //    @available(iOS 8.0, *)
-    //    optional func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void)
-    //
-    //
-    //    /** @abstract Allows your app to determine whether or not the given element should show a preview.
-    //     @param webView The web view invoking the delegate method.
-    //     @param elementInfo The elementInfo for the element the user has started touching.
-    //     @discussion To disable previews entirely for the given element, return NO. Returning NO will prevent
-    //     webView:previewingViewControllerForElement:defaultActions: and webView:commitPreviewingViewController:
-    //     from being invoked.
-    //
-    //     This method will only be invoked for elements that have default preview in WebKit, which is
-    //     limited to links. In the future, it could be invoked for additional elements.
-    //     */
-    //    @available(iOS, introduced: 10.0, deprecated: 13.0)
-    //    optional func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool
-    //
-    //
-    //    /** @abstract Allows your app to provide a custom view controller to show when the given element is peeked.
-    //     @param webView The web view invoking the delegate method.
-    //     @param elementInfo The elementInfo for the element the user is peeking.
-    //     @param defaultActions An array of the actions that WebKit would use as previewActionItems for this element by
-    //     default. These actions would be used if allowsLinkPreview is YES but these delegate methods have not been
-    //     implemented, or if this delegate method returns nil.
-    //     @discussion Returning a view controller will result in that view controller being displayed as a peek preview.
-    //     To use the defaultActions, your app is responsible for returning whichever of those actions it wants in your
-    //     view controller's implementation of -previewActionItems.
-    //
-    //     Returning nil will result in WebKit's default preview behavior. webView:commitPreviewingViewController: will only be invoked
-    //     if a non-nil view controller was returned.
-    //     */
-    //    @available(iOS, introduced: 10.0, deprecated: 13.0)
-    //    optional func webView(_ webView: WKWebView, previewingViewControllerForElement elementInfo: WKPreviewElementInfo, defaultActions previewActions: [WKPreviewActionItem]) -> UIViewController?
-    //
-    //
-    //    /** @abstract Allows your app to pop to the view controller it created.
-    //     @param webView The web view invoking the delegate method.
-    //     @param previewingViewController The view controller that is being popped.
-    //     */
-    //    @available(iOS, introduced: 10.0, deprecated: 13.0)
-    //    optional func webView(_ webView: WKWebView, commitPreviewingViewController previewingViewController: UIViewController)
-    //
-    //
-    //    // TARGET_OS_IPHONE
-    //
-    //
-    //    /**
-    //     * @abstract Called when a context menu interaction begins.
-    //     *
-    //     * @param webView The web view invoking the delegate method.
-    //     * @param elementInfo The elementInfo for the element the user is touching.
-    //     * @param completionHandler A completion handler to call once a it has been decided whether or not to show a context menu.
-    //     * Pass a valid UIContextMenuConfiguration to show a context menu, or pass nil to not show a context menu.
-    //     */
-    //    @available(iOS 13.0, *)
-    //    optional func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo, completionHandler: @escaping (UIContextMenuConfiguration?) -> Void)
-    //
-    //
-    //
-    //    /**
-    //     * @abstract Called when the context menu will be presented.
-    //     *
-    //     * @param webView The web view invoking the delegate method.
-    //     * @param elementInfo The elementInfo for the element the user is touching.
-    //     */
-    //    @available(iOS 13.0, *)
-    //    optional func webView(_ webView: WKWebView, contextMenuWillPresentForElement elementInfo: WKContextMenuElementInfo)
-    //
-    //
-    //
-    //    /**
-    //     * @abstract Called when the context menu configured by the UIContextMenuConfiguration from
-    //     * webView:contextMenuConfigurationForElement:completionHandler: is committed. That is, when
-    //     * the user has selected the view provided in the UIContextMenuContentPreviewProvider.
-    //     *
-    //     * @param webView The web view invoking the delegate method.
-    //     * @param elementInfo The elementInfo for the element the user is touching.
-    //     * @param animator The animator to use for the commit animation.
-    //     */
-    //    @available(iOS 13.0, *)
-    //    optional func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo, willCommitWithAnimator animator: UIContextMenuInteractionCommitAnimating)
-    //
-    //
-    //
-    //    /**
-    //     * @abstract Called when the context menu ends, either by being dismissed or when a menu action is taken.
-    //     *
-    //     * @param webView The web view invoking the delegate method.
-    //     * @param elementInfo The elementInfo for the element the user is touching.
-    //     */
-    //    @available(iOS 13.0, *)
-    //    optional func webView(_ webView: WKWebView, contextMenuDidEndForElement elementInfo: WKContextMenuElementInfo)
-    
-    
-    
-    
+  
     /// Subscribe to a calendar
     @objc private func subscribe(sender: UIButton){
         let cell = sender.superview as! UITableViewCell
@@ -425,7 +269,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         NotificationCenter.default.post(name: .subscribedToCalendar, object: url)
     }
-    
+  
     /// Set up the activity indicator in the view and start loading
     private func setUpActivityIndicator() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -536,33 +380,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         
         cell.setup(pageItem: pageItem,
                    tintColor: navigationController?.navigationBar.tintColor)
-        // Set text label to the page item's name
-        cell.textLabel?.text = item.name
-        
-        // Set icon (if any)
-        if item.icon != nil{
-            cell.imageView!.sd_setImage(with: item.icon!, placeholderImage: UIImage(named: "Icon_Placeholder", in: Bundle.resourceBundle,
-                                                                                    compatibleWith: nil)
-            )
-        } else {
-            cell.imageView!.image = nil
-        }
-        
-        // Add subscribe button if item is a calendar item
-        if item.itemClass == .calendar {
-            let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 28, height: 28))
-            addButton.setImage(UIImage(named: "Add", in: Bundle.resourceBundle,
-                                       compatibleWith: nil)?.withRenderingMode(.alwaysTemplate), for: .normal)
-            addButton.imageView?.tintColor = navigationController?.navigationBar.tintColor
-            addButton.addTarget(self, action: #selector(subscribe(sender:)), for: .touchUpInside)
-            cell.accessoryView = addButton
-            cell.isUserInteractionEnabled = true
-            cell.accessoryView?.isUserInteractionEnabled = true
-            // Else add a disclosure indicator
-        } else {
-            cell.accessoryType = .disclosureIndicator
-        }
-        
         return cell
     }
     
