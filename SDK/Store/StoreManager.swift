@@ -11,14 +11,19 @@ import SchedJoulesApiClient
 import StoreKit
 import Alamofire
 
-protocol InteractableStoreManager: class {
+@objc public enum SJPurchaseModel: Int {
+    case freeTrial
+    case freeCalendar
+}
+
+public protocol InteractableStoreManager: class {
     func show(subscription: SubscriptionIAP?, product: SKProduct)
     func purchaseFinished()
     func purchaseFailed(errorDescription: String?)
 }
 
 
-class StoreManager: NSObject {
+public class StoreManager: NSObject {
     
     weak var presentable: InteractableStoreManager?
     
@@ -49,7 +54,7 @@ class StoreManager: NSObject {
     /**
      Initialize StoreManager and load subscriptions SKProducts from Store
      */
-    static let shared = StoreManager()
+    public static let shared = StoreManager()
     
     func Begin(){
         sjPrint("StoreManager initialized")
@@ -201,7 +206,7 @@ class StoreManager: NSObject {
 //The delegate receives the product information that the request was interested in.
 extension StoreManager: SKProductsRequestDelegate{
     
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+    public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         let products = response.products as [SKProduct]
         
         guard let firstProduct = products.first else {

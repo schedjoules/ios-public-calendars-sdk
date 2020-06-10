@@ -25,9 +25,12 @@
 
 import UIKit
 import SchedJoulesApiClient
+import SafariServices
+import WebKit
 
-final class PageViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
-                                            UISearchBarDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
+
+class PageViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
+UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
     
     // - MARK: Public Properties
     
@@ -41,7 +44,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     
     /// The returned Pages object from the query.
     private var page: Page?
-
+    
     /// A temporary variable to hold the Pages object while searching.
     private var tempPage: Page?
     
@@ -67,9 +70,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     private let isSearchEnabled: Bool
     
     // - MARK: Initialization
-
+    
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `PageViewController`
-    must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
+     must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
     required init?(coder aDecoder: NSCoder) {
         fatalError("PageViewController must only be initialized programatically.")
     }
@@ -94,7 +97,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Fetch the pages from the API
         fetchPages()
-
+        
         // Create a table view
         tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -178,7 +181,89 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             self.stopLoading()
         })
     }
+  
+    ///Safaridelegate
+    func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
+        print("activityItemsFor: ", URL, title)
+        return []
+    }
     
+    func safariViewController(_ controller: SFSafariViewController, excludedActivityTypesFor URL: URL, title: String?) -> [UIActivity.ActivityType] {
+        print("excludedActivityTypesFor: ", URL, title)
+        return []
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        print("safariViewControllerDidFinish: ", controller)
+    }
+    
+    func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
+        print("didCompleteInitialLoad: ", controller)
+        print("didCompleteInitialLoad: ", didLoadSuccessfully)
+    }
+    
+    
+    func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
+        print("initialLoadDidRedirectTo: ", controller)
+        print("initialLoadDidRedirectTo: ", URL)
+    }
+    
+    //WKWebView delegate
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        print("createWebViewWith: ", configuration)
+        print("createWebViewWith: ", navigationAction)
+        print("createWebViewWith: ", windowFeatures)
+        return nil
+    }
+  
+    /// Subscribe to a calendar
+    @objc private func subscribe(sender: UIButton){
+        let cell = sender.superview as! UITableViewCell
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            sjPrint("Could not get row")
+            return
+        }
+        
+        
+        let pageSection = page!.sections[indexPath.section]
+        let item = pageSection.items[indexPath.row]
+        guard let webcal = item.url.webcalURL() else {
+            open(item: item)
+            return
+        }
+        
+        //First we check if the user has a valid subscription or if they haven't downloaded the free calendar
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            openCalendar(url: webcal)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(item.name).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                self.openCalendar(url: webcal)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+            
+            
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
+    }
+    
+    private func openCalendar(url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        NotificationCenter.default.post(name: .subscribedToCalendar, object: url)
+    }
+  
     /// Set up the activity indicator in the view and start loading
     private func setUpActivityIndicator() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -286,10 +371,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             sjPrint("Could not get page item.")
             return cell
         }
-        
+      
         cell.setup(pageItem: pageItem,
                    tintColor: navigationController?.navigationBar.tintColor)
-        
         return cell
     }
     
@@ -312,12 +396,12 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             let languageSetting = SettingsManager.get(type: .language)
             let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
                                                   locale: languageSetting.code)
-             let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
-                                                                    pageQuery: singlePageQuery,
-                                                                    searchEnabled: true)
+            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
+                                                             pageQuery: singlePageQuery,
+                                                             searchEnabled: true)
             
             navigationController?.pushViewController(pageVC, animated: true)
-        // Show the selected calendar
+            // Show the selected calendar
         } else {
             let item = pageSection.items[indexPath.row]
             open(item: item)
@@ -330,14 +414,14 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         tempPage = page
     }
-
+    
     // Perfrom the search
     func updateSearchResults(for searchController: UISearchController) {
         // Get the search text from the search bar
         guard let queryText = searchController.searchBar.text else {
             return
         }
-    
+        
         // Only search if more than 2 charachters were entered
         if queryText.count > 2 {
             apiClient.execute(query: SearchQuery(query: queryText), completion: { result in

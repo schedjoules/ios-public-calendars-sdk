@@ -26,13 +26,13 @@
 import UIKit
 import SchedJoulesApiClient
 
-@objc protocol CalendarStoreDelegate: class {
+@objc public protocol CalendarStoreDelegate: class {
     func calendarStoreDidClose()
 }
 
 public final class CalendarStoreViewController: UITabBarController {
     /// Delegate
-    weak var calendarStoreDelegate: CalendarStoreDelegate?
+    public weak var calendarStoreDelegate: CalendarStoreDelegate?
     
     /// Colors used by the SDK.
     public struct ColorPalette {
@@ -73,7 +73,11 @@ public final class CalendarStoreViewController: UITabBarController {
      - parameter pageIdentifier: The page identifier for the the home page.
      - parameter title: The title for the `navigtaion bar` in the home page.
      */
-    public init(apiKey: String, pageIdentifier: String?, title: String?, showCloseButton: Bool = true) {
+    public init(apiKey: String,
+                pageIdentifier: String?,
+                title: String?,
+                showCloseButton: Bool = true,
+                purchaseModel: SJPurchaseModel = .freeTrial) {
         // Initialization
         self.apiClient = SchedJoulesApi(accessToken: apiKey, userId: Config.uuid)
         self.pageIdentifier = pageIdentifier
@@ -81,6 +85,7 @@ public final class CalendarStoreViewController: UITabBarController {
         self.tintColor = ColorPalette.red
         homePageTitle = title
         self.showCloseButton = showCloseButton
+        UserDefaults.standard.sjPurchaseModel = purchaseModel
         super.init(nibName: nil, bundle: nil)
         
         // Set tab bar tint color
