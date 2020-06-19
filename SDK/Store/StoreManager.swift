@@ -14,6 +14,17 @@ import Alamofire
 @objc public enum SJPurchaseModel: Int {
     case freeTrial
     case freeCalendar
+    
+    var trackingValue: String {
+        get {
+            switch self {
+            case .freeTrial:
+                return "free_trial"
+            case .freeCalendar:
+                return "free_calendar"
+            }
+        }
+    }
 }
 
 public protocol InteractableStoreManager: class {

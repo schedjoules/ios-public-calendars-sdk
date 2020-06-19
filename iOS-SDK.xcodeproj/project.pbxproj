@@ -224,6 +224,13 @@
 			path = WeatherMap;
 			sourceTree = "<group>";
 		};
+		46AC46F4249CBB5300AB561D /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		8F02A3D2818F97746AAFE47C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +295,7 @@
 		B6D3E05A204D97CE0044C800 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				46AC46F4249CBB5300AB561D /* Analytics */,
 				460A554D2452EFE20075355D /* Keychain */,
 				468B4E35221EB98900211C2A /* Store */,
 				460015422208987300C6E9F2 /* Utils */,
