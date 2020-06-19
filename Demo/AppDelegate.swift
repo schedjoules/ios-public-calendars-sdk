@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Add observer to listen for subscribe notifications
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(subscribedToCalendar(_:)),
-                                               name: .subscribedToCalendar,
+                                               name: .sjSubscribedToCalendar,
                                                object: nil)
         
         // Show the calendar store to either iPhone or iPad

@@ -233,7 +233,7 @@ class WeatherDetailViewController: UIViewController {
         
         //Open calendar to subscribe
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+        NotificationCenter.default.post(name: .sjSubscribedToCalendar, object: webcal)
     }
     
 }
