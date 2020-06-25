@@ -26,8 +26,4 @@ public extension Notification.Name {
         return .init("CalendarStore.start.free.trial")
     }
     
-    static var SJAddCalendar: Notification.Name {
-        return .init("CalendarStore.add.calendar")
-    }
-    
 }

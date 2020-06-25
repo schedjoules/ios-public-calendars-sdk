@@ -464,6 +464,12 @@ extension PageViewController: ItemCollectionViewCellDelegate {
 
     /// Subscribe to a calendar
     func subscribe(to pageItem: PageItem) {
+
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.name,
+                                              calendarURL: pageItem.url.webcalURL()?.absoluteString ?? "")
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJPlustButtonClicked, object: sjEvent)
+        
         guard let webcal = pageItem.url.webcalURL() else {
             open(item: pageItem)
             return
@@ -471,8 +477,6 @@ extension PageViewController: ItemCollectionViewCellDelegate {
         
         if StoreManager.shared.isSubscriptionValid == true {
             UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-            let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.name, calendarURL: webcal.absoluteString)
-            let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
             NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)

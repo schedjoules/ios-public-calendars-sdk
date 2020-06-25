@@ -37,8 +37,6 @@
 		469AA7A823215C830092CBA1 /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79F23215C830092CBA1 /* WeatherMapViewController.swift */; };
 		469AA7AB23215D520092CBA1 /* WeatherPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA7AA23215D520092CBA1 /* WeatherPointAnnotation.swift */; };
 		469AA7AD23215D7D0092CBA1 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA7AC23215D7D0092CBA1 /* StringExtension.swift */; };
-		46AC46F6249CC46F00AB561D /* SJAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AC46F5249CC46F00AB561D /* SJAnalytics.swift */; };
-		46AC46F7249CC46F00AB561D /* SJAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AC46F5249CC46F00AB561D /* SJAnalytics.swift */; };
 		46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */; };
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
@@ -103,7 +101,6 @@
 		469AA79F23215C830092CBA1 /* WeatherMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		469AA7AA23215D520092CBA1 /* WeatherPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPointAnnotation.swift; sourceTree = "<group>"; };
 		469AA7AC23215D7D0092CBA1 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		46AC46F5249CC46F00AB561D /* SJAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJAnalytics.swift; sourceTree = "<group>"; };
 		46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		46F45C5222608B5D0005EAB6 /* StoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -232,7 +229,6 @@
 		46AC46F4249CBB5300AB561D /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				46AC46F5249CC46F00AB561D /* SJAnalytics.swift */,
 				465C78F5249CC69200A832DB /* SJAnalyticsObject.swift */,
 			);
 			path = Analytics;
@@ -535,7 +531,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				460015522208987300C6E9F2 /* SJLogger.swift in Sources */,
-				46AC46F6249CC46F00AB561D /* SJAnalytics.swift in Sources */,
 				46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */,
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
 				4629919423435B8000CA8292 /* NotificationName.swift in Sources */,
@@ -587,7 +582,6 @@
 				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
 				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
-				46AC46F7249CC46F00AB561D /* SJAnalytics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
