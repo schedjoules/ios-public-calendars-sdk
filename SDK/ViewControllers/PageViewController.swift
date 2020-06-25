@@ -267,7 +267,10 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     
     private func openCalendar(url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .sjSubscribedToCalendar, object: url)
+        
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: title ?? "", calendarURL: url.absoluteString)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
   
     /// Set up the activity indicator in the view and start loading
@@ -468,7 +471,9 @@ extension PageViewController: ItemCollectionViewCellDelegate {
         
         if StoreManager.shared.isSubscriptionValid == true {
             UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-            NotificationCenter.default.post(name: .sjSubscribedToCalendar, object: webcal)
+            let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.name, calendarURL: webcal.absoluteString)
+            let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+            NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
