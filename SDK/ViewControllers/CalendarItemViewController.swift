@@ -135,8 +135,11 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .sjSubscribedToCalendar, object: webcal)
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: title ?? "", calendarURL: webcal.absoluteString)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        
+        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: webcal)
     }
     
     // Show network indicator and activity indicator

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Add observer to listen for subscribe notifications
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(subscribedToCalendar(_:)),
-                                               name: .sjSubscribedToCalendar,
+                                               name: .SJSubscribedToCalendar,
                                                object: nil)
         
         // Show the calendar store to either iPhone or iPad
@@ -55,14 +55,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc private func subscribedToCalendar(_ notification: Notification) {
         sjPrint("notification: ", notification)
         
-        guard let calendarUrl = notification.object as? URL else {
-            fatalError("it's not a url")
+        guard let analyticsEvent = notification.object as? SJAnalyticsObject else {
+            fatalError("it's not a Analytics event")
+        }
+        
+        guard let calendarURL = analyticsEvent.calendar?.calendarURL else {
+            return
         }
         
         do {
             let freeSubscriptionRecord = FreeSubscriptionRecord()
             try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
-                                     account: freeSubscriptionRecord.account).savePassword(calendarUrl.absoluteString)
+                                     account: freeSubscriptionRecord.account).savePassword(calendarURL)
         } catch {
             sjPrint("Register Free Calendar Error: ", error)
         }
