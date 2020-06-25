@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct SJAnalyticsCalendar {
+public struct SJAnalyticsCalendar {
     let calendarId: String
     let calendarURL: String
 }
 
-struct SJAnalyticsObject {
+public struct SJAnalyticsObject {
     
     let calendar: SJAnalyticsCalendar?
     let purchaseMode: SJPurchaseModel?
