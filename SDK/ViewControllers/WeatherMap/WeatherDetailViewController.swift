@@ -26,6 +26,7 @@ class WeatherDetailViewController: UIViewController {
     var selectedSetting: WeatherSettingsItem?
     let apiClient: Api
     let urlString: String
+    let calendarId: Int
     
     
     //UI
@@ -65,10 +66,11 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     
-    init(annotation: WeatherPointAnnotation, apiClient: Api, url: String) {
+    init(annotation: WeatherPointAnnotation, apiClient: Api, url: String, calendarId: Int) {
         self.weatherPointAnnotation = annotation
         self.apiClient = apiClient
         self.urlString = url
+        self.calendarId = calendarId
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -233,7 +235,7 @@ class WeatherDetailViewController: UIViewController {
         //Open calendar to subscribe
         UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
         
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: title ?? "", calendarURL: webcal.absoluteString)
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: webcal)
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }

@@ -22,6 +22,10 @@ public extension Notification.Name {
         return .init("CalendarStore.plus.button.clicked")
     }
     
+    static var SJSubscribeButtonClicked: Notification.Name {
+        return .init("CalendarStore.subscribe.button.clicked")
+    }
+    
     static var SJStartFreeTrial: Notification.Name {
         return .init("CalendarStore.start.free.trial")
     }

@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let freeSubscriptionRecord = FreeSubscriptionRecord()
             try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
-                                     account: freeSubscriptionRecord.account).savePassword(calendarURL)
+                                     account: freeSubscriptionRecord.account).savePassword(calendarURL.absoluteString)
         } catch {
             sjPrint("Register Free Calendar Error: ", error)
         }
