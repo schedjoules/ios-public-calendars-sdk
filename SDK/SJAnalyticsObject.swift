@@ -42,7 +42,7 @@ public struct SJAnalyticsObject {
     public func asDictionary() -> [String: AnyObject] {
         var dictionary: [String: AnyObject] = [:]
         if let validCalendar = self.calendar {
-            dictionary["calendar_id"] = validCalendar.calendarId as AnyObject
+            dictionary["calendar_id"] = "\(validCalendar.calendarId)" as AnyObject
             
             if let validURL = validCalendar.calendarURL {
                 if let webcalURL = validURL.absoluteString.webcalURL() {
@@ -55,7 +55,7 @@ public struct SJAnalyticsObject {
             dictionary["purchase_mode"] = validPurchaseMode.trackingValue as AnyObject
         }
         
-        dictionary["is_free"] = self.isFree as AnyObject
+        dictionary["is_free"] = NSNumber(value: self.isFree) as AnyObject
         
         if let validScreenName = self.screenName {
             dictionary["screen_name"] = validScreenName as AnyObject
