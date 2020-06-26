@@ -133,14 +133,39 @@ final class CalendarItemViewController: UIViewController {
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribeButtonClicked, object: sjEvent)
         
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
+        guard let webcal = icsURL.absoluteString.webcalURL() else {
+            return
+        }
+        
+        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        
+        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+            NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let calendarName = self.title ?? "calendar"
+            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                self.openCalendar(calendarId: self.itemId, url: webcal)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+        } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
         
-        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
     
     // Show network indicator and activity indicator
@@ -186,6 +211,14 @@ final class CalendarItemViewController: UIViewController {
         loadErrorView.refreshButton.layer.borderColor = navigationController?.navigationBar.tintColor.cgColor
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
+    }
+    
+    private func openCalendar(calendarId: Int, url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: url)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
 }
 

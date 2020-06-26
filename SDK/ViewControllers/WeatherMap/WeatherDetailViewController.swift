@@ -140,7 +140,7 @@ class WeatherDetailViewController: UIViewController {
             subscribeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             subscribeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             subscribeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
-            ])
+        ])
         
         mapView.showAnnotations([weatherPointAnnotation], animated: true)
         subscribeButton.addTarget(self, action: #selector(subscribeButtonPressed(_:)), for: .touchUpInside)
@@ -212,13 +212,6 @@ class WeatherDetailViewController: UIViewController {
     // MARK: Subscription
     
     @objc func subscribeButtonPressed(_ sender: UIButton) {
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
-        
         //Decompose the url for weather ot use user's settings
         var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.id)")
         if let weatherSettings = self.weatherSettings {
@@ -232,8 +225,30 @@ class WeatherDetailViewController: UIViewController {
             return
         }
         
-        //Open calendar to subscribe
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        
+        
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let calendarName = self.title ?? "calendar"
+            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+        }
         
         let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: webcal)
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
