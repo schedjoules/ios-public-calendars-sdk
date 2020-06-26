@@ -181,7 +181,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             self.stopLoading()
         })
     }
-  
+    
     ///Safaridelegate
     func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
         print("activityItemsFor: ", URL, title)
@@ -215,7 +215,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         print("createWebViewWith: ", windowFeatures)
         return nil
     }
-  
+    
     /// Subscribe to a calendar
     @objc private func subscribe(sender: UIButton){
         let cell = sender.superview as! UITableViewCell
@@ -261,7 +261,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
-            return
         }
     }
     
@@ -272,7 +271,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
-  
+    
     /// Set up the activity indicator in the view and start loading
     private func setUpActivityIndicator() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -462,10 +461,10 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
 
 
 extension PageViewController: ItemCollectionViewCellDelegate {
-
+    
     /// Subscribe to a calendar
     func subscribe(to pageItem: PageItem) {
-
+        
         let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.itemID ?? 0,
                                               calendarURL: URL(string: pageItem.url))
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
@@ -476,14 +475,32 @@ extension PageViewController: ItemCollectionViewCellDelegate {
             return
         }
         
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
         if StoreManager.shared.isSubscriptionValid == true {
             UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
             NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+            
+            
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
+        
     }
     
 }
