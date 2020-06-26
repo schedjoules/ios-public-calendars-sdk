@@ -40,6 +40,9 @@ final class CalendarItemViewController: UIViewController {
     /// URL to the .ics file.
     var icsURL: URL!
     
+    ///The id of the calendar
+    var itemId: Int = 0
+    
     // - MARK: Private Properties
     
     /// The parsed events.
@@ -124,6 +127,12 @@ final class CalendarItemViewController: UIViewController {
     
     // Subscribe button pressed
     @IBAction func subscribeButtonPressed(_ sender: UIButton) {
+        //Analytics
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: itemId,
+                                              calendarURL: icsURL)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJSubscribeButtonClicked, object: sjEvent)
+        
         //First we check if the user has a valid subscription
         guard StoreManager.shared.isSubscriptionValid == true else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
@@ -131,15 +140,7 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        guard let webcal = icsURL.absoluteString.webcalURL() else {
-            return
-        }
-        
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: title ?? "", calendarURL: webcal.absoluteString)
-        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
-        
-        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: webcal)
     }
     
     // Show network indicator and activity indicator

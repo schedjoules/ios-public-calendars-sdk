@@ -242,14 +242,14 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         let freeSubscriptionRecord = FreeSubscriptionRecord()
         
         if StoreManager.shared.isSubscriptionValid == true {
-            openCalendar(url: webcal)
+            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
             let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(item.name).\n\nYou can't undo this step",
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
                                              style: .default) { (_) in
-                                                self.openCalendar(url: webcal)
+                                                self.openCalendar(calendarId: item.itemID ?? 0, url: webcal)
             }
             let cancelAction = UIAlertAction(title: "Cancel",
                                              style: .cancel)
@@ -265,10 +265,10 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         }
     }
     
-    private func openCalendar(url: URL) {
+    private func openCalendar(calendarId: Int, url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: title ?? "", calendarURL: url.absoluteString)
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: url)
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
@@ -324,7 +324,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     //Open calendar details
     func open(item: PageItem) {
         if item.url.contains("weather") {
-            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url)
+            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url, calendarId: item.itemID ?? 0)
             navigationController?.pushViewController(weatherViewController, animated: true)
         } else {
             let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
@@ -332,6 +332,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             calendarVC.icsURL = URL(string: item.url)
             calendarVC.title = item.name
             calendarVC.apiClient = apiClient
+            calendarVC.itemId = item.itemID ?? 0
             navigationController?.pushViewController(calendarVC, animated: true)
         }
     }
@@ -465,8 +466,8 @@ extension PageViewController: ItemCollectionViewCellDelegate {
     /// Subscribe to a calendar
     func subscribe(to pageItem: PageItem) {
 
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.name,
-                                              calendarURL: pageItem.url.webcalURL()?.absoluteString ?? "")
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.itemID ?? 0,
+                                              calendarURL: URL(string: pageItem.url))
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJPlustButtonClicked, object: sjEvent)
         
