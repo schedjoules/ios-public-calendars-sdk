@@ -146,7 +146,7 @@ final class CalendarItemViewController: UIViewController {
             NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
             let calendarName = self.title ?? "calendar"
-            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
