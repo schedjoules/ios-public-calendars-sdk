@@ -137,8 +137,6 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
         
         let freeSubscriptionRecord = FreeSubscriptionRecord()
