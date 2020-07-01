@@ -244,7 +244,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         if StoreManager.shared.isSubscriptionValid == true {
             openCalendar(calendarId: item.itemID ?? 0, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(item.name).\n\nYou can't undo this step",
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
@@ -481,7 +481,7 @@ extension PageViewController: ItemCollectionViewCellDelegate {
             UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
             NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let freeCalendarAlertController = UIAlertController(title: "Firs Calendar for Free",
+            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
