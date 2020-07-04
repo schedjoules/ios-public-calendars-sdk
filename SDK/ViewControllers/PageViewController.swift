@@ -478,8 +478,7 @@ extension PageViewController: ItemCollectionViewCellDelegate {
         let freeSubscriptionRecord = FreeSubscriptionRecord()
         
         if StoreManager.shared.isSubscriptionValid == true {
-            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-            NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+            self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
             let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
