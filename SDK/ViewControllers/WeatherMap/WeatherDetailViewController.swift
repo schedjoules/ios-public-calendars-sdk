@@ -226,12 +226,10 @@ class WeatherDetailViewController: UIViewController {
             return
         }
         
-        
-        
         let freeSubscriptionRecord = FreeSubscriptionRecord()
         
         if StoreManager.shared.isSubscriptionValid == true {
-            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+            self.openCalendar(calendarId: calendarId, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
             let calendarName = self.title ?? "calendar"
             let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
@@ -239,7 +237,7 @@ class WeatherDetailViewController: UIViewController {
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
                                              style: .default) { (_) in
-                                                UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
+                                             self.openCalendar(calendarId: self.calendarId, url: webcal)
             }
             let cancelAction = UIAlertAction(title: "Cancel",
                                              style: .cancel)
@@ -250,8 +248,12 @@ class WeatherDetailViewController: UIViewController {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
         }
+    }
+    
+    private func openCalendar(calendarId: Int, url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
         
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: webcal)
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: url)
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }

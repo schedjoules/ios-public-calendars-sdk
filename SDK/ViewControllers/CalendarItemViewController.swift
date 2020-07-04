@@ -137,13 +137,10 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
-        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
-        
         let freeSubscriptionRecord = FreeSubscriptionRecord()
         
         if StoreManager.shared.isSubscriptionValid == true {
-            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-            NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+            self.openCalendar(calendarId: self.itemId, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
             let calendarName = self.title ?? "calendar"
             let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
@@ -218,6 +215,7 @@ final class CalendarItemViewController: UIViewController {
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
         NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
     }
+    
 }
 
 
