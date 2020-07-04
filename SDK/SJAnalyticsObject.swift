@@ -10,12 +10,12 @@ import Foundation
 
 public struct SJAnalyticsCalendar {
     let calendarId: Int
-    let calendarURL: URL?
+    public let calendarURL: URL?
 }
 
 public struct SJAnalyticsObject {
     
-    let calendar: SJAnalyticsCalendar?
+    public let calendar: SJAnalyticsCalendar?
     let purchaseMode: SJPurchaseModel?
     let isFree: Bool
     let screenName: String?
