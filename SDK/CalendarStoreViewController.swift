@@ -243,6 +243,10 @@ extension CalendarStoreViewController {
         })
         alert.addAction(dismissAction)
         
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(origin: self.view.center,
+                                                                 size: CGSize(width: 1, height: 1))
+        
         self.present(alert, animated: true , completion: nil)
     }
 

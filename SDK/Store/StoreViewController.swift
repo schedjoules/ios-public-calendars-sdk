@@ -420,6 +420,10 @@ extension StoreViewController: InteractableStoreManager {
             }
             alertController.addAction(okAction)
             
+            alertController.popoverPresentationController?.sourceView = self.view
+            alertController.popoverPresentationController?.sourceRect = CGRect(origin: self.view.center,
+                                                                               size: CGSize(width: 1, height: 1))
+            
             self.present(alertController, animated: true, completion: nil)
         }
     }

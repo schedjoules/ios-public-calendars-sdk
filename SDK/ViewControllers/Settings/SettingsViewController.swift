@@ -245,13 +245,15 @@ extension SettingsViewController: UITableViewDelegate {
         let section = sections[indexPath.section]
         let item = section.items[indexPath.row]
         
+        let cell = tableView.cellForRow(at: indexPath)
+        
         //Separate the code by section because each one uses a different design
         switch section.kind {
         case .about, .contact:
             if let url = item.data as? URL {
                 open(url: url, for: section)
             } else if let email = item.data as? String {
-                presentAlertFor(email: email)
+                presentAlertFor(email: email, source: cell ?? self.view)
             } else {
                 sjPrint("invalid url for item: \(item.title)")
                 return
@@ -280,12 +282,12 @@ extension SettingsViewController: UITableViewDelegate {
                 storeManager.restorePurchases()
                 showLoader(animate: true)
             } else {
-                presentSubscriptionActive(restored: false)
+                presentSubscriptionActive(restored: false, source: cell ?? self.view)
             }
         }
     }
     
-    private func presentSubscriptionActive(restored: Bool) {
+    private func presentSubscriptionActive(restored: Bool, source: UIView) {
         DispatchQueue.main.async {
             let message = restored == true ? "Your purchases are restored!" : "Your subscription is active!"
             
@@ -297,6 +299,10 @@ extension SettingsViewController: UITableViewDelegate {
                                             alertController.dismiss(animated: true, completion: nil)
             }
             alertController.addAction(okAction)
+            
+            //Present on ipad
+            alertController.popoverPresentationController?.sourceView = source
+            alertController.popoverPresentationController?.sourceRect = source.bounds
             
             self.showLoader(animate: false)
             self.present(alertController, animated: true, completion: nil)
@@ -320,7 +326,7 @@ extension SettingsViewController: UITableViewDelegate {
     
     
     //MARK: Handle emailing support
-    private func presentAlertFor(email: String) {
+    private func presentAlertFor(email: String, source: UIView) {
         let subject = "Calendar Store Feedback"
         
         let emailActionSheet = UIAlertController(title: "Choose an email client",
@@ -340,7 +346,6 @@ extension SettingsViewController: UITableViewDelegate {
             }
             emailActionSheet.addAction(emailAction)
         }
-        
         
         let gmailUrlString = String(format: "googlegmail:///co?to=%@&subject=%@&body=%@", email, subject, self.feedbackInitialText(html: false))
         let gmailEncodedUrl = gmailUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -368,6 +373,10 @@ extension SettingsViewController: UITableViewDelegate {
             emailActionSheet.dismiss(animated: true)
         }
         emailActionSheet.addAction(cancelAction)
+        
+        //Present on ipad
+        emailActionSheet.popoverPresentationController?.sourceView = source
+        emailActionSheet.popoverPresentationController?.sourceRect = source.bounds
         
         present(emailActionSheet, animated: true, completion: nil)
     }
@@ -448,7 +457,7 @@ extension SettingsViewController: InteractableStoreManager {
     
     func purchaseFinished() {
         showLoader(animate: false)
-        presentSubscriptionActive(restored: true)
+        presentSubscriptionActive(restored: true, source: self.view)
     }
     
     func purchaseFailed(errorDescription: String?) {
@@ -472,6 +481,11 @@ extension SettingsViewController: InteractableStoreManager {
                                                     alertController.dismiss(animated: true, completion: nil)
                 }
                 alertController.addAction(dismissAction)
+                
+                //Present on ipad
+                alertController.popoverPresentationController?.sourceView = self.view
+                alertController.popoverPresentationController?.sourceRect = CGRect(origin: self.view.center,
+                                                                                   size: CGSize(width: 1, height: 1))
                 
                 self.present(alertController, animated: true, completion: nil)
             }
