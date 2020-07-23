@@ -236,7 +236,7 @@ class WeatherDetailViewController: UIViewController {
                 preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
                                              style: .default) { (_) in
-                                             self.openCalendar(calendarId: self.calendarId, url: webcal)
+                                                self.openCalendar(calendarId: self.calendarId, url: webcal)
             }
             let cancelAction = UIAlertAction(title: "Cancel",
                                              style: .cancel)
@@ -250,11 +250,20 @@ class WeatherDetailViewController: UIViewController {
     }
     
     private func openCalendar(calendarId: Int, url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: url)
-        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
-        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        let subscriber = SJDeviceCalendarSubscriber.shared
+        subscriber.subscribe(to: calendarId,
+                             url: url,
+                             screenName: self.title) { (error) in
+                                if error == nil {
+                                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                                        message: error?.localizedDescription,
+                                                                                        preferredStyle: .alert)
+                                    let cancelAction = UIAlertAction(title: "Ok",
+                                                                     style: .cancel)
+                                    freeCalendarAlertController.addAction(cancelAction)
+                                    self.present(freeCalendarAlertController, animated: true)
+                                }
+        }
     }
     
 }

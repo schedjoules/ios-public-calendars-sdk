@@ -53,7 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc private func subscribedToCalendar(_ notification: Notification) {
-        sjPrint("notification: ", notification)
         
         guard let analyticsEvent = notification.object as? SJAnalyticsObject else {
             fatalError("it's not a Analytics event")
@@ -64,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         do {
+            sjPrint("notification: ", notification)
             let freeSubscriptionRecord = FreeSubscriptionRecord()
             try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
                                      account: freeSubscriptionRecord.account).savePassword(calendarURL.absoluteString)
@@ -88,7 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        //Check for new subscriptions
+        SJDeviceCalendarSubscriber.shared.checkForNewCalendarsInDevice()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
