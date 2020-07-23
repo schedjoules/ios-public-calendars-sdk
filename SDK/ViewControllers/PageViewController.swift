@@ -224,13 +224,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             return
         }
         
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
-        
         let pageSection = page!.sections[indexPath.section]
         let item = pageSection.items[indexPath.row]
         guard let webcal = item.url.webcalURL() else {
@@ -244,20 +237,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         if StoreManager.shared.isSubscriptionValid == true {
             openCalendar(calendarId: item.itemID ?? 0, url: webcal)
         } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                message: "Do you want to use your Free Calendar to subscribe to: \(item.name).\n\nYou can't undo this step",
-                preferredStyle: .alert)
-            let acceptAction = UIAlertAction(title: "Ok",
-                                             style: .default) { (_) in
-                                                self.openCalendar(calendarId: item.itemID ?? 0, url: webcal)
-            }
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .cancel)
-            freeCalendarAlertController.addAction(acceptAction)
-            freeCalendarAlertController.addAction(cancelAction)
-            present(freeCalendarAlertController, animated: true)
-            
-            
+            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
@@ -265,11 +245,20 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     }
     
     private func openCalendar(calendarId: Int, url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: calendarId, calendarURL: url)
-        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
-        NotificationCenter.default.post(name: .SJSubscribedToCalendar, object: sjEvent)
+        let subscriber = SJDeviceCalendarSubscriber.shared
+        subscriber.subscribe(to: calendarId,
+                             url: url,
+                             screenName: self.title) { (error) in
+                                if error == nil {
+                                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                                        message: error?.localizedDescription,
+                                                                                        preferredStyle: .alert)
+                                    let cancelAction = UIAlertAction(title: "Ok",
+                                                                     style: .cancel)
+                                    freeCalendarAlertController.addAction(cancelAction)
+                                    self.present(freeCalendarAlertController, animated: true)
+                                }
+        }
     }
     
     /// Set up the activity indicator in the view and start loading
@@ -464,7 +453,6 @@ extension PageViewController: ItemCollectionViewCellDelegate {
     
     /// Subscribe to a calendar
     func subscribe(to pageItem: PageItem) {
-        
         let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.itemID ?? 0,
                                               calendarURL: URL(string: pageItem.url))
         let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)

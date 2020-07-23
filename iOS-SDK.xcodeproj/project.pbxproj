@@ -36,6 +36,8 @@
 		469AA7A823215C830092CBA1 /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA79F23215C830092CBA1 /* WeatherMapViewController.swift */; };
 		469AA7AB23215D520092CBA1 /* WeatherPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA7AA23215D520092CBA1 /* WeatherPointAnnotation.swift */; };
 		469AA7AD23215D7D0092CBA1 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AA7AC23215D7D0092CBA1 /* StringExtension.swift */; };
+		46AC55DE24C8495100BBBA62 /* SJCalendarSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AC55DD24C8495100BBBA62 /* SJCalendarSubscriber.swift */; };
+		46AC55DF24C8495100BBBA62 /* SJCalendarSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AC55DD24C8495100BBBA62 /* SJCalendarSubscriber.swift */; };
 		46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */; };
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
@@ -98,6 +100,7 @@
 		469AA79F23215C830092CBA1 /* WeatherMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		469AA7AA23215D520092CBA1 /* WeatherPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherPointAnnotation.swift; sourceTree = "<group>"; };
 		469AA7AC23215D7D0092CBA1 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		46AC55DD24C8495100BBBA62 /* SJCalendarSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJCalendarSubscriber.swift; sourceTree = "<group>"; };
 		46F45C5022607E800005EAB6 /* Bundle+ResourceBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ResourceBundle.swift"; sourceTree = "<group>"; };
 		46F45C5222608B5D0005EAB6 /* StoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 				B6EF1C3820780879003E0095 /* ViewControllers */,
 				B6EF1C4120780879003E0095 /* Views */,
 				B60CC7E520B0AA7200CAE3BD /* Supporting Files */,
+				46AC55DD24C8495100BBBA62 /* SJCalendarSubscriber.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -534,6 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46AC55DE24C8495100BBBA62 /* SJCalendarSubscriber.swift in Sources */,
 				460015522208987300C6E9F2 /* SJLogger.swift in Sources */,
 				46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */,
 				460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */,
@@ -581,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46AC55DF24C8495100BBBA62 /* SJCalendarSubscriber.swift in Sources */,
 				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
 				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
