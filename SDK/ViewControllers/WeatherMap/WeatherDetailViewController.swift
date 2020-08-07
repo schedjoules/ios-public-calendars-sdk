@@ -173,20 +173,20 @@ class WeatherDetailViewController: UIViewController {
     
     func dismissOptionsView() {
         //Update the setting with the new data
-        guard var weatherSettings = self.weatherSettings else {
+        guard var newWeatherSettings = self.weatherSettings else {
             return
         }
         
         if let updatedSetting = selectedSetting {
             switch updatedSetting.title {
-            case weatherSettings.rain.title:
-                weatherSettings.rain = updatedSetting
-            case weatherSettings.wind.title:
-                weatherSettings.wind = updatedSetting
-            case weatherSettings.temp.title:
-                weatherSettings.temp = updatedSetting
-            case weatherSettings.time.title:
-                weatherSettings.time = updatedSetting
+            case newWeatherSettings.rain.title:
+                newWeatherSettings.rain = updatedSetting
+            case newWeatherSettings.wind.title:
+                newWeatherSettings.wind = updatedSetting
+            case newWeatherSettings.temp.title:
+                newWeatherSettings.temp = updatedSetting
+            case newWeatherSettings.time.title:
+                newWeatherSettings.time = updatedSetting
             default:
                 break
             }
@@ -203,6 +203,7 @@ class WeatherDetailViewController: UIViewController {
             }
         }
         
+        self.weatherSettings = newWeatherSettings
         self.selectedSetting = nil
     }
     
