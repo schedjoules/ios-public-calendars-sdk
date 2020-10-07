@@ -184,35 +184,15 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     
     ///Safaridelegate
     func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
-        print("activityItemsFor: ", URL, title)
         return []
     }
     
     func safariViewController(_ controller: SFSafariViewController, excludedActivityTypesFor URL: URL, title: String?) -> [UIActivity.ActivityType] {
-        print("excludedActivityTypesFor: ", URL, title)
         return []
-    }
-    
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        print("safariViewControllerDidFinish: ", controller)
-    }
-    
-    func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
-        print("didCompleteInitialLoad: ", controller)
-        print("didCompleteInitialLoad: ", didLoadSuccessfully)
-    }
-    
-    
-    func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
-        print("initialLoadDidRedirectTo: ", controller)
-        print("initialLoadDidRedirectTo: ", URL)
     }
     
     //WKWebView delegate
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        print("createWebViewWith: ", configuration)
-        print("createWebViewWith: ", navigationAction)
-        print("createWebViewWith: ", windowFeatures)
         return nil
     }
     
@@ -327,23 +307,19 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     
     
     /// Show the load error view and hide the refresh control
-    private func showErrorView(){
+    private func showErrorView() {
         // Set up the load error view
-        loadErrorView.delegate = self
-        loadErrorView.refreshButton.setTitleColor(navigationController?.navigationBar.tintColor, for: .normal)
-        loadErrorView.refreshButton.layer.borderColor = navigationController?.navigationBar.tintColor.cgColor
-        loadErrorView.center = view.center
-        view.addSubview(loadErrorView)
+        self.loadErrorView.delegate = self
+        self.loadErrorView.refreshButton.setTitleColor(self.navigationController?.navigationBar.tintColor, for: .normal)
+        self.loadErrorView.refreshButton.layer.borderColor = self.navigationController?.navigationBar.tintColor.cgColor
+        self.loadErrorView.center = self.view.center
+        self.view.addSubview(self.loadErrorView)
         
         // Remove the refresh control
-        tableView.refreshControl = nil
+        self.tableView.refreshControl = nil
         
         // Remove the search controller
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-        } else {
-            tableView.tableHeaderView = nil
-        }
+        self.navigationItem.searchController = nil
     }
     
     // - MARK: Table View Data source Methods

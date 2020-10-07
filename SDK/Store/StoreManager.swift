@@ -9,7 +9,6 @@
 import Foundation
 import SchedJoulesApiClient
 import StoreKit
-import Alamofire
 
 @objc public enum SJPurchaseModel: Int {
     case freeTrial
