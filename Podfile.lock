@@ -1,31 +1,22 @@
 PODS:
   - SchedJoulesApiClient (0.8.0)
-  - SDWebImage (5.9.1):
-    - SDWebImage/Core (= 5.9.1)
-  - SDWebImage/Core (5.9.1)
+  - SDWebImage (5.9.3):
+    - SDWebImage/Core (= 5.9.3)
+  - SDWebImage/Core (5.9.3)
 
 DEPENDENCIES:
-  - SchedJoulesApiClient (from `https://github.com/schedjoules/swift-api-client.git`, branch `Xcode-12`)
+  - SchedJoulesApiClient
   - SDWebImage
 
 SPEC REPOS:
   trunk:
+    - SchedJoulesApiClient
     - SDWebImage
-
-EXTERNAL SOURCES:
-  SchedJoulesApiClient:
-    :branch: Xcode-12
-    :git: https://github.com/schedjoules/swift-api-client.git
-
-CHECKOUT OPTIONS:
-  SchedJoulesApiClient:
-    :commit: 1213f8625cea83dd278e2ab39ad0695de133e576
-    :git: https://github.com/schedjoules/swift-api-client.git
 
 SPEC CHECKSUMS:
   SchedJoulesApiClient: 9f188965233d7591b2936a66247aff89d4d9c118
-  SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
+  SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
 
-PODFILE CHECKSUM: 405b2b96b4f5ab0456dd147ea424f28f20d5c8c7
+PODFILE CHECKSUM: f16d6b9a14e556266aa643cb8518dd6bf1b0427a
 
 COCOAPODS: 1.9.3
