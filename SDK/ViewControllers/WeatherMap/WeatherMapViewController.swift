@@ -17,6 +17,7 @@ class WeatherMapViewController: UIViewController {
     var locationDisplayed = false
     let apiClient: Api
     let urlString: String
+    let calendarId: Int
     var changedByUser: Bool = false
     
     //UI
@@ -26,9 +27,10 @@ class WeatherMapViewController: UIViewController {
         return mapView
     }()
     
-    init(apiClient: Api, url: String) {
+    init(apiClient: Api, url: String, calendarId: Int) {
         self.apiClient = apiClient
         self.urlString = url
+        self.calendarId = calendarId
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -146,7 +148,8 @@ class WeatherMapViewController: UIViewController {
     private func presentDetails(_ annotation: WeatherPointAnnotation) {
         let detailViewController = WeatherDetailViewController(annotation: annotation,
                                                                apiClient: apiClient,
-                                                               url: urlString)
+                                                               url: urlString,
+                                                               calendarId: calendarId)
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     

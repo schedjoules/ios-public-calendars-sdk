@@ -40,6 +40,9 @@ final class CalendarItemViewController: UIViewController {
     /// URL to the .ics file.
     var icsURL: URL!
     
+    ///The id of the calendar
+    var itemId: Int = 0
+    
     // - MARK: Private Properties
     
     /// The parsed events.
@@ -124,19 +127,40 @@ final class CalendarItemViewController: UIViewController {
     
     // Subscribe button pressed
     @IBAction func subscribeButtonPressed(_ sender: UIButton) {
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
+        //Analytics
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: itemId,
+                                              calendarURL: icsURL)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJSubscribeButtonClicked, object: sjEvent)
         
         guard let webcal = icsURL.absoluteString.webcalURL() else {
             return
         }
         
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            self.openCalendar(calendarId: self.itemId, url: webcal)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let calendarName = self.title ?? "calendar"
+            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                self.openCalendar(calendarId: self.itemId, url: webcal)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+            return
+        }
+        
     }
     
     // Show network indicator and activity indicator
@@ -183,6 +207,24 @@ final class CalendarItemViewController: UIViewController {
         loadErrorView.center = view.center
         view.addSubview(loadErrorView)
     }
+    
+    private func openCalendar(calendarId: Int, url: URL) {
+        let subscriber = SJDeviceCalendarSubscriber.shared
+        subscriber.subscribe(to: calendarId,
+                             url: url,
+                             screenName: self.title) { (error) in
+                                if error == nil {
+                                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                                        message: error?.localizedDescription,
+                                                                                        preferredStyle: .alert)
+                                    let cancelAction = UIAlertAction(title: "Ok",
+                                                                     style: .cancel)
+                                    freeCalendarAlertController.addAction(cancelAction)
+                                    self.present(freeCalendarAlertController, animated: true)
+                                }
+        }
+    }
+    
 }
 
 

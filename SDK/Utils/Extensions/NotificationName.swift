@@ -8,8 +8,26 @@
 
 import Foundation
 
-extension Notification.Name {
-    static var subscribedToCalendar: Notification.Name {
+public extension Notification.Name {
+    
+    static var SJSubscribedToCalendar: Notification.Name {
         return .init("CalendarStore.subscribed")
     }
+    
+    static var SJPageViewed: Notification.Name {
+        return .init("CalendarStore.page.viewed")
+    }
+    
+    static var SJPlustButtonClicked: Notification.Name {
+        return .init("CalendarStore.plus.button.clicked")
+    }
+    
+    static var SJSubscribeButtonClicked: Notification.Name {
+        return .init("CalendarStore.subscribe.button.clicked")
+    }
+    
+    static var SJStartFreeTrial: Notification.Name {
+        return .init("CalendarStore.start.free.trial")
+    }
+    
 }

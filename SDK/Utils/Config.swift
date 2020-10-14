@@ -28,6 +28,20 @@ class Config {
         return bundleString
     }
     
+    static var subscriptionAccount: String {
+        guard let infoKey = kCFBundleNameKey as String?,
+            let info = Bundle.main.infoDictionary,
+            var bundleString = info[infoKey] as? String else {
+                return ""
+        }
+        
+        if let clientAccount = UserDefaults.standard.string(forKey: "sjClientAccount") {
+            bundleString += clientAccount
+        }
+        
+        return bundleString
+    }
+    
     static var bundleIdentifier: String {
         guard let bundleString = Bundle.main.infoDictionary?[kCFBundleIdentifierKey! as String] as? String else {
             return ""

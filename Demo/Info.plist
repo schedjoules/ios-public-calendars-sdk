@@ -48,5 +48,7 @@
 	<string>To show you the weather map</string>
 	<key>CalendarStoreFeedbackEmailAddress</key>
 	<string>support@schedjoules.com</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to manage the calendars you add through Schedjoules</string>
 </dict>
 </plist>

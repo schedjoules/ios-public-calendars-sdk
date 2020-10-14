@@ -25,9 +25,12 @@
 
 import UIKit
 import SchedJoulesApiClient
+import SafariServices
+import WebKit
 
-final class PageViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
-                                            UISearchBarDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
+
+class PageViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
+UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
     
     // - MARK: Public Properties
     
@@ -41,7 +44,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     
     /// The returned Pages object from the query.
     private var page: Page?
-
+    
     /// A temporary variable to hold the Pages object while searching.
     private var tempPage: Page?
     
@@ -67,9 +70,9 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     private let isSearchEnabled: Bool
     
     // - MARK: Initialization
-
+    
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `PageViewController`
-    must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
+     must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
     required init?(coder aDecoder: NSCoder) {
         fatalError("PageViewController must only be initialized programatically.")
     }
@@ -94,7 +97,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         // Fetch the pages from the API
         fetchPages()
-
+        
         // Create a table view
         tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -179,6 +182,65 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         })
     }
     
+    ///Safaridelegate
+    func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
+        return []
+    }
+    
+    func safariViewController(_ controller: SFSafariViewController, excludedActivityTypesFor URL: URL, title: String?) -> [UIActivity.ActivityType] {
+        return []
+    }
+    
+    //WKWebView delegate
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        return nil
+    }
+    
+    /// Subscribe to a calendar
+    @objc private func subscribe(sender: UIButton){
+        let cell = sender.superview as! UITableViewCell
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            sjPrint("Could not get row")
+            return
+        }
+        
+        let pageSection = page!.sections[indexPath.section]
+        let item = pageSection.items[indexPath.row]
+        guard let webcal = item.url.webcalURL() else {
+            open(item: item)
+            return
+        }
+        
+        //First we check if the user has a valid subscription or if they haven't downloaded the free calendar
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
+        if StoreManager.shared.isSubscriptionValid == true {
+            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+        }
+    }
+    
+    private func openCalendar(calendarId: Int, url: URL) {
+        let subscriber = SJDeviceCalendarSubscriber.shared
+        subscriber.subscribe(to: calendarId,
+                             url: url,
+                             screenName: self.title) { (error) in
+                                if error == nil {
+                                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                                        message: error?.localizedDescription,
+                                                                                        preferredStyle: .alert)
+                                    let cancelAction = UIAlertAction(title: "Ok",
+                                                                     style: .cancel)
+                                    freeCalendarAlertController.addAction(cancelAction)
+                                    self.present(freeCalendarAlertController, animated: true)
+                                }
+        }
+    }
+    
     /// Set up the activity indicator in the view and start loading
     private func setUpActivityIndicator() {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -230,7 +292,7 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     //Open calendar details
     func open(item: PageItem) {
         if item.url.contains("weather") {
-            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url)
+            let weatherViewController = WeatherMapViewController(apiClient: apiClient, url: item.url, calendarId: item.itemID ?? 0)
             navigationController?.pushViewController(weatherViewController, animated: true)
         } else {
             let storyboard = UIStoryboard(name: "SDK", bundle: Bundle.resourceBundle)
@@ -238,29 +300,26 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             calendarVC.icsURL = URL(string: item.url)
             calendarVC.title = item.name
             calendarVC.apiClient = apiClient
+            calendarVC.itemId = item.itemID ?? 0
             navigationController?.pushViewController(calendarVC, animated: true)
         }
     }
     
     
     /// Show the load error view and hide the refresh control
-    private func showErrorView(){
+    private func showErrorView() {
         // Set up the load error view
-        loadErrorView.delegate = self
-        loadErrorView.refreshButton.setTitleColor(navigationController?.navigationBar.tintColor, for: .normal)
-        loadErrorView.refreshButton.layer.borderColor = navigationController?.navigationBar.tintColor.cgColor
-        loadErrorView.center = view.center
-        view.addSubview(loadErrorView)
+        self.loadErrorView.delegate = self
+        self.loadErrorView.refreshButton.setTitleColor(self.navigationController?.navigationBar.tintColor, for: .normal)
+        self.loadErrorView.refreshButton.layer.borderColor = self.navigationController?.navigationBar.tintColor.cgColor
+        self.loadErrorView.center = self.view.center
+        self.view.addSubview(self.loadErrorView)
         
         // Remove the refresh control
-        tableView.refreshControl = nil
+        self.tableView.refreshControl = nil
         
         // Remove the search controller
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-        } else {
-            tableView.tableHeaderView = nil
-        }
+        self.navigationItem.searchController = nil
     }
     
     // - MARK: Table View Data source Methods
@@ -289,7 +348,6 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
         
         cell.setup(pageItem: pageItem,
                    tintColor: navigationController?.navigationBar.tintColor)
-        
         return cell
     }
     
@@ -312,12 +370,12 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
             let languageSetting = SettingsManager.get(type: .language)
             let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
                                                   locale: languageSetting.code)
-             let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
-                                                                    pageQuery: singlePageQuery,
-                                                                    searchEnabled: true)
+            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
+                                                             pageQuery: singlePageQuery,
+                                                             searchEnabled: true)
             
             navigationController?.pushViewController(pageVC, animated: true)
-        // Show the selected calendar
+            // Show the selected calendar
         } else {
             let item = pageSection.items[indexPath.row]
             open(item: item)
@@ -330,14 +388,14 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         tempPage = page
     }
-
+    
     // Perfrom the search
     func updateSearchResults(for searchController: UISearchController) {
         // Get the search text from the search bar
         guard let queryText = searchController.searchBar.text else {
             return
         }
-    
+        
         // Only search if more than 2 charachters were entered
         if queryText.count > 2 {
             apiClient.execute(query: SearchQuery(query: queryText), completion: { result in
@@ -368,22 +426,44 @@ final class PageViewController<PageQuery: Query>: UIViewController, UITableViewD
 
 
 extension PageViewController: ItemCollectionViewCellDelegate {
-
+    
     /// Subscribe to a calendar
     func subscribe(to pageItem: PageItem) {
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.itemID ?? 0,
+                                              calendarURL: URL(string: pageItem.url))
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
+        NotificationCenter.default.post(name: .SJPlustButtonClicked, object: sjEvent)
+        
         guard let webcal = pageItem.url.webcalURL() else {
             open(item: pageItem)
             return
         }
         
+        let freeSubscriptionRecord = FreeSubscriptionRecord()
+        
         if StoreManager.shared.isSubscriptionValid == true {
-            UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-            NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+            self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
+        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
+            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
+                                                                message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
+                preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Ok",
+                                             style: .default) { (_) in
+                                                self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel)
+            freeCalendarAlertController.addAction(acceptAction)
+            freeCalendarAlertController.addAction(cancelAction)
+            present(freeCalendarAlertController, animated: true)
+            
+            
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)
             return
         }
+        
     }
     
 }

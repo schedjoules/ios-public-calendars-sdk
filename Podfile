@@ -6,8 +6,8 @@ target 'iOS-SDK' do
   use_frameworks!
 
   # Pods for iOS-SDK
-  pod 'SchedJoulesApiClient', '~> 0.7'
-  pod 'SDWebImage', '~> 4.0'
+  pod 'SchedJoulesApiClient'
+  pod 'SDWebImage'
   
 end
 

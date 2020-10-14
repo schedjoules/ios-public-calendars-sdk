@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Add observer to listen for subscribe notifications
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(subscribedToCalendar(_:)),
-                                               name: .subscribedToCalendar,
+                                               name: .SJSubscribedToCalendar,
                                                object: nil)
         
         // Show the calendar store to either iPhone or iPad
@@ -53,8 +53,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc private func subscribedToCalendar(_ notification: Notification) {
-        sjPrint(notification)
+        
+        guard let analyticsEvent = notification.object as? SJAnalyticsObject else {
+            fatalError("it's not a Analytics event")
+        }
+        
+        guard let calendarURL = analyticsEvent.calendar?.calendarURL else {
+            return
+        }
+        
+        do {
+            sjPrint("notification: ", notification)
+            let freeSubscriptionRecord = FreeSubscriptionRecord()
+            try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
+                                     account: freeSubscriptionRecord.account).savePassword(calendarURL.absoluteString)
+        } catch {
+            sjPrint("Register Free Calendar Error: ", error)
+        }
     }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -71,7 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        //Check for new subscriptions
+        SJDeviceCalendarSubscriber.shared.checkForNewCalendarsInDevice()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
