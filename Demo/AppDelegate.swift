@@ -26,12 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         calendarVC.calendarStoreDelegate = self
         calendarVC.view.backgroundColor = .sjBackground
         
-        //Add observer to listen for subscribe notifications
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(subscribedToCalendar(_:)),
-                                               name: .SJSubscribedToCalendar,
-                                               object: nil)
-        
         // Show the calendar store to either iPhone or iPad
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) {
             window?.rootViewController = calendarVC
