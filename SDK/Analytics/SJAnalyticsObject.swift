@@ -17,7 +17,6 @@ public struct SJAnalyticsObject {
     
     public let calendar: SJAnalyticsCalendar?
     let purchaseMode: SJPurchaseModel?
-    let isFree: Bool
     let screenName: String?
     
     init(calendar: SJAnalyticsCalendar? = nil, screenName: String? = nil) {
@@ -25,18 +24,6 @@ public struct SJAnalyticsObject {
         self.screenName = screenName
         
         self.purchaseMode = UserDefaults.standard.sjPurchaseModel
-        
-        if StoreManager.shared.isSubscriptionValid == true {
-            isFree = false
-        } else {
-            let freeSubscriptionRecord = FreeSubscriptionRecord()
-            if freeSubscriptionRecord.canGetFreeCalendar() == true {
-                isFree = true
-            } else {
-                isFree = false
-            }
-        }
-        
     }
     
     public func asDictionary() -> [String: AnyObject] {
@@ -54,8 +41,6 @@ public struct SJAnalyticsObject {
         if let validPurchaseMode = self.purchaseMode {
             dictionary["purchase_mode"] = validPurchaseMode.trackingValue as AnyObject
         }
-        
-        dictionary["is_free"] = NSNumber(value: self.isFree) as AnyObject
         
         if let validScreenName = self.screenName {
             dictionary["screen_name"] = validScreenName as AnyObject

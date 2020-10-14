@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SKPaymentQueue.default().add(iapObserver)
         
         // Initialize the calendar store
-        let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
+        let calendarVC = CalendarStoreViewController(apiKey: "4f8a4d80e0b5079806cd344ce3095272", title: "Featured")
         calendarVC.calendarStoreDelegate = self
         calendarVC.view.backgroundColor = .sjBackground
         
@@ -51,27 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    @objc private func subscribedToCalendar(_ notification: Notification) {
-        
-        guard let analyticsEvent = notification.object as? SJAnalyticsObject else {
-            fatalError("it's not a Analytics event")
-        }
-        
-        guard let calendarURL = analyticsEvent.calendar?.calendarURL else {
-            return
-        }
-        
-        do {
-            sjPrint("notification: ", notification)
-            let freeSubscriptionRecord = FreeSubscriptionRecord()
-            try KeychainPasswordItem(service: freeSubscriptionRecord.serviceName,
-                                     account: freeSubscriptionRecord.account).savePassword(calendarURL.absoluteString)
-        } catch {
-            sjPrint("Register Free Calendar Error: ", error)
-        }
-    }
-    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

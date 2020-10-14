@@ -397,7 +397,6 @@ extension SettingsViewController: UITableViewDelegate {
             App: %@ (%@/%@)<br>\
             UUID: %@<br>\
             SubscriptionId: %@<br>\
-            FreeCalendar: %@<br>\
             Device: %@<br>\
             Firmware: %@<br>\
             Library: %@<br>\
@@ -413,7 +412,6 @@ extension SettingsViewController: UITableViewDelegate {
             App: %@ (%@/%@) -
             UUID: %@ -
             SubscriptionId: %@ -
-            FreeCalendar: %@ -
             Device: %@ -
             Firmware: %@ -
             Library: %@ -
@@ -430,7 +428,6 @@ extension SettingsViewController: UITableViewDelegate {
                                   Config.bundleVersion,
                                   Config.uuid,
                                   UserDefaults.standard.subscriptionId ?? "",
-                                  FreeSubscriptionRecord().freeCalendar() ?? "",
                                   UIDevice.current.model,
                                   UIDevice.current.systemVersion,
                                   Config.libraryVersion,

@@ -14,10 +14,6 @@
 		460015552208987300C6E9F2 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015492208987300C6E9F2 /* ArrayExtension.swift */; };
 		460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */; };
 		460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460015502208987300C6E9F2 /* AnalyticsTracker.swift */; };
-		460A554F2452EFF20075355D /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A554E2452EFF20075355D /* KeychainPasswordItem.swift */; };
-		460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A554E2452EFF20075355D /* KeychainPasswordItem.swift */; };
-		460A55522452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */; };
-		460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */; };
 		4610CD16228DD54800CE25C2 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610CD15228DD53F00CE25C2 /* Reach.swift */; };
 		46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */; };
 		4629919423435B8000CA8292 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4629919323435B8000CA8292 /* NotificationName.swift */; };
@@ -81,8 +77,6 @@
 		460015492208987300C6E9F2 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Headers.swift"; sourceTree = "<group>"; };
 		460015502208987300C6E9F2 /* AnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
-		460A554E2452EFF20075355D /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
-		460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeSubscriptionRecord.swift; sourceTree = "<group>"; };
 		4610CD15228DD53F00CE25C2 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
 		46214AA2222913DE00A92F39 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		4629919323435B8000CA8292 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
@@ -201,8 +195,6 @@
 		460A554D2452EFE20075355D /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
-				460A554E2452EFF20075355D /* KeychainPasswordItem.swift */,
-				460A55512452F13C0075355D /* FreeSubscriptionRecord.swift */,
 				46800B6D245959470095B244 /* WebKitViewController.swift */,
 			);
 			path = Keychain;
@@ -482,7 +474,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		803FC2E69C87B530F7B3960C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -559,8 +552,6 @@
 				46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */,
 				4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
-				460A55522452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
-				460A554F2452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
 				4610CD16228DD54800CE25C2 /* Reach.swift in Sources */,
 				460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */,
@@ -584,9 +575,7 @@
 				46A78442252DC3640038CC3A /* SJAnalyticsObject.swift in Sources */,
 				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
-				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
-				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
