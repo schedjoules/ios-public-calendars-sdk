@@ -192,5 +192,9 @@ class AnalyticsTracker: NSObject {
         }
         
         track(hit: hitInfo)
+        
+        let sjCalendar =  SJAnalyticsCalendar(calendarId: page?.itemID ?? 0, calendarURL: url)
+        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: name ?? "")
+        NotificationCenter.default.post(name: .SJPageViewed, object: sjEvent)
     }
 }

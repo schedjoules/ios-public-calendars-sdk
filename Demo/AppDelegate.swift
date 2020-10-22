@@ -26,12 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         calendarVC.calendarStoreDelegate = self
         calendarVC.view.backgroundColor = .sjBackground
         
-        //Add observer to listen for subscribe notifications
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(subscribedToCalendar(_:)),
-                                               name: .subscribedToCalendar,
-                                               object: nil)
-        
         // Show the calendar store to either iPhone or iPad
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) {
             window?.rootViewController = calendarVC
@@ -51,10 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    @objc private func subscribedToCalendar(_ notification: Notification) {
-        sjPrint(notification)
-    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -71,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        //Check for new subscriptions
+        SJDeviceCalendarSubscriber.shared.checkForNewCalendarsInDevice()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

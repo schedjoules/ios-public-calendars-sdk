@@ -26,6 +26,7 @@ class WeatherDetailViewController: UIViewController {
     var selectedSetting: WeatherSettingsItem?
     let apiClient: Api
     let urlString: String
+    let calendarId: Int
     
     
     //UI
@@ -65,10 +66,11 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     
-    init(annotation: WeatherPointAnnotation, apiClient: Api, url: String) {
+    init(annotation: WeatherPointAnnotation, apiClient: Api, url: String, calendarId: Int) {
         self.weatherPointAnnotation = annotation
         self.apiClient = apiClient
         self.urlString = url
+        self.calendarId = calendarId
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -138,7 +140,7 @@ class WeatherDetailViewController: UIViewController {
             subscribeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             subscribeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             subscribeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
-            ])
+        ])
         
         mapView.showAnnotations([weatherPointAnnotation], animated: true)
         subscribeButton.addTarget(self, action: #selector(subscribeButtonPressed(_:)), for: .touchUpInside)
@@ -211,13 +213,6 @@ class WeatherDetailViewController: UIViewController {
     // MARK: Subscription
     
     @objc func subscribeButtonPressed(_ sender: UIButton) {
-        //First we check if the user has a valid subscription
-        guard StoreManager.shared.isSubscriptionValid == true else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
-        
         //Decompose the url for weather ot use user's settings
         var customUrlString = urlString.replacingOccurrences(of: "{location}", with: "\(weatherPointAnnotation.id)")
         if let weatherSettings = self.weatherSettings {
@@ -231,9 +226,29 @@ class WeatherDetailViewController: UIViewController {
             return
         }
         
-        //Open calendar to subscribe
-        UIApplication.shared.open(webcal, options: [:], completionHandler: nil)
-        NotificationCenter.default.post(name: .subscribedToCalendar, object: webcal)
+        if StoreManager.shared.isSubscriptionValid == true {
+            self.openCalendar(calendarId: calendarId, url: webcal)
+        } else {
+            let storeVC = StoreViewController(apiClient: self.apiClient)
+            self.present(storeVC, animated: true, completion: nil)
+        }
+    }
+    
+    private func openCalendar(calendarId: Int, url: URL) {
+        let subscriber = SJDeviceCalendarSubscriber.shared
+        subscriber.subscribe(to: calendarId,
+                             url: url,
+                             screenName: self.title) { (error) in
+                                if error == nil {
+                                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                                        message: error?.localizedDescription,
+                                                                                        preferredStyle: .alert)
+                                    let cancelAction = UIAlertAction(title: "Ok",
+                                                                     style: .cancel)
+                                    freeCalendarAlertController.addAction(cancelAction)
+                                    self.present(freeCalendarAlertController, animated: true)
+                                }
+        }
     }
     
 }

@@ -54,4 +54,9 @@ extension UserDefaults {
         get { return string(forKey: #function) }
         set { set(newValue, forKey: #function) }
     }
+    
+    var sjPurchaseModel: SJPurchaseModel {
+        get { return SJPurchaseModel(rawValue: integer(forKey: #function)) ?? .freeTrial }
+        set { set(newValue.rawValue, forKey: #function) }
+    }
 }
