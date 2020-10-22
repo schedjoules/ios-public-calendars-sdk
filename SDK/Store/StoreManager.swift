@@ -196,6 +196,8 @@ public class StoreManager: NSObject {
             duration = debug == false ? (30 * 24 * 60 * 60 * numberOfUnits) : 5 * numberOfUnits
         case .year:
             duration = debug == false ? (365 * 24 * 60 * 60 * numberOfUnits) : 60 * 60
+        @unknown default:
+            return Date()
         }
         
         var dayComponent = DateComponents()
@@ -228,7 +230,7 @@ extension StoreManager: SKProductsRequestDelegate{
         }
     }
     
-    func request(_ request: SKRequest, didFailWithError error: Error) {
+    public func request(_ request: SKRequest, didFailWithError error: Error) {
         presentable?.purchaseFailed(errorDescription: error.localizedDescription)
     }
 }
@@ -236,8 +238,6 @@ extension StoreManager: SKProductsRequestDelegate{
 
 // MARK: SKTransactions
 extension StoreManager: SKPaymentTransactionObserver {
-    
-    
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         if isRestoringPurchases == true {
@@ -271,18 +271,20 @@ extension StoreManager: SKPaymentTransactionObserver {
                 case .purchasing:
                     //No need to handle
                     break
+                @unknown default:
+                    break
                 }
             }
         }
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+    public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if restorePurchaseCompleted == false {
             presentable?.purchaseFailed(errorDescription: "No transaction was restored")
         }
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+    public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         sjPrint("failed restoration")
         if error.localizedDescription == "Cannot connect to iTunes Store" {
             presentable?.purchaseFailed(errorDescription: nil)
@@ -362,7 +364,7 @@ extension StoreManager: SKPaymentTransactionObserver {
 //In-App Purchases App Store
 extension StoreManager{
     
-    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+    public func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         return true
     }
     

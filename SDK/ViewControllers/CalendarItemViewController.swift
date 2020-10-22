@@ -49,7 +49,7 @@ final class CalendarItemViewController: UIViewController {
     private var calendar: ICalendar?
     
     // Acitivity indicator reference
-    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
     
     // Load error view
     private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
@@ -66,7 +66,7 @@ final class CalendarItemViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: .zero)
         
         // Add bottom content inset to avoid content being hidden by subscribe button
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 100, right: 0)
         
         // Start loading indicator(s)
         setUpActivityIndicator()
@@ -248,13 +248,13 @@ extension CalendarItemViewController: UITableViewDataSource {
         }
         
         // Make time string bold
-        let boldAttributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
+        let boldAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
         let boldTimeString = NSMutableAttributedString(string:timeString, attributes:boldAttributes)
         
         // Format the date of the event
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-        let sizeAttributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+        let sizeAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
         let dateString = NSMutableAttributedString(string:" " + dateFormatter.string(from: event!.startDate), attributes: sizeAttributes)
         
         // Append the date string to the time

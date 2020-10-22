@@ -51,7 +51,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
     private var calendarStoreViewController: CalendarStoreViewController?
 
     /// Acitivity indicator reference.
-    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
 
     /// Load error view reference.
     private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
@@ -101,7 +101,7 @@ final class SettingsDetailViewController<SettingsQuery: Query>: UIViewController
         
         // Set up the refresh control
         refreshControl.tintColor = navigationController?.navigationBar.tintColor
-        refreshControl.addTarget(self, action: #selector(loadItems), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(loadItems), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
 
         // Load the items with the query passed in on initialization

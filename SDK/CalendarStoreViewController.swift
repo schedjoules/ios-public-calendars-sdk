@@ -239,7 +239,7 @@ extension CalendarStoreViewController {
         let alert = UIAlertController(title: titleText,message: messageText, preferredStyle:.alert)
         
         //Create a button to open settings where users can enable internet connection
-        if let settingsURL = URL(string: UIApplicationOpenSettingsURLString) {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
             let settingsAction = UIAlertAction(title: "Open Settings", style: .default, handler:{ (action) in
                 UIApplication.shared.open(settingsURL)
             })

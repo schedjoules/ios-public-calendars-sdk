@@ -150,7 +150,7 @@ class StoreViewController: UIViewController {
         let range1 = (text as NSString).range(of: TosLinks.terms.text)
         let range2 = (text as NSString).range(of: TosLinks.privacy.text)
         
-        let formatAttributes: [NSAttributedString.Key : Any] = [.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+        let formatAttributes: [NSAttributedString.Key : Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue,
                                                                 .foregroundColor: UIColor.sjBlue]
         
         formattedText.addAttributes(formatAttributes, range: range1)
@@ -169,7 +169,7 @@ class StoreViewController: UIViewController {
     var mainActivityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(frame: .zero)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.style = .whiteLarge
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .blue
         return activityIndicator
@@ -178,7 +178,7 @@ class StoreViewController: UIViewController {
     var productActivityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(frame: .zero)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.style = .whiteLarge
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .blue
         activityIndicator.startAnimating()

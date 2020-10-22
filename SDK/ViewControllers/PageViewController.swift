@@ -55,7 +55,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private var tableView: UITableView!
     
     // Acitivity indicator
-    private lazy var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    private lazy var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     
     // Load error view
     private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
@@ -123,7 +123,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         
         // Set up the refresh control
         refreshControl.tintColor = navigationController?.navigationBar.tintColor
-        refreshControl.addTarget(self, action: #selector(fetchPages), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(fetchPages), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
         
         // Set up the search controller (if neccessary)

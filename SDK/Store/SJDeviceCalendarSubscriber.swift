@@ -42,7 +42,7 @@ open class SJDeviceCalendarSubscriber {
             self.url = url
             self.screenName = screenName
             
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
         
     }
@@ -94,6 +94,9 @@ open class SJDeviceCalendarSubscriber {
         case .denied:
             completion(false)
             return
+        @unknown default:
+            completion(false)
+            return
         }
         
         let eventStore = EKEventStore()
@@ -102,4 +105,9 @@ open class SJDeviceCalendarSubscriber {
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
