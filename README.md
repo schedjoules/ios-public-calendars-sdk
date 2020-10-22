@@ -8,7 +8,6 @@ You can install the SDK through **CocoaPods**.
 
 `pod 'SchedJoulesSDK'`
 
-
 ## Usage
 
 To present the Calendar Store, you first have to initialize it using the API Key we provided you.
@@ -31,3 +30,7 @@ Optionally, if you would only like to use the Calendar Store to present a single
 let calendarVC = CalendarStoreSinglePageViewController(apiKey: "YOUR_API_KEY", pageIdentifer: "115673", title: "Featured")
 present(calendarVC, animated: true, completion: nil)
 ```
+
+## Legacy
+If you want to use the previous version supported that includes [Alamofire](https://github.com/Alamofire/Alamofire) and [Result](https://github.com/antitypical/Result) you can point your pod file to the `legacy-0.7.8` branch.
+```pod 'SchedJoulesApiClient', :git => 'https://github.com/schedjoules/ios-public-calendars-sdk.git', :branch => 'legacy-0.9.4'
