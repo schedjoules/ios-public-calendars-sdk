@@ -185,9 +185,7 @@ public final class CalendarStoreViewController: UITabBarController {
         viewControllers = tabViewControllers.map {
             let navigationController = UINavigationController(rootViewController: $0)
             navigationController.navigationBar.tintColor = tintColor
-            if #available(iOS 11.0, *) {
-                navigationController.navigationBar.prefersLargeTitles = largeTitle
-            }
+            navigationController.navigationBar.prefersLargeTitles = largeTitle
             if #available(iOS 13.0, *) {
                 navigationController.navigationBar.backgroundColor = .systemBackground
             }

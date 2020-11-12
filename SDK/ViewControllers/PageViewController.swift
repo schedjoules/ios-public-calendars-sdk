@@ -127,17 +127,16 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         tableView.refreshControl = refreshControl
         
         // Set up the search controller (if neccessary)
-        if isSearchEnabled {
+        if isSearchEnabled && navigationItem.searchController == nil {
             searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
             definesPresentationContext = true
             searchController.searchBar.delegate = self
             searchController.searchBar.tintColor = navigationController?.navigationBar.tintColor
-            if #available(iOS 11.0, *) {
-                navigationItem.searchController = searchController
-            } else {
-                tableView.tableHeaderView = searchController.searchBar
-            }
+            navigationItem.searchController = searchController
+            
+            navigationController?.view.setNeedsLayout()
+            navigationController?.view.layoutIfNeeded()
         }
     }
     
@@ -276,13 +275,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             
             // Add the refresh control
             tableView.refreshControl = refreshControl
-            
-            // Add the search controller
-            if #available(iOS 11.0, *) {
-                navigationItem.searchController = searchController
-            } else {
-                tableView.tableHeaderView = searchController.searchBar
-            }
         }
     }
     
