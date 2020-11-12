@@ -212,7 +212,7 @@ extension SettingsViewController: UITableViewDataSource {
         case .purchases:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             if storeManager.isSubscriptionValid == true,
-                let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
+               let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
                 cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
                 cell.detailTextLabel?.text = ""
                 cell.detailTextLabel?.textColor = .lightGray
@@ -296,7 +296,7 @@ extension SettingsViewController: UITableViewDelegate {
                                                     preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok",
                                          style: .default) { (action) in
-                                            alertController.dismiss(animated: true, completion: nil)
+                alertController.dismiss(animated: true, completion: nil)
             }
             alertController.addAction(okAction)
             
@@ -472,16 +472,16 @@ extension SettingsViewController: InteractableStoreManager {
                 
                 let purchaseAction = UIAlertAction(title: "Get a Subscription",
                                                    style: .default) { (action) in
-                                                    let storeVC = StoreViewController(apiClient: self.apiClient)
-                                                    self.storeManager.isRestoringPurchases = false
-                                                    self.present(storeVC, animated: true, completion: nil)
-                                                    return
+                    let storeVC = StoreViewController(apiClient: self.apiClient)
+                    self.storeManager.isRestoringPurchases = false
+                    self.present(storeVC, animated: true, completion: nil)
+                    return
                 }
                 alertController.addAction(purchaseAction)
                 
                 let dismissAction = UIAlertAction(title: "Dismisss",
                                                   style: .cancel) { (action) in
-                                                    alertController.dismiss(animated: true, completion: nil)
+                    alertController.dismiss(animated: true, completion: nil)
                 }
                 alertController.addAction(dismissAction)
                 
@@ -502,5 +502,5 @@ extension SettingsViewController: InteractableStoreManager {
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

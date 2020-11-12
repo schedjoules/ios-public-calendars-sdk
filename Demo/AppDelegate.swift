@@ -22,7 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SKPaymentQueue.default().add(iapObserver)
         
         // Initialize the calendar store
-        let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c", title: "Featured")
+        let calendarVC = CalendarStoreViewController(apiKey: "0443a55244bb2b6224fd48e0416f0d9c",
+                                                     pageIdentifier: nil,
+                                                     title: "Featured",
+                                                     showCloseButton: false,
+                                                     purchaseModel: .freeCalendar)
         calendarVC.calendarStoreDelegate = self
         calendarVC.view.backgroundColor = .sjBackground
         
