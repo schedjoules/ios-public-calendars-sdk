@@ -10,4 +10,3 @@ target 'iOS-SDK' do
   pod 'SDWebImage'
   
 end
-

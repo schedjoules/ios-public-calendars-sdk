@@ -59,7 +59,7 @@ class WeatherDetailViewController: UIViewController {
     }()
     
     var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .blue
         return activityIndicator

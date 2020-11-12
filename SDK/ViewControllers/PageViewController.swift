@@ -55,7 +55,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private var tableView: UITableView!
     
     // Acitivity indicator
-    private lazy var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    private lazy var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     
     // Load error view
     private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
@@ -123,21 +123,20 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         
         // Set up the refresh control
         refreshControl.tintColor = navigationController?.navigationBar.tintColor
-        refreshControl.addTarget(self, action: #selector(fetchPages), for: UIControlEvents.valueChanged)
+        refreshControl.addTarget(self, action: #selector(fetchPages), for: UIControl.Event.valueChanged)
         tableView.refreshControl = refreshControl
         
         // Set up the search controller (if neccessary)
-        if isSearchEnabled {
+        if isSearchEnabled && navigationItem.searchController == nil {
             searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
             definesPresentationContext = true
             searchController.searchBar.delegate = self
             searchController.searchBar.tintColor = navigationController?.navigationBar.tintColor
-            if #available(iOS 11.0, *) {
-                navigationItem.searchController = searchController
-            } else {
-                tableView.tableHeaderView = searchController.searchBar
-            }
+            navigationItem.searchController = searchController
+            
+            navigationController?.view.setNeedsLayout()
+            navigationController?.view.layoutIfNeeded()
         }
     }
     
@@ -279,13 +278,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             
             // Add the refresh control
             tableView.refreshControl = refreshControl
-            
-            // Add the search controller
-            if #available(iOS 11.0, *) {
-                navigationItem.searchController = searchController
-            } else {
-                tableView.tableHeaderView = searchController.searchBar
-            }
         }
     }
     
@@ -456,8 +448,6 @@ extension PageViewController: ItemCollectionViewCellDelegate {
             freeCalendarAlertController.addAction(acceptAction)
             freeCalendarAlertController.addAction(cancelAction)
             present(freeCalendarAlertController, animated: true)
-            
-            
         } else {
             let storeVC = StoreViewController(apiClient: self.apiClient)
             self.present(storeVC, animated: true, completion: nil)

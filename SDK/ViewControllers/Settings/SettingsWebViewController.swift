@@ -39,7 +39,7 @@ final class SettingsWebViewController: UIViewController {
     private var webView = WKWebView()
     
     /// Acitivity indicator reference.
-    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    private let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
     
     override func viewDidLoad() {
         super.viewDidLoad()

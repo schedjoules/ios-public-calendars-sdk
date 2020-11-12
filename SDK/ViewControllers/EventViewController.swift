@@ -46,9 +46,7 @@ final class EventViewController: UIViewController {
     
         // Set navbar title
         navigationItem.title = event.summary
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
+        navigationItem.largeTitleDisplayMode = .never
         
         // Set the colors
         textView.tintColor = navigationController?.navigationBar.tintColor

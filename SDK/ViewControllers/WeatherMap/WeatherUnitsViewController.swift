@@ -124,7 +124,7 @@ extension WeatherUnitsViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, Constants.cellSpace, 0, Constants.cellSpace)
+        return UIEdgeInsets.init(top: 0, left: Constants.cellSpace, bottom: 0, right: Constants.cellSpace)
     }
     
 }

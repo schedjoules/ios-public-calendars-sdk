@@ -51,9 +51,7 @@ final class CalendarStoreSinglePageViewController: UINavigationController {
         
         // Customize the naivgation controller
         navigationBar.tintColor = ColorPalette.red
-        if #available(iOS 11.0, *) {
-            navigationBar.prefersLargeTitles = true
-        }
+        navigationBar.prefersLargeTitles = true
         
         // Create home page with a specific page identifier and push it on to the navigation stack
         let countrySetting = SettingsManager.get(type: .country)

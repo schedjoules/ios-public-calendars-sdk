@@ -108,6 +108,9 @@ class WeatherMapViewController: UIViewController {
             case .denied, .restricted:
                 startLocationDisplay()
                 break
+            @unknown default:
+                startLocationDisplay()
+                break
             }
         } else {
             // Show alert letting the user know they have to turn this on.
@@ -118,11 +121,11 @@ class WeatherMapViewController: UIViewController {
     private func startLocationDisplay() {
         let northEastPoint = MKMapPoint(x: mapView.visibleMapRect.maxX,
                                         y: mapView.visibleMapRect.minY)
-        let northEastCoordinate = MKCoordinateForMapPoint(northEastPoint)
+        let northEastCoordinate = northEastPoint.coordinate
         
         let southWestPoint = MKMapPoint(x: mapView.visibleMapRect.minX,
                                         y: mapView.visibleMapRect.maxY)
-        let southWestCoordinate = MKCoordinateForMapPoint(southWestPoint)
+        let southWestCoordinate = southWestPoint.coordinate
         
         let weatherCitiesQuery = WeatherCitiesQuery(northEastCoordinate: northEastCoordinate,
                                                     southWestCoordinate: southWestCoordinate)

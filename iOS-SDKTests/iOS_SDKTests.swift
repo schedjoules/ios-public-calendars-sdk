@@ -43,7 +43,7 @@ class iOS_SDKTests: XCTestCase {
         }
         
         //Set the expected result in format # days, for the test the language setting is expected in english
-        let expectedResult: String = "5 days"
+        let expectedResult: String = "4 days"
         
         //Set in seconds the time in the past for the date to compare. Example 3,600 == 1 hour, 360,000 == 100 hours
         let secondsInThePast: Double = 432001 //This number should be seconds and in positive

@@ -123,7 +123,7 @@ final class SettingsViewController: UIViewController {
     
     //Activity indicator
     var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .blue
         return activityIndicator
@@ -315,7 +315,7 @@ extension SettingsViewController: UITableViewDelegate {
     private func open(url: URL, for section: Section) {
         //We show the website in safari, everything else in SettingsWebViewController
         if url.absoluteString == "http://www.schedjoules.com" {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else {
             let webVC = SettingsWebViewController()
             webVC.url = url
@@ -352,7 +352,7 @@ extension SettingsViewController: UITableViewDelegate {
         if let gmailUrl = URL(string: gmailEncodedUrl) {
             if UIApplication.shared.canOpenURL(gmailUrl) {
                 let gmailAction = UIAlertAction(title: "Gmail", style: .default) { (action) in
-                    UIApplication.shared.open(gmailUrl, options: [:])
+                    UIApplication.shared.open(gmailUrl, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]))
                 }
                 emailActionSheet.addAction(gmailAction)
             }
@@ -363,7 +363,7 @@ extension SettingsViewController: UITableViewDelegate {
         if let outlookUrl = URL(string: outlookEncodedUrl) {
             if UIApplication.shared.canOpenURL(outlookUrl) {
                 let outlookAction = UIAlertAction(title: "Outlook", style: .default) { (action) in
-                    UIApplication.shared.open(outlookUrl, options: [:])
+                    UIApplication.shared.open(outlookUrl, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]))
                 }
                 emailActionSheet.addAction(outlookAction)
             }
@@ -498,4 +498,9 @@ extension SettingsViewController: InteractableStoreManager {
         
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

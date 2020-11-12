@@ -185,9 +185,7 @@ public final class CalendarStoreViewController: UITabBarController {
         viewControllers = tabViewControllers.map {
             let navigationController = UINavigationController(rootViewController: $0)
             navigationController.navigationBar.tintColor = tintColor
-            if #available(iOS 11.0, *) {
-                navigationController.navigationBar.prefersLargeTitles = largeTitle
-            }
+            navigationController.navigationBar.prefersLargeTitles = largeTitle
             if #available(iOS 13.0, *) {
                 navigationController.navigationBar.backgroundColor = .systemBackground
             }
@@ -239,7 +237,7 @@ extension CalendarStoreViewController {
         let alert = UIAlertController(title: titleText,message: messageText, preferredStyle:.alert)
         
         //Create a button to open settings where users can enable internet connection
-        if let settingsURL = URL(string: UIApplicationOpenSettingsURLString) {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
             let settingsAction = UIAlertAction(title: "Open Settings", style: .default, handler:{ (action) in
                 UIApplication.shared.open(settingsURL)
             })
