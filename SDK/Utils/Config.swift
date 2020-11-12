@@ -60,5 +60,5 @@ class Config {
         return Int(Date().timeIntervalSince1970)
     }
     
-    static let libraryVersion: String = "0.9.14"
+    static let libraryVersion: String = "0.9.16"
 }
