@@ -62,7 +62,7 @@ public final class CalendarStoreViewController: UITabBarController {
     // - MARK: Initialization
     
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`.
-    The `CalendarStoreViewController` must only be used programatically, but every subclass of `UIViewController` must implement
+     The `CalendarStoreViewController` must only be used programatically, but every subclass of `UIViewController` must implement
      `init?(coder aDecoder: NSCoder)`. */
     public required init?(coder aDecoder: NSCoder) {
         fatalError("CalendarStoreViewController must only be initialized programatically.")
@@ -147,14 +147,14 @@ public final class CalendarStoreViewController: UITabBarController {
         // Create home page with a specific page identifier
         if pageIdentifier != nil {
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
+                                                SinglePageQuery(pageID: pageIdentifier!, locale: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
         } else {
             // Create home page with just localization parameters
             let homeVC = PageViewController(apiClient: apiClient, pageQuery:
-                HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
+                                                HomePageQuery(locale: languageSetting.code, location: countrySetting.code), searchEnabled: true)
             homeVC.title = homePageTitle
             homeVC.tabBarItem.image = UIImage(named: "Featured", in: Bundle.resourceBundle, compatibleWith: nil)
             tabViewControllers.append(homeVC)
@@ -162,7 +162,7 @@ public final class CalendarStoreViewController: UITabBarController {
         
         // Create top page
         let topVC = PageViewController(apiClient: apiClient, pageQuery:
-            TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
+                                        TopPageQuery(numberOfItems: 12, locale: languageSetting.code, location: countrySetting.code))
         topVC.title = "Top"
         topVC.tabBarItem.image = UIImage(named: "Top", in: Bundle.resourceBundle, compatibleWith: nil)
         tabViewControllers.append(topVC)
@@ -189,7 +189,7 @@ public final class CalendarStoreViewController: UITabBarController {
             if #available(iOS 13.0, *) {
                 navigationController.navigationBar.backgroundColor = .systemBackground
             }
-
+            
             if showCloseButton == true &&
                 $0.title == homePageTitle {
                 let doneButton = UIBarButtonItem(barButtonSystemItem: .done,
@@ -255,5 +255,23 @@ extension CalendarStoreViewController {
         
         self.present(alert, animated: true , completion: nil)
     }
-
+    
+    public func handleIncoming(url: URL) {
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        guard let id = components?.queryItems?.first?.value else {
+            return
+        }
+        
+        let countrySetting = SettingsManager.get(type: .country)
+        let deeplinkVC = PageViewController(apiClient: apiClient, pageQuery:
+                                                SinglePageQuery(pageID: id, locale: countrySetting.code), searchEnabled: true)
+        navigationController?.pushViewController(deeplinkVC, animated: true)
+        
+        
+        if let selectedNC = self.selectedViewController as? UINavigationController {
+            selectedNC.pushViewController(deeplinkVC, animated: true)
+        } else {
+            present(deeplinkVC, animated: true)
+        }
+    }
 }
