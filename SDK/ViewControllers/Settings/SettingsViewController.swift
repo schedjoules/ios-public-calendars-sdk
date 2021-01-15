@@ -104,9 +104,6 @@ final class SettingsViewController: UIViewController {
                                 Item(title: "Twitter",
                                      details: "@schedjoules",
                                      data: URL(string:"https://twitter.com/SchedJoules")),
-                                Item(title: "Facebook",
-                                     details: "SchedJoules",
-                                     data: URL(string:"https://www.facebook.com/SchedJoules/")),
                                 Item(title: "Website",
                                      details: "http://www.schedjoules.com",
                                      data: URL(string:"http://www.schedjoules.com"))]
