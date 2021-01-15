@@ -30,4 +30,8 @@ public extension Notification.Name {
         return .init("CalendarStore.start.free.trial")
     }
     
+    static var SJRegisterForAPNS: Notification.Name {
+        return .init("CalendarStore.register.for.APNS")
+    }
+    
 }

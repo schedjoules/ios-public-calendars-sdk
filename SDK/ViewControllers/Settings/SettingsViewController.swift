@@ -43,6 +43,8 @@ final class SettingsViewController: UIViewController {
                     return "Country & Language"
                 case .purchases:
                     return "Purchases"
+                case .notifications:
+                    return "Notifications"
                 case .contact:
                     return "Contact us"
                 }
@@ -53,6 +55,7 @@ final class SettingsViewController: UIViewController {
             case about
             case localization
             case purchases
+            case notifications
             case contact
         }
     }
@@ -94,6 +97,8 @@ final class SettingsViewController: UIViewController {
     
     private let purchasesItems = [Item(title: "Restore Purchases")]
     
+    private let notificationsItems = [Item(title: "Register for Notifications")]
+    
     private static let supportEmail: String = Bundle.main.object(forInfoDictionaryKey: "CalendarStoreFeedbackEmailAddress") as? String ?? "support@schedjoules.com"
     private let contactItems = [Item(title: "FAQ",
                                      details: nil,
@@ -117,6 +122,7 @@ final class SettingsViewController: UIViewController {
             return [Section(kind: .about, items: aboutItems),
                     Section(kind: .localization, items: countryLanguageItems),
                     Section(kind: .purchases, items: purchasesItems),
+                    Section(kind: .notifications, items: notificationsItems),
                     Section(kind: .contact, items: contactItems)]
         }
     }
@@ -224,6 +230,21 @@ extension SettingsViewController: UITableViewDataSource {
                 cell.detailTextLabel?.textColor = .lightGray
             }
             return cell
+        case .notifications:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
+//            if storeManager.isSubscriptionValid == true,
+//               let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
+//                cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
+//                cell.detailTextLabel?.text = ""
+//                cell.detailTextLabel?.textColor = .lightGray
+//                cell.accessoryType = .none
+//                return cell
+//            } else {
+                cell.textLabel?.text = item.title
+                cell.detailTextLabel?.text = nil
+                cell.detailTextLabel?.textColor = .lightGray
+//            }
+            return cell
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
             cell.textLabel!.text = item.title
@@ -284,6 +305,8 @@ extension SettingsViewController: UITableViewDelegate {
             } else {
                 presentSubscriptionActive(restored: false, source: cell ?? self.view)
             }
+        case .notifications:
+            NotificationCenter.default.post(name: .SJRegisterForAPNS, object: nil)
         }
     }
     
