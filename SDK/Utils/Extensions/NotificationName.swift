@@ -34,4 +34,12 @@ public extension Notification.Name {
         return .init("CalendarStore.register.for.APNS")
     }
     
+    static var SJUnregisterForAPNS: Notification.Name {
+        return .init("CalendarStore.unregister.for.APNS")
+    }
+    
+    static var SJAPNSUpdated: Notification.Name {
+        return .init("CalendarStore.unregister.for.APNS")
+    }
+    
 }

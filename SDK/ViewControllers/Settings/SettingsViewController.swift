@@ -64,12 +64,8 @@ final class SettingsViewController: UIViewController {
         var title: String
         var details: String?
         var data: Any?
+        var alternativeTitle: String?
         
-        init(title: String, details: String? = nil, data: Any? = nil) {
-            self.title = title
-            self.details = details
-            self.data = data
-        }
     }
     
     
@@ -97,7 +93,8 @@ final class SettingsViewController: UIViewController {
     
     private let purchasesItems = [Item(title: "Restore Purchases")]
     
-    private let notificationsItems = [Item(title: "Register for Notifications")]
+    private let notificationsItems = [Item(title: "Register for Notifications",
+                                           alternativeTitle: "Unregister for notifications")]
     
     private static let supportEmail: String = Bundle.main.object(forInfoDictionaryKey: "CalendarStoreFeedbackEmailAddress") as? String ?? "support@schedjoules.com"
     private let contactItems = [Item(title: "FAQ",
@@ -108,7 +105,7 @@ final class SettingsViewController: UIViewController {
                                      data: supportEmail),
                                 Item(title: "Twitter",
                                      details: "@schedjoules",
-                                     data: URL(string:"https://twitter.com/SchedJoules")),,
+                                     data: URL(string:"https://twitter.com/SchedJoules")),
                                 Item(title: "Website",
                                      details: "http://www.schedjoules.com",
                                      data: URL(string:"http://www.schedjoules.com"))]
@@ -150,6 +147,11 @@ final class SettingsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         showLoader(animate: false)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateNotificationStatus),
+                                               name: .SJAPNSUpdated,
+                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +171,13 @@ final class SettingsViewController: UIViewController {
             self.view.isUserInteractionEnabled = true
         }
     }
+    
+    
+    //MARK: Actions
+    @objc private func updateNotificationStatus() {
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .automatic)
+    }
+    
 }
 
 
@@ -229,18 +238,15 @@ extension SettingsViewController: UITableViewDataSource {
             return cell
         case .notifications:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-//            if storeManager.isSubscriptionValid == true,
-//               let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
-//                cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
-//                cell.detailTextLabel?.text = ""
-//                cell.detailTextLabel?.textColor = .lightGray
-//                cell.accessoryType = .none
-//                return cell
-//            } else {
+            if UIApplication.shared.isRegisteredForRemoteNotifications == true {
+                cell.textLabel?.text = item.alternativeTitle
+                cell.detailTextLabel?.text = nil
+                cell.detailTextLabel?.textColor = .sjRed
+            } else {
                 cell.textLabel?.text = item.title
                 cell.detailTextLabel?.text = nil
                 cell.detailTextLabel?.textColor = .lightGray
-//            }
+            }
             return cell
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
@@ -303,7 +309,11 @@ extension SettingsViewController: UITableViewDelegate {
                 presentSubscriptionActive(restored: false, source: cell ?? self.view)
             }
         case .notifications:
-            NotificationCenter.default.post(name: .SJRegisterForAPNS, object: nil)
+            if UIApplication.shared.isRegisteredForRemoteNotifications == true {
+                NotificationCenter.default.post(name: .SJUnregisterForAPNS, object: nil)
+            } else {
+                NotificationCenter.default.post(name: .SJRegisterForAPNS, object: nil)
+            }
         }
     }
     
