@@ -78,6 +78,7 @@ final class SettingsViewController: UIViewController {
     var apiClient: Api!
     
     // - MARK: Private Properties
+    private var reloadNotificationsRow = false
     
     //Reference to IAP Store
     private lazy var storeManager = StoreManager.shared
@@ -141,17 +142,17 @@ final class SettingsViewController: UIViewController {
         view.addSubview(activityIndicator)
         
         storeManager.apiClient = self.apiClient
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateNotificationStatus),
+                                               name: .SJDidBecomeActive,
+                                               object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         showLoader(animate: false)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateNotificationStatus),
-                                               name: .SJAPNSUpdated,
-                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -310,7 +311,14 @@ extension SettingsViewController: UITableViewDelegate {
             }
         case .notifications:
             if UIApplication.shared.isRegisteredForRemoteNotifications == true {
-                NotificationCenter.default.post(name: .SJUnregisterForAPNS, object: nil)
+                guard let bundleIdentifier = Bundle.main.bundleIdentifier,
+                      let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier),
+                      UIApplication.shared.canOpenURL(appSettings) else {
+                    return
+                }
+                
+                reloadNotificationsRow = true
+                UIApplication.shared.open(appSettings)
             } else {
                 NotificationCenter.default.post(name: .SJRegisterForAPNS, object: nil)
             }
