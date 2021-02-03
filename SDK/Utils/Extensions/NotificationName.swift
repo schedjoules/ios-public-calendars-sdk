@@ -38,4 +38,8 @@ public extension Notification.Name {
         return .init("CalendarStore.did.become.active")
     }
     
+    static var SJShareCalendar: Notification.Name {
+        return .init("CalendarStor.share.calendar")
+    }
+    
 }

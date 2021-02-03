@@ -76,6 +76,10 @@ final class CalendarItemViewController: UIViewController {
         
         // Fetch and parse the ics file
         loadICS()
+        
+        //Add Share Button
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(handleShareTap))
+        navigationItem.rightBarButtonItem = shareButton
     }
     
     // Prepare for segue
@@ -114,9 +118,9 @@ final class CalendarItemViewController: UIViewController {
     }
     
     //Scroll to the next upcoming Event
-    private func scrollToNextEvent(in calendar: ICalendar?) {        
+    private func scrollToNextEvent(in calendar: ICalendar?) {
         let indexOfUpcomingEvent = calendar?.events.firstIndex(where: { (event) -> Bool in
-            let dateForFilter: Date = event.endDate ?? event.startDate            
+            let dateForFilter: Date = event.endDate ?? event.startDate
             return Calendar.current.compare(dateForFilter,
                                             to: Date(),
                                             toGranularity: .second) == .orderedDescending
@@ -145,10 +149,10 @@ final class CalendarItemViewController: UIViewController {
             let calendarName = self.title ?? "calendar"
             let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
                                                                 message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
-                preferredStyle: .alert)
+                                                                preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Ok",
                                              style: .default) { (_) in
-                                                self.openCalendar(calendarId: self.itemId, url: webcal)
+                self.openCalendar(calendarId: self.itemId, url: webcal)
             }
             let cancelAction = UIAlertAction(title: "Cancel",
                                              style: .cancel)
@@ -161,6 +165,18 @@ final class CalendarItemViewController: UIViewController {
             return
         }
         
+    }
+    
+    //Share calendar link
+    @objc private func handleShareTap() {
+        guard let calendarURL = icsURL else {
+            return
+        }
+        
+        let userInfo = ["calendarURL" : calendarURL,
+                        "senderVC" : self,
+                        "senderButton" : navigationItem.rightBarButtonItem as Any] as [String : Any]
+        NotificationCenter.default.post(name: .SJShareCalendar, object: nil, userInfo: userInfo)
     }
     
     // Show network indicator and activity indicator
@@ -213,15 +229,15 @@ final class CalendarItemViewController: UIViewController {
         subscriber.subscribe(to: calendarId,
                              url: url,
                              screenName: self.title) { (error) in
-                                if error == nil {
-                                    let freeCalendarAlertController = UIAlertController(title: "Error",
-                                                                                        message: error?.localizedDescription,
-                                                                                        preferredStyle: .alert)
-                                    let cancelAction = UIAlertAction(title: "Ok",
-                                                                     style: .cancel)
-                                    freeCalendarAlertController.addAction(cancelAction)
-                                    self.present(freeCalendarAlertController, animated: true)
-                                }
+            if error == nil {
+                let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                    message: error?.localizedDescription,
+                                                                    preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok",
+                                                 style: .cancel)
+                freeCalendarAlertController.addAction(cancelAction)
+                self.present(freeCalendarAlertController, animated: true)
+            }
         }
     }
     
