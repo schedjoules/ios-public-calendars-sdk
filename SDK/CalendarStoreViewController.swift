@@ -258,20 +258,36 @@ extension CalendarStoreViewController {
     
     public func handleIncoming(url: URL) {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let countrySetting = SettingsManager.get(type: .country)
+        
+        guard components?.host != "api.schedjoules.com" else {
+            guard let itemId = url.pathComponents.last else {
+                return
+            }
+            
+            let deeplinkVC = PageViewController(apiClient: apiClient, pageQuery:
+                                                    SinglePageQuery(pageID: itemId,
+                                                                    locale: countrySetting.code),
+                                                 searchEnabled: true)
+            present(deeplinkVC: deeplinkVC)
+            return
+        }
+        
         guard let id = components?.queryItems?.first?.value else {
             return
         }
         
-        let countrySetting = SettingsManager.get(type: .country)
         let deeplinkVC = PageViewController(apiClient: apiClient, pageQuery:
                                                 SinglePageQuery(pageID: id, locale: countrySetting.code), searchEnabled: true)
-        navigationController?.pushViewController(deeplinkVC, animated: true)
-        
-        
+        present(deeplinkVC: deeplinkVC)
+    }
+    
+    private func present(deeplinkVC: UIViewController) {
         if let selectedNC = self.selectedViewController as? UINavigationController {
             selectedNC.pushViewController(deeplinkVC, animated: true)
         } else {
             present(deeplinkVC, animated: true)
         }
     }
+    
 }
