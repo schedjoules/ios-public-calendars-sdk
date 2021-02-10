@@ -103,6 +103,8 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -417,6 +419,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
 }
 
 
+//MARK: Cell
 extension PageViewController: ItemCollectionViewCellDelegate {
     
     /// Subscribe to a calendar
