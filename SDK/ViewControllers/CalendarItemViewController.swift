@@ -43,6 +43,9 @@ final class CalendarItemViewController: UIViewController {
     ///The id of the calendar
     var itemId: Int = 0
     
+    ///The id of the parent page
+    var pageId: Int = 0
+    
     // - MARK: Private Properties
     
     /// The parsed events.
@@ -169,7 +172,12 @@ final class CalendarItemViewController: UIViewController {
     
     //Share calendar link
     @objc private func handleShareTap() {
-        guard let calendarURL = icsURL else {
+        guard let icsURL = icsURL else {
+            return
+        }
+        
+        let urlComponents = URLComponents(string: icsURL.absoluteString)
+        guard let calendarURL = URL(string: "https://www.schedjoules.com/public-calendars-app-schedjoules/?pageId=\(pageId)&itemId=\(itemId)") else {
             return
         }
         

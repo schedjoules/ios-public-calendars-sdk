@@ -45,6 +45,11 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     /// The returned Pages object from the query.
     private var page: Page?
     
+    
+    
+    private var deeplinkItemId: Int?
+    
+    
     /// A temporary variable to hold the Pages object while searching.
     private var tempPage: Page?
     
@@ -83,10 +88,12 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false) {
+    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
+        self.deeplinkItemId = deeplinkItemId
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -170,6 +177,15 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
                 // Set the page name as the navigation bar title, only if it has not been explicitly set before
                 if self.navigationItem.title == nil {
                     self.navigationItem.title = page.name
+                }
+                
+                if self.deeplinkItemId != 0 {
+                    page.sections.forEach { pageSection in
+                        if let matchingItem = pageSection.items.filter({ $0.itemID == self.deeplinkItemId }).first {
+                            self.open(item: matchingItem)
+                            return
+                        }
+                    }
                 }
             case .failure:
                 // Remove the previous pages
@@ -295,6 +311,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             calendarVC.title = item.name
             calendarVC.apiClient = apiClient
             calendarVC.itemId = item.itemID ?? 0
+            calendarVC.pageId = page?.itemID ?? 0
             navigationController?.pushViewController(calendarVC, animated: true)
         }
     }
