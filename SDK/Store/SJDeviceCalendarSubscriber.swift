@@ -41,8 +41,11 @@ open class SJDeviceCalendarSubscriber {
             self.calendarId = calendarId
             self.url = url
             self.screenName = screenName
-            
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            DispatchQueue.main.async {
+                UIApplication.shared.open(url,
+                                          options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
+                                          completionHandler: nil)
+            }
         }
         
     }
