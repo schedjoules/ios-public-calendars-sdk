@@ -39,7 +39,23 @@ public extension Notification.Name {
     }
     
     static var SJShareCalendar: Notification.Name {
-        return .init("CalendarStor.share.calendar")
+        return .init("CalendarStore.share.calendar")
+    }
+    
+    static var SJShowPurchaseScreen: Notification.Name {
+        return .init("CalendarStore.show.purchase.screen")
+    }
+    
+    static var SJClickPurchaseScreenButton: Notification.Name {
+        return .init("CalendarStore.purchase.button.clicked")
+    }
+    
+    static var SJPurchaseSubsctiption: Notification.Name {
+        return .init("CalendarStore.purchase.subscription")
+    }
+    
+    static var SJPurchaseSubscriptionFailed: Notification.Name {
+        return .init("CalendarStore.purchase.failed")
     }
     
 }

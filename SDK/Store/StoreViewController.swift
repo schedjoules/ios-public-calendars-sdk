@@ -207,6 +207,7 @@ class StoreViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.setNeedsStatusBarAppearanceUpdate()
+        NotificationCenter.default.post(name: .SJShowPurchaseScreen, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -333,6 +334,8 @@ class StoreViewController: UIViewController {
     }
     
     @objc func tapPurchaseButton() {
+        NotificationCenter.default.post(name: .SJClickPurchaseScreenButton, object: nil)
+        
         mainActivityIndicator.startAnimating()
         
         guard let validProduct = self.product else {
@@ -396,12 +399,16 @@ extension StoreViewController: InteractableStoreManager {
     }
     
     func purchaseFinished() {
+        NotificationCenter.default.post(name: .SJPurchaseSubsctiption, object: nil)
+        
         mainActivityIndicator.stopAnimating()
         
         self.dismiss()
     }
     
     func purchaseFailed(errorDescription: String?) {
+        NotificationCenter.default.post(name: .SJPurchaseSubscriptionFailed, object: errorDescription)
+        
         DispatchQueue.main.async {
             self.mainActivityIndicator.stopAnimating()
             self.productActivityIndicator.stopAnimating()
