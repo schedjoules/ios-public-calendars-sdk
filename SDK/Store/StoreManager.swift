@@ -223,7 +223,8 @@ extension StoreManager: SKProductsRequestDelegate{
         
         guard let firstProduct = products.first else {
             presentable?.purchaseFailed(errorDescription: "No product found")
-            return }
+            return
+        }
         
         if isRestoringPurchases == false {
             presentable?.show(subscription: nil, product: firstProduct)
@@ -267,6 +268,7 @@ extension StoreManager: SKPaymentTransactionObserver {
                     break
                 case .restored:
                     //We already handled this scenario
+                    completeTransaction(transaction: transaction)
                     break
                 case .deferred:
                     //No need to handle
