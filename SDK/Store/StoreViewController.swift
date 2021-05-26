@@ -56,7 +56,7 @@ class StoreViewController: UIViewController {
     private let backgroundImageView : UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "stadium_short")
+        imageView.image = UIImage(named: "stadium_short", in: Bundle.resourceBundle, compatibleWith: nil)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -71,7 +71,7 @@ class StoreViewController: UIViewController {
     private let logoImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "Icon")
+        imageView.image = UIImage(named: "Icon", in: Bundle.resourceBundle, compatibleWith: nil)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
