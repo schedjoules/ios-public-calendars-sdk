@@ -56,7 +56,9 @@ class StoreViewController: UIViewController {
     private let backgroundImageView : UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "stadium_short", in: Bundle.resourceBundle, compatibleWith: nil)
+        let image = UIImage(named: "stadium_short", in: Bundle.resourceBundle, compatibleWith: nil)
+        print("image: ", image)
+        imageView.image = image
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
