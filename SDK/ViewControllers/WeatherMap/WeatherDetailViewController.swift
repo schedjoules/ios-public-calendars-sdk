@@ -53,7 +53,7 @@ class WeatherDetailViewController: UIViewController {
     var stackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .green
+        stackView.backgroundColor = .white
         stackView.axis = .vertical
         return stackView
     }()
@@ -117,10 +117,6 @@ class WeatherDetailViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(subscribeButton)
         
-        let optionsLabel = UILabel(frame: .zero)
-        optionsLabel.text = "     Options"
-        stackView.addArrangedSubview(optionsLabel)
-        
         stackView.addArrangedSubview(activityIndicator)
         activityIndicator.startAnimating()
         
@@ -133,8 +129,6 @@ class WeatherDetailViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 24),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            optionsLabel.heightAnchor.constraint(equalToConstant: 44),
             
             subscribeButton.heightAnchor.constraint(equalToConstant: 50),
             subscribeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
