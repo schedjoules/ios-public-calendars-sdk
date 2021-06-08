@@ -164,11 +164,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
                 AnalyticsTracker.shared().trackScreen(name: self.title,
                                                       page: self.page,
                                                       url: self.pageQuery.url)
-                
-                // Set the page name as the navigation bar title, only if it has not been explicitly set before
-                if self.navigationItem.title == nil {
-                    self.navigationItem.title = page.name
-                }
+                self.navigationItem.title = page.name
             case .failure:
                 // Remove the previous pages
                 self.page = nil
