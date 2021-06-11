@@ -9,7 +9,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-protocol WeatherSettingsViewDelegate: class {
+protocol WeatherSettingsViewDelegate: AnyObject {
     func open(setting: WeatherSettingsItem)
 }
 

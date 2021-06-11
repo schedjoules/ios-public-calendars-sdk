@@ -9,7 +9,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-protocol ItemCollectionViewCellDelegate: class {
+protocol ItemCollectionViewCellDelegate: AnyObject {
     func subscribe(to pageItem: PageItem)
 }
 

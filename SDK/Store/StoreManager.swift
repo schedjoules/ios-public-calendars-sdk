@@ -23,7 +23,7 @@ import StoreKit
     }
 }
 
-public protocol InteractableStoreManager: class {
+public protocol InteractableStoreManager: AnyObject {
     func show(subscription: SubscriptionIAP?, product: SKProduct)
     func purchaseFinished()
     func purchaseFailed(errorDescription: String?)
