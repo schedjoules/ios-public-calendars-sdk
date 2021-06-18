@@ -1,8 +1,8 @@
 PODS:
   - SchedJoulesApiClient (0.8.3)
-  - SDWebImage (5.10.4):
-    - SDWebImage/Core (= 5.10.4)
-  - SDWebImage/Core (5.10.4)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
 
 DEPENDENCIES:
   - SchedJoulesApiClient
@@ -15,7 +15,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   SchedJoulesApiClient: ec02d931dbb77f3d3ae98ea37045e99b72b8339b
-  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
 PODFILE CHECKSUM: 6a879dfc270b64bfd4455e7c245dd05b2c5839a2
 
