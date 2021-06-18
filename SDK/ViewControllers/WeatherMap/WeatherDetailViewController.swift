@@ -130,8 +130,6 @@ class WeatherDetailViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            optionsLabel.heightAnchor.constraint(equalToConstant: 44),
-            
             subscribeButton.heightAnchor.constraint(equalToConstant: 50),
             subscribeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             subscribeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
