@@ -172,11 +172,6 @@ final class CalendarItemViewController: UIViewController {
     
     //Share calendar link
     @objc private func handleShareTap() {
-        guard let icsURL = icsURL else {
-            return
-        }
-        
-        let urlComponents = URLComponents(string: icsURL.absoluteString)
         guard let calendarURL = URL(string: "https://www.schedjoules.com/public-calendars-app-schedjoules/?pageId=\(pageId)&itemId=\(itemId)") else {
             return
         }
