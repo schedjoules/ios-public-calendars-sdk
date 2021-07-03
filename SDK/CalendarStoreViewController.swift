@@ -26,7 +26,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-@objc public protocol CalendarStoreDelegate: class {
+@objc public protocol CalendarStoreDelegate: AnyObject {
     func calendarStoreDidClose()
 }
 

@@ -25,7 +25,7 @@
 
 import UIKit
 
-protocol LoadErrorViewDelegate: class {
+protocol LoadErrorViewDelegate: AnyObject {
     /// Refresh button was pressed.
     func refreshPressed()
 }
