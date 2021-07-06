@@ -9,7 +9,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-protocol WeatherUnitsDelegate: class {
+protocol WeatherUnitsDelegate: AnyObject {
     func save(updated setting: WeatherSettingsItem)
 }
 
