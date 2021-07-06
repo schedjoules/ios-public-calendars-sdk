@@ -86,8 +86,8 @@ public class StoreManager: NSObject {
         apiClient.execute(query: subscriptionStatusQuery) { result in
             switch result {
             case let .success(resultInfo):
-                let subscriptionExpirationDateUTC = Date(timeIntervalSince1970: resultInfo.expirationDate)
-                UserDefaults.standard.subscriptionExpirationDate = subscriptionExpirationDateUTC
+                UserDefaults.standard.subscriptionId = resultInfo.subscriptionId
+                UserDefaults.standard.subscriptionExpirationDate = Date(timeIntervalSince1970: resultInfo.expirationDate)
             case let .failure(error):
                 sjPrint(error)
                 sjPrint(error.localizedDescription)
@@ -138,7 +138,7 @@ public class StoreManager: NSObject {
         } else {
             requestSubscriptionProducts { (result, error) in
                 guard let validSubscriptionIAP = result,
-                    error == nil else { return }
+                      error == nil else { return }
                 
                 //2.
                 //get the product
@@ -325,7 +325,6 @@ extension StoreManager: SKPaymentTransactionObserver {
         sjPrint("restoreTransaction... \(productIdentifier)")
         
         deliverPurchaseForIdentifier(identifier: productIdentifier)
-        presentable?.purchaseFinished()
         restorePurchaseCompleted = true
         SKPaymentQueue.default().finishTransaction(transaction)
     }
