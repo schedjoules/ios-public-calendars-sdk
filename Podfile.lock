@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SchedJoulesApiClient:
-    :commit: 634a20221d9b159ba32554e3d43919db40186d27
+    :commit: 60700ae92616215f229f842dfc719fbdf1b9082a
     :git: https://github.com/schedjoules/swift-api-client.git
 
 SPEC CHECKSUMS:
