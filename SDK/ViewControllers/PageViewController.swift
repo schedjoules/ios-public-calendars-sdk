@@ -184,6 +184,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
                         }
                     }
                 }
+                self.navigationItem.title = page.name
             case .failure:
                 // Remove the previous pages
                 self.page = nil
