@@ -1,31 +1,22 @@
 PODS:
-  - SchedJoulesApiClient (0.8.4)
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
+  - SchedJoulesApiClient (0.8.5)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
 
 DEPENDENCIES:
-  - "SchedJoulesApiClient (from `https://github.com/schedjoules/swift-api-client.git`, branch `#109-Bug-with-URLComponents-on-requests`)"
+  - SchedJoulesApiClient
   - SDWebImage
 
 SPEC REPOS:
   trunk:
+    - SchedJoulesApiClient
     - SDWebImage
 
-EXTERNAL SOURCES:
-  SchedJoulesApiClient:
-    :branch: "#109-Bug-with-URLComponents-on-requests"
-    :git: https://github.com/schedjoules/swift-api-client.git
-
-CHECKOUT OPTIONS:
-  SchedJoulesApiClient:
-    :commit: 60700ae92616215f229f842dfc719fbdf1b9082a
-    :git: https://github.com/schedjoules/swift-api-client.git
-
 SPEC CHECKSUMS:
-  SchedJoulesApiClient: 6c658862cd32e143acd768a512a3ccd84ce2a96c
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SchedJoulesApiClient: 700d2be7ac247294af9397589a6a2a809ae45d43
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: af39e47be487dda09c76405effc277c5934c5df3
+PODFILE CHECKSUM: 148153995c0ddef23ddd2474cdaa1386f7cef086
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
