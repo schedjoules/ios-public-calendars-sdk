@@ -122,7 +122,7 @@ final class SettingsViewController: UIViewController {
                             Section(kind: .contact, items: contactItems)]
             
             if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
-               appBundle == "com.schedjoules.calstore" {
+               appBundle != "com.schedjoules.calstore" {
                 sections.insert(Section(kind: .purchases, items: purchasesItems), at: 2)
             } else {
                 sections.insert(Section(kind: .purchases, items: purchasesItemsMainApp), at: 2)
