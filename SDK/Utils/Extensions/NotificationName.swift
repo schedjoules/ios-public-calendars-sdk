@@ -10,6 +10,10 @@ import Foundation
 
 public extension Notification.Name {
     
+    static var SJLaunchSignUp: Notification.Name {
+        return .init("CalendarStore.launchSignUp")
+    }
+    
     static var SJSubscribedToCalendar: Notification.Name {
         return .init("CalendarStore.subscribed")
     }

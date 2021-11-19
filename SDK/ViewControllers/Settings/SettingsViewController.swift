@@ -93,6 +93,8 @@ final class SettingsViewController: UIViewController {
                                              data: SettingsManager.SettingsType.language)]
     
     private let purchasesItems = [Item(title: "Restore Purchases")]
+    private let purchasesItemsMainApp = [Item(title: "From the Appstore"),
+                                         Item(title: "From another SchedJoules App")]
     
     private let notificationsItems = [Item(title: "Register for Notifications",
                                            alternativeTitle: "Unregister for notifications")]
@@ -114,11 +116,19 @@ final class SettingsViewController: UIViewController {
     //Sections
     private var sections: [Section] {
         get {
-            return [Section(kind: .about, items: aboutItems),
-                    Section(kind: .localization, items: countryLanguageItems),
-                    Section(kind: .purchases, items: purchasesItems),
-                    Section(kind: .notifications, items: notificationsItems),
-                    Section(kind: .contact, items: contactItems)]
+            var sections = [Section(kind: .about, items: aboutItems),
+                            Section(kind: .localization, items: countryLanguageItems),
+                            Section(kind: .notifications, items: notificationsItems),
+                            Section(kind: .contact, items: contactItems)]
+            
+            if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
+               appBundle == "com.schedjoules.calstore" {
+                sections.insert(Section(kind: .purchases, items: purchasesItems), at: 2)
+            } else {
+                sections.insert(Section(kind: .purchases, items: purchasesItemsMainApp), at: 2)
+            }
+            
+            return sections
         }
     }
     
@@ -300,22 +310,27 @@ extension SettingsViewController: UITableViewDelegate {
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
             }
         case .purchases:
-            //Only run if there is no subscription
-            if storeManager.isSubscriptionValid == false {
-                storeManager.isRestoringPurchases = true
-                storeManager.presentable = self
-                storeManager.restorePurchases()
-                showLoader(animate: true)
-            } else {
-                presentSubscriptionActive(restored: false, source: cell ?? self.view)
+            if indexPath.item == 0 {
+                //Only run if there is no subscription
+                if storeManager.isSubscriptionValid == false {
+                    storeManager.isRestoringPurchases = true
+                    storeManager.presentable = self
+                    storeManager.restorePurchases()
+                    showLoader(animate: true)
+                } else {
+                    presentSubscriptionActive(restored: false, source: cell ?? self.view)
+                }
+            } else if #available(iOS 13.0, *) {
+                    NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
+                    return
             }
         case .notifications:
             if UIApplication.shared.isRegisteredForRemoteNotifications == true {
                 guard let bundleIdentifier = Bundle.main.bundleIdentifier,
                       let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier),
                       UIApplication.shared.canOpenURL(appSettings) else {
-                    return
-                }
+                          return
+                      }
                 
                 reloadNotificationsRow = true
                 UIApplication.shared.open(appSettings)
