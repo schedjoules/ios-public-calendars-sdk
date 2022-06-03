@@ -333,10 +333,10 @@
 				B69268862089F32A003456FB /* PageViewController.swift */,
 				B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */,
 				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
+				84E917A6284A16AE0027810F /* SuggestionsViewController.swift */,
 				B6EF1C3920780879003E0095 /* Settings */,
 				469AA79A23215C830092CBA1 /* WeatherMap */,
 				467C70EE248A475300674885 /* ItemCollectionViewCell.swift */,
-				84E917A6284A16AE0027810F /* SuggestionsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

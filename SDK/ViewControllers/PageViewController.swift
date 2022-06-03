@@ -75,7 +75,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private let isSearchEnabled: Bool
     
     
-    private let suggestionsViewController = SuggestionsViewController()
+    private let suggestionsViewController: SuggestionsViewController<PageQuery>
     
     // - MARK: Initialization
     
@@ -96,6 +96,8 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
         self.deeplinkItemId = deeplinkItemId
+        
+        self.suggestionsViewController = SuggestionsViewController(apiClient: apiClient, pageQuery: pageQuery)
         
         super.init(nibName: nil, bundle: nil)
     }
