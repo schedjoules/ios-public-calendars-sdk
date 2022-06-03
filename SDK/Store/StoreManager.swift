@@ -51,7 +51,7 @@ public class StoreManager: NSObject {
     var isRestoringPurchases = false
     var restorePurchaseCompleted = false
     
-    var isSubscriptionValid: Bool {
+    public var isSubscriptionValid: Bool {
         get {
             guard let expirationDate = UserDefaults.standard.subscriptionExpirationDate else {
                 return false

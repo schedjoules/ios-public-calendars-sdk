@@ -42,6 +42,8 @@
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
 		46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5622608BA00005EAB6 /* UIColorExtension.swift */; };
+		84E917A7284A16AE0027810F /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* SuggestionsViewController.swift */; };
+		84E917A8284A16AE0027810F /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* SuggestionsViewController.swift */; };
 		AC77A8E9CFFEA2FE7F1A06F5 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF73D9BBB270B7D19445C64 /* Pods_iOS_SDK.framework */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
 		B625A60A20C038D000586F5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B625A60220C038D000586F5E /* Assets.xcassets */; };
@@ -107,6 +109,7 @@
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		46F45C5622608BA00005EAB6 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		6F2E4C6B691ADEF03E85DF26 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
+		84E917A6284A16AE0027810F /* SuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsViewController.swift; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B625A60220C038D000586F5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B625A60420C038D000586F5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -333,6 +336,7 @@
 				B6EF1C3920780879003E0095 /* Settings */,
 				469AA79A23215C830092CBA1 /* WeatherMap */,
 				467C70EE248A475300674885 /* ItemCollectionViewCell.swift */,
+				84E917A6284A16AE0027810F /* SuggestionsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -554,6 +558,7 @@
 				B6EF1C6120780879003E0095 /* CalendarStoreViewController.swift in Sources */,
 				460015542208987300C6E9F2 /* SettingsObject.swift in Sources */,
 				46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */,
+				84E917A7284A16AE0027810F /* SuggestionsViewController.swift in Sources */,
 				46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */,
 				469AA7A023215C830092CBA1 /* WeatherUnitCollectionViewCell.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
@@ -588,6 +593,7 @@
 				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
 				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
+				84E917A8284A16AE0027810F /* SuggestionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -74,6 +74,9 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     /// If this is true, the search controller is added to the view
     private let isSearchEnabled: Bool
     
+    
+    private let suggestionsViewController = SuggestionsViewController()
+    
     // - MARK: Initialization
     
     /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `PageViewController`
@@ -105,6 +108,10 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         // Fetch the pages from the API
         fetchPages()
         
+        view.addSubview(suggestionsViewController.view)
+        addChild(suggestionsViewController)
+        suggestionsViewController.didMove(toParent: self)
+        
         // Create a table view
         tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +122,12 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            suggestionsViewController.view.heightAnchor.constraint(equalToConstant: 120),
+            suggestionsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            suggestionsViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            suggestionsViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: suggestionsViewController.view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
