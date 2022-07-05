@@ -44,6 +44,8 @@
 		46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5622608BA00005EAB6 /* UIColorExtension.swift */; };
 		84E917A7284A16AE0027810F /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* SuggestionsViewController.swift */; };
 		84E917A8284A16AE0027810F /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* SuggestionsViewController.swift */; };
+		84E917AA284A24430027810F /* SuggestionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A9284A24430027810F /* SuggestionsCollectionViewCell.swift */; };
+		84E917AB284A24430027810F /* SuggestionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A9284A24430027810F /* SuggestionsCollectionViewCell.swift */; };
 		AC77A8E9CFFEA2FE7F1A06F5 /* Pods_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF73D9BBB270B7D19445C64 /* Pods_iOS_SDK.framework */; };
 		B625A60920C038D000586F5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B625A60120C038D000586F5E /* ViewController.swift */; };
 		B625A60A20C038D000586F5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B625A60220C038D000586F5E /* Assets.xcassets */; };
@@ -110,6 +112,7 @@
 		46F45C5622608BA00005EAB6 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		6F2E4C6B691ADEF03E85DF26 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
 		84E917A6284A16AE0027810F /* SuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsViewController.swift; sourceTree = "<group>"; };
+		84E917A9284A24430027810F /* SuggestionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B625A60220C038D000586F5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B625A60420C038D000586F5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -337,6 +340,7 @@
 				B6EF1C3920780879003E0095 /* Settings */,
 				469AA79A23215C830092CBA1 /* WeatherMap */,
 				467C70EE248A475300674885 /* ItemCollectionViewCell.swift */,
+				84E917A9284A24430027810F /* SuggestionsCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -551,6 +555,7 @@
 				469AA7AD23215D7D0092CBA1 /* StringExtension.swift in Sources */,
 				B625A60920C038D000586F5E /* ViewController.swift in Sources */,
 				460015512208987300C6E9F2 /* UserDefaultsKeys.swift in Sources */,
+				84E917AA284A24430027810F /* SuggestionsCollectionViewCell.swift in Sources */,
 				467C70EF248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6EF1C5F20780879003E0095 /* SettingsWebViewController.swift in Sources */,
 				46A78441252DC3640038CC3A /* SJAnalyticsObject.swift in Sources */,
@@ -587,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E917AB284A24430027810F /* SuggestionsCollectionViewCell.swift in Sources */,
 				46A78442252DC3640038CC3A /* SJAnalyticsObject.swift in Sources */,
 				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,

@@ -75,7 +75,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private let isSearchEnabled: Bool
     
     
-    private let suggestionsViewController: SuggestionsViewController<PageQuery>
+    private var suggestionsViewController: SuggestionsViewController<SuggestionsQuery>?
     
     // - MARK: Initialization
     
@@ -91,13 +91,24 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
+    required init(apiClient: Api,
+                  pageQuery: PageQuery,
+                  searchEnabled: Bool = false,
+                  deeplinkItemId: Int? = 0) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
         self.isSearchEnabled = searchEnabled
         self.deeplinkItemId = deeplinkItemId
         
-        self.suggestionsViewController = SuggestionsViewController(apiClient: apiClient, pageQuery: pageQuery)
+        if pageQuery is HomePageQuery {
+            let languageSetting = SettingsManager.get(type: .language)
+            let countrySetting = SettingsManager.get(type: .country)
+            
+            let suggestedQuery = SuggestionsQuery(numberOfItems: 12,
+                                                  locale: languageSetting.code,
+                                                  location: countrySetting.code)
+            self.suggestionsViewController = SuggestionsViewController(apiClient: apiClient, pageQuery: suggestedQuery)
+        }
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -110,10 +121,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         // Fetch the pages from the API
         fetchPages()
         
-        view.addSubview(suggestionsViewController.view)
-        addChild(suggestionsViewController)
-        suggestionsViewController.didMove(toParent: self)
-        
         // Create a table view
         tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -123,13 +130,25 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         tableView.estimatedRowHeight = 44
         view.addSubview(tableView)
         
-        NSLayoutConstraint.activate([
-            suggestionsViewController.view.heightAnchor.constraint(equalToConstant: 120),
-            suggestionsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            suggestionsViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            suggestionsViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        // If necessary add the Suggestions row
+        if let suggestionsViewController = suggestionsViewController {
+            view.addSubview(suggestionsViewController.view)
+            addChild(suggestionsViewController)
+            suggestionsViewController.didMove(toParent: self)
             
-            tableView.topAnchor.constraint(equalTo: suggestionsViewController.view.bottomAnchor),
+            NSLayoutConstraint.activate([
+                suggestionsViewController.view.heightAnchor.constraint(equalToConstant: 100),
+                suggestionsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                suggestionsViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                suggestionsViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            ])
+            
+            tableView.topAnchor.constraint(equalTo: suggestionsViewController.view.bottomAnchor).isActive = true
+        } else {
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        }
+        
+        NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)

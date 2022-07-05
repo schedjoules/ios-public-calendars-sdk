@@ -373,3 +373,38 @@ extension StoreManager{
     }
     
 }
+
+
+// MARK: StoreKit 2
+@available(iOS 15.0, *)
+extension StoreManager {
+    
+    func getCurrentProducts() async throws -> [Transaction.Transactions.Element] {
+        print(":::: ", Transaction.currentEntitlements)
+        for await result in Transaction.currentEntitlements {
+            print("currentEntitlements: ", result)
+        }
+        let currentEntitlements = await Transaction.currentEntitlements.collect()
+        return currentEntitlements
+    }
+    
+    func manageSubscriptionsPage(from view: UIView) async {
+        // Fetch the current scene, then attempt to show the sheet. If there was an issue, print the error.
+        if let scene = await view.window?.windowScene {
+            do {
+                try  await AppStore.showManageSubscriptions(in: scene)
+            } catch {
+                print("Error:(error)")
+            }
+        }
+    }
+    
+}
+
+
+@available(iOS 13.0, *)
+extension AsyncSequence {
+    func collect() async rethrows -> [Element] {
+        try await reduce(into: [Element]()) { $0.append($1) }
+    }
+}

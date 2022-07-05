@@ -12,8 +12,7 @@ import SafariServices
 import WebKit
 
 
-class SuggestionsViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
-UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
+class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where SuggestionsQuery.Result == Page {
     
     // - MARK: Public Properties
     
@@ -23,7 +22,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     // - MARK: Private Properties
     
     /// The Page query used by this view controller.
-    private let pageQuery: PageQuery!
+    private let pageQuery: SuggestionsQuery!
     
     /// The returned Pages object from the query.
     private var page: Page?
@@ -40,22 +39,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private let apiClient: Api
     
     /// The table view for presenting the pages.
-    private var tableView: UITableView!
-    
-    // Acitivity indicator
-    private lazy var activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
-    
-    // Load error view
-    private lazy var loadErrorView = Bundle.resourceBundle.loadNibNamed("LoadErrorView", owner: self, options: nil)![0] as! LoadErrorView
-    
-    // Search controller
-    private lazy var searchController = UISearchController(searchResultsController: nil)
-    
-    // Refresh control
-    private var refreshControl = UIRefreshControl()
-    
-    /// If this is true, the search controller is added to the view
-    private let isSearchEnabled: Bool
+    private var tableView: UICollectionView!
     
     // - MARK: Initialization
     
@@ -71,16 +55,15 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: Api, pageQuery: PageQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
+    required init(apiClient: Api, pageQuery: SuggestionsQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
-        self.isSearchEnabled = searchEnabled
         self.deeplinkItemId = deeplinkItemId
         
         super.init(nibName: nil, bundle: nil)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .green//.sjBackground
     }
     
     // - MARK: ViewController Methods
@@ -92,12 +75,16 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         fetchPages()
         
         // Create a table view
-        tableView = UITableView(frame: .zero)
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.itemSize = CGSize(width: 100, height: 100)
+        
+        tableView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -107,32 +94,8 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        // Set up the activity indicator
-        setUpActivityIndicator()
-        
-        // Remove empty table cell seperators
-        tableView.tableFooterView = UIView(frame: .zero)
-        
         // Register table cell for reuse
-        tableView.register(ItemCollectionViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        // Set up the refresh control
-        refreshControl.tintColor = navigationController?.navigationBar.tintColor
-        refreshControl.addTarget(self, action: #selector(fetchPages), for: UIControl.Event.valueChanged)
-        tableView.refreshControl = refreshControl
-        
-        // Set up the search controller (if neccessary)
-        if isSearchEnabled && navigationItem.searchController == nil {
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            definesPresentationContext = true
-            searchController.searchBar.delegate = self
-            searchController.searchBar.tintColor = navigationController?.navigationBar.tintColor
-            navigationItem.searchController = searchController
-            
-            navigationController?.view.setNeedsLayout()
-            navigationController?.view.layoutIfNeeded()
-        }
+        tableView.register(SuggestionsCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -174,12 +137,8 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             case .failure:
                 // Remove the previous pages
                 self.page = nil
-                
-                // Show the loading error view
-                self.showErrorView()
             }
             self.tableView.reloadData()
-            self.stopLoading()
         })
     }
     
@@ -197,34 +156,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         return nil
     }
     
-    /// Subscribe to a calendar
-    @objc private func subscribe(sender: UIButton){
-        let cell = sender.superview as! UITableViewCell
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            sjPrint("Could not get row")
-            return
-        }
-        
-        let pageSection = page!.sections[indexPath.section]
-        let item = pageSection.items[indexPath.row]
-        guard let webcal = item.url.webcalURL() else {
-            open(item: item)
-            return
-        }
-        
-        //First we check if the user has a valid subscription or if they haven't downloaded the free calendar
-        let freeSubscriptionRecord = FreeSubscriptionRecord()
-        
-        if StoreManager.shared.isSubscriptionValid == true {
-            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
-        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
-        } else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-        }
-    }
-    
     private func openCalendar(calendarId: Int, url: URL) {
         let subscriber = SJDeviceCalendarSubscriber.shared
         subscriber.subscribe(to: calendarId,
@@ -239,47 +170,6 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
                                     freeCalendarAlertController.addAction(cancelAction)
                                     self.present(freeCalendarAlertController, animated: true)
                                 }
-        }
-    }
-    
-    /// Set up the activity indicator in the view and start loading
-    private func setUpActivityIndicator() {
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = navigationController?.navigationBar.tintColor
-        view.addSubview(activityIndicator)
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
-        ])
-        
-        startLoading()
-    }
-    
-    /// Show network indicator and activity indicator
-    private func startLoading(){
-        // Remove the load error view, if present
-        if view.subviews.contains(loadErrorView) {
-            loadErrorView.removeFromSuperview()
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        activityIndicator.startAnimating()
-    }
-    
-    /// Stop all loading indicators and remove error view
-    private func stopLoading(){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        activityIndicator.stopAnimating()
-        tableView.refreshControl?.endRefreshing()
-        if tableView.numberOfSections > 0 {
-            // Remove the load error view, if present
-            if view.subviews.contains(loadErrorView) {
-                loadErrorView.removeFromSuperview()
-            }
-            
-            // Add the refresh control
-            tableView.refreshControl = refreshControl
         }
     }
     
@@ -301,46 +191,33 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     }
     
     
-    /// Show the load error view and hide the refresh control
-    private func showErrorView() {
-        // Set up the load error view
-        self.loadErrorView.delegate = self
-        self.loadErrorView.refreshButton.setTitleColor(self.navigationController?.navigationBar.tintColor, for: .normal)
-        self.loadErrorView.refreshButton.layer.borderColor = self.navigationController?.navigationBar.tintColor.cgColor
-        self.loadErrorView.center = self.view.center
-        self.view.addSubview(self.loadErrorView)
-        
-        // Remove the refresh control
-        self.tableView.refreshControl = nil
-        
-        // Remove the search controller
-        self.navigationItem.searchController = nil
+    // - MARK: UICollectionView View Data source Methods
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
-    // - MARK: Table View Data source Methods
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return page?.sections.count ?? 0
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let page = self.page,
+              let firstSection = page.sections.first else {
+            return 0
+        }
+        return firstSection.items.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return page?.sections[section].items.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // Dequeue a reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ItemCollectionViewCell
-        cell.delegate = self
+        let cell = tableView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SuggestionsCollectionViewCell
         
         // Get the page section
         let pageSection = page?.sections[indexPath.section]
-        
+
         // Get the page item from the given section
         guard let pageItem = pageSection?.items[indexPath.row] else {
             sjPrint("Could not get page item.")
             return cell
         }
-        
+
         cell.setup(pageItem: pageItem,
                    tintColor: navigationController?.navigationBar.tintColor)
         return cell
@@ -348,24 +225,22 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     
     // Set title for the headers
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return page?.sections[section].name
+        return "page?.sections[section].name"
     }
     
     // - MARK: Table View Delegate Methods
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Deselect the row
-        tableView.deselectRow(at: indexPath, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        tableView.deselectItem(at: indexPath, animated: true)
         
         // Get page section
         let pageSection = page!.sections[indexPath.section]
         
-        // Show the seleced page in a SuggestionsViewController
+        // Show the seleced page in a PageViewController
         if pageSection.items[indexPath.row].itemClass == .page {
             let languageSetting = SettingsManager.get(type: .language)
             let singlePageQuery = SinglePageQuery(pageID: String(pageSection.items[indexPath.row].itemID!),
                                                   locale: languageSetting.code)
-            let pageVC = SuggestionsViewController<SinglePageQuery>(apiClient: apiClient,
+            let pageVC = PageViewController<SinglePageQuery>(apiClient: apiClient,
                                                              pageQuery: singlePageQuery,
                                                              searchEnabled: true)
             
@@ -377,87 +252,9 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         }
     }
     
-    // MARK: - Search Delegate Methods
-    
-    // Store the current page before searching
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        tempPage = page
-    }
-    
-    // Perfrom the search
-    func updateSearchResults(for searchController: UISearchController) {
-        // Get the search text from the search bar
-        guard let queryText = searchController.searchBar.text else {
-            return
-        }
-        
-        // Only search if more than 2 charachters were entered
-        if queryText.count > 2 {
-            apiClient.execute(query: SearchQuery(query: queryText), completion: { result in
-                switch result {
-                case let .success(searchPage):
-                    self.page = searchPage
-                    self.tableView.reloadData()
-                case let .failure(error):
-                    sjPrint("There was an error searching: \(error)")
-                }
-            })
-        }
-    }
-    
-    // Cancel the search and show the page before searching
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        page = tempPage
-        tableView.reloadData()
-    }
-    
     // MARK: - Load Error View Delegate Methods
     
     func refreshPressed() {
-        startLoading()
         fetchPages()
     }
-}
-
-
-//MARK: Cell
-extension SuggestionsViewController: ItemCollectionViewCellDelegate {
-    
-    /// Subscribe to a calendar
-    func subscribe(to pageItem: PageItem) {
-        let sjCalendar =  SJAnalyticsCalendar(calendarId: pageItem.itemID ?? 0,
-                                              calendarURL: URL(string: pageItem.url))
-        let sjEvent = SJAnalyticsObject(calendar: sjCalendar, screenName: self.title)
-        NotificationCenter.default.post(name: .SJPlustButtonClicked, object: sjEvent)
-        
-        guard let webcal = pageItem.url.webcalURL() else {
-            open(item: pageItem)
-            return
-        }
-        
-        let freeSubscriptionRecord = FreeSubscriptionRecord()
-        
-        if StoreManager.shared.isSubscriptionValid == true {
-            self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
-        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
-                preferredStyle: .alert)
-            let acceptAction = UIAlertAction(title: "Ok",
-                                             style: .default) { (_) in
-                                                self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
-            }
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .cancel)
-            freeCalendarAlertController.addAction(acceptAction)
-            freeCalendarAlertController.addAction(cancelAction)
-            present(freeCalendarAlertController, animated: true)
-        } else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
-        }
-        
-    }
-    
 }

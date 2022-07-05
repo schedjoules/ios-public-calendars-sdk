@@ -47,6 +47,8 @@ final class SettingsViewController: UIViewController {
                     return "Notifications"
                 case .contact:
                     return "Contact us"
+                case .account:
+                    return "Account"
                 }
             }
         }
@@ -57,6 +59,7 @@ final class SettingsViewController: UIViewController {
             case purchases
             case notifications
             case contact
+            case account
         }
     }
     
@@ -112,6 +115,7 @@ final class SettingsViewController: UIViewController {
                                 Item(title: "Website",
                                      details: "http://www.schedjoules.com",
                                      data: URL(string:"http://www.schedjoules.com"))]
+    private let accountItems = [Item(title: "Delete your account")]
     
     //Sections
     private var sections: [Section] {
@@ -119,7 +123,8 @@ final class SettingsViewController: UIViewController {
             var sections = [Section(kind: .about, items: aboutItems),
                             Section(kind: .localization, items: countryLanguageItems),
                             Section(kind: .notifications, items: notificationsItems),
-                            Section(kind: .contact, items: contactItems)]
+                            Section(kind: .contact, items: contactItems),
+                            Section(kind: .account, items: accountItems)]
             
             if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
                appBundle != "com.schedjoules.calstore" {
@@ -268,6 +273,12 @@ extension SettingsViewController: UITableViewDataSource {
             cell.imageView?.tintColor = navigationController?.navigationBar.tintColor
             cell.detailTextLabel!.textColor = .lightGray
             return cell
+        case .account:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellDetail", for: indexPath)
+            cell.textLabel?.text = item.title
+            cell.detailTextLabel?.text = nil
+            cell.detailTextLabel?.textColor = .lightGray
+            return cell
         }
     }
 }
@@ -337,7 +348,29 @@ extension SettingsViewController: UITableViewDelegate {
             } else {
                 NotificationCenter.default.post(name: .SJRegisterForAPNS, object: nil)
             }
+        case .account:
+            if #available(iOS 15.0, *) {
+                Task {
+                    do {
+                        let appStoreSubscriptions = try await StoreManager.shared.getCurrentProducts()
+                        if appStoreSubscriptions.count > 0 {
+                            await StoreManager.shared.manageSubscriptionsPage(from: view)
+                        } else {
+                            deleteAccount()
+                        }
+                    } catch {
+                        print("appstore error: ", error)
+                    }
+                }
+            } else {
+                deleteAccount()
+            }
         }
+    }
+    
+    func deleteAccount() {
+        print("UserDefaults.standard.subscriptionId: ", UserDefaults.standard.subscriptionId)
+    //https://api.schedjoules.com/remove_account?sid=23121232 will trigger an email s
     }
     
     private func presentSubscriptionActive(restored: Bool, source: UIView) {
