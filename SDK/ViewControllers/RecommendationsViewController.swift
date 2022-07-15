@@ -1,5 +1,5 @@
 //
-//  SuggestionsViewController.swift
+//  RecommendationsViewController.swift
 //  iOS-SDK
 //
 //  Created by Alberto on 03/06/22.
@@ -12,7 +12,7 @@ import SafariServices
 import WebKit
 
 
-class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where SuggestionsQuery.Result == Page {
+class RecommendationsViewController<RecommendationsQuery: Query>: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where RecommendationsQuery.Result == Page {
     
     // - MARK: Public Properties
     
@@ -22,7 +22,7 @@ class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICo
     // - MARK: Private Properties
     
     /// The Page query used by this view controller.
-    private let pageQuery: SuggestionsQuery!
+    private let pageQuery: RecommendationsQuery!
     
     /// The returned Pages object from the query.
     private var page: Page?
@@ -43,10 +43,10 @@ class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICo
     
     // - MARK: Initialization
     
-    /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `SuggestionsViewController`
+    /* This method is only called when initializing a `UIViewController` from a `Storyboard` or `XIB`. The `RecommendationsViewController`
      must only be used programatically, but every subclass of `UIViewController` must implement `init?(coder aDecoder: NSCoder)`. */
     required init?(coder aDecoder: NSCoder) {
-        fatalError("SuggestionsViewController must only be initialized programatically.")
+        fatalError("RecommendationsViewController must only be initialized programatically.")
     }
     
     /**
@@ -55,7 +55,7 @@ class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICo
      - parameter pageQuery: A query with a `Result` of type `Page`.
      - parameter searchEnabled: Set this parameter to true, if you would like to have a search controller present. Default is `false`.
      */
-    required init(apiClient: Api, pageQuery: SuggestionsQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
+    required init(apiClient: Api, pageQuery: RecommendationsQuery, searchEnabled: Bool = false, deeplinkItemId: Int? = 0) {
         self.pageQuery = pageQuery
         self.apiClient = apiClient
         self.deeplinkItemId = deeplinkItemId
@@ -95,7 +95,7 @@ class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICo
         ])
         
         // Register table cell for reuse
-        tableView.register(SuggestionsCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        tableView.register(RecommendationsCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -207,7 +207,7 @@ class SuggestionsViewController<SuggestionsQuery: Query>: UIViewController, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // Dequeue a reusable cell
-        let cell = tableView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SuggestionsCollectionViewCell
+        let cell = tableView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! RecommendationsCollectionViewCell
         
         // Get the page section
         let pageSection = page?.sections[indexPath.section]

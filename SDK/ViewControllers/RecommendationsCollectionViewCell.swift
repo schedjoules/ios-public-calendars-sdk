@@ -1,5 +1,5 @@
 //
-//  SuggestionsCollectionViewCell.swift
+//  RecommendationsCollectionViewCell.swift
 //  iOS-SDK
 //
 //  Created by Alberto on 03/06/22.
@@ -9,7 +9,7 @@
 import UIKit
 import SchedJoulesApiClient
 
-class SuggestionsCollectionViewCell: UICollectionViewCell {
+class RecommendationsCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
     var pageItem: PageItem?

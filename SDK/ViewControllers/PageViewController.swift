@@ -75,7 +75,7 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
     private let isSearchEnabled: Bool
     
     
-    private var suggestionsViewController: SuggestionsViewController<SuggestionsQuery>?
+    private var recommendationsViewController: RecommendationsViewController<RecommendationsQuery>?
     
     // - MARK: Initialization
     
@@ -104,10 +104,10 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             let languageSetting = SettingsManager.get(type: .language)
             let countrySetting = SettingsManager.get(type: .country)
             
-            let suggestedQuery = SuggestionsQuery(numberOfItems: 12,
+            let suggestedQuery = RecommendationsQuery(numberOfItems: 12,
                                                   locale: languageSetting.code,
                                                   location: countrySetting.code)
-            self.suggestionsViewController = SuggestionsViewController(apiClient: apiClient, pageQuery: suggestedQuery)
+            self.recommendationsViewController = RecommendationsViewController(apiClient: apiClient, pageQuery: suggestedQuery)
         }
         
         super.init(nibName: nil, bundle: nil)
@@ -130,20 +130,20 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         tableView.estimatedRowHeight = 44
         view.addSubview(tableView)
         
-        // If necessary add the Suggestions row
-        if let suggestionsViewController = suggestionsViewController {
-            view.addSubview(suggestionsViewController.view)
-            addChild(suggestionsViewController)
-            suggestionsViewController.didMove(toParent: self)
+        // If necessary add the Recommendations row
+        if let recommendationsViewController = recommendationsViewController {
+            view.addSubview(recommendationsViewController.view)
+            addChild(recommendationsViewController)
+            recommendationsViewController.didMove(toParent: self)
             
             NSLayoutConstraint.activate([
-                suggestionsViewController.view.heightAnchor.constraint(equalToConstant: 100),
-                suggestionsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                suggestionsViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                suggestionsViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                recommendationsViewController.view.heightAnchor.constraint(equalToConstant: 100),
+                recommendationsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                recommendationsViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                recommendationsViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             ])
             
-            tableView.topAnchor.constraint(equalTo: suggestionsViewController.view.bottomAnchor).isActive = true
+            tableView.topAnchor.constraint(equalTo: recommendationsViewController.view.bottomAnchor).isActive = true
         } else {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         }
