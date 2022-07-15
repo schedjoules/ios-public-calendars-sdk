@@ -29,8 +29,13 @@ import SafariServices
 import WebKit
 
 
-class PageViewController<PageQuery: Query>: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating,
-UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where PageQuery.Result == Page {
+class PageViewController<PageQuery: Query>: UIViewController,
+                                            UITableViewDataSource,
+                                            UITableViewDelegate,
+                                            UISearchResultsUpdating,
+                                            UISearchBarDelegate,
+                                            SFSafariViewControllerDelegate,
+                                            LoadErrorViewDelegate where PageQuery.Result == Page {
     
     // - MARK: Public Properties
     
@@ -105,8 +110,8 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
             let countrySetting = SettingsManager.get(type: .country)
             
             let suggestedQuery = RecommendationsQuery(numberOfItems: 12,
-                                                  locale: languageSetting.code,
-                                                  location: countrySetting.code)
+                                                      locale: languageSetting.code,
+                                                      location: countrySetting.code)
             self.recommendationsViewController = RecommendationsViewController(apiClient: apiClient, pageQuery: suggestedQuery)
         }
         
@@ -264,11 +269,16 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         
         if StoreManager.shared.isSubscriptionValid == true {
             openCalendar(calendarId: item.itemID ?? 0, url: webcal)
-        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            openCalendar(calendarId: item.itemID ?? 0, url: webcal)
+        } else if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
+                  appBundle == "com.schedjoules.calstore" {
+            if freeSubscriptionRecord.canGetFreeCalendar() == true {
+                openCalendar(calendarId: item.itemID ?? 0, url: webcal)
+            } else {
+                let storeVC = StoreViewController(apiClient: self.apiClient)
+                self.present(storeVC, animated: true, completion: nil)
+            }
         } else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
+            NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
         }
     }
     
@@ -277,15 +287,15 @@ UISearchBarDelegate, SFSafariViewControllerDelegate, LoadErrorViewDelegate where
         subscriber.subscribe(to: calendarId,
                              url: url,
                              screenName: self.title) { (error) in
-                                if error == nil {
-                                    let freeCalendarAlertController = UIAlertController(title: "Error",
-                                                                                        message: error?.localizedDescription,
-                                                                                        preferredStyle: .alert)
-                                    let cancelAction = UIAlertAction(title: "Ok",
-                                                                     style: .cancel)
-                                    freeCalendarAlertController.addAction(cancelAction)
-                                    self.present(freeCalendarAlertController, animated: true)
-                                }
+            if error != nil {
+                let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                    message: error?.localizedDescription,
+                                                                    preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok",
+                                                 style: .cancel)
+                freeCalendarAlertController.addAction(cancelAction)
+                self.present(freeCalendarAlertController, animated: true)
+            }
         }
     }
     
@@ -486,25 +496,29 @@ extension PageViewController: ItemCollectionViewCellDelegate {
         
         if StoreManager.shared.isSubscriptionValid == true {
             self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
-        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
-                preferredStyle: .alert)
-            let acceptAction = UIAlertAction(title: "Ok",
-                                             style: .default) { (_) in
-                                                self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
+        } else if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
+                  appBundle == "com.schedjoules.calstore" {
+            if freeSubscriptionRecord.canGetFreeCalendar() == true {
+                let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
+                                                                    preferredStyle: .alert)
+                let acceptAction = UIAlertAction(title: "Ok",
+                                                 style: .default) { (_) in
+                    self.openCalendar(calendarId: pageItem.itemID ?? 0, url: webcal)
+                }
+                let cancelAction = UIAlertAction(title: "Cancel",
+                                                 style: .cancel)
+                freeCalendarAlertController.addAction(acceptAction)
+                freeCalendarAlertController.addAction(cancelAction)
+                present(freeCalendarAlertController, animated: true)
+            } else {
+                let storeVC = StoreViewController(apiClient: self.apiClient)
+                self.present(storeVC, animated: true, completion: nil)
+                return
             }
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .cancel)
-            freeCalendarAlertController.addAction(acceptAction)
-            freeCalendarAlertController.addAction(cancelAction)
-            present(freeCalendarAlertController, animated: true)
         } else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
-            return
+            NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
         }
-        
     }
     
 }

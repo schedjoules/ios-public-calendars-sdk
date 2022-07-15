@@ -95,9 +95,17 @@ final class SettingsViewController: UIViewController {
                                         Item(title: "Language",
                                              data: SettingsManager.SettingsType.language)]
     
-    private let purchasesItems = [Item(title: "Restore Purchases")]
-    private let purchasesItemsMainApp = [Item(title: "From the Appstore"),
-                                         Item(title: "From another SchedJoules App")]
+    private var purchasesItems: [Item] {
+        var items = [Item(title: "Restore Purchases")]
+        if storeManager.isSubscriptionValid == true {
+            items.append(Item(title: "Migrate your subscription"))
+        }
+        return items
+    }
+    
+    private var purchasesItemsMainApp: [Item] {
+        return [Item(title: "Restore Purchases")]
+    }
     
     private let notificationsItems = [Item(title: "Register for Notifications",
                                            alternativeTitle: "Unregister for notifications")]
@@ -239,17 +247,26 @@ extension SettingsViewController: UITableViewDataSource {
             return cell
         case .purchases:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellSubtitle", for: indexPath)
-            if storeManager.isSubscriptionValid == true,
-               let expirationDate = UserDefaults.standard.subscriptionExpirationDate {
-                cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
-                cell.detailTextLabel?.text = ""
-                cell.detailTextLabel?.textColor = .lightGray
-                cell.accessoryType = .none
-                return cell
+            if indexPath.row == 0 {
+                if storeManager.isSubscriptionValid == true,
+                   let expirationDate = UserDefaults.standard.subscriptionExpirationDate,
+                   indexPath.row == 0 {
+                    cell.textLabel?.text = "\(expirationDate.remainingTimeString()) left on your subscription"
+                    cell.detailTextLabel?.text = ""
+                    cell.detailTextLabel?.textColor = .lightGray
+                    cell.accessoryType = .none
+                    return cell
+                } else {
+                    cell.textLabel?.text = item.title
+                    cell.detailTextLabel?.text = nil
+                    cell.detailTextLabel?.textColor = .lightGray
+                    cell.textLabel?.numberOfLines = 0
+                }
             } else {
                 cell.textLabel?.text = item.title
                 cell.detailTextLabel?.text = nil
                 cell.detailTextLabel?.textColor = .lightGray
+                cell.textLabel?.numberOfLines = 0
             }
             return cell
         case .notifications:
@@ -321,19 +338,20 @@ extension SettingsViewController: UITableViewDelegate {
                 navigationController?.pushViewController(settingsDetailVC, animated: true)
             }
         case .purchases:
-            if indexPath.item == 0 {
+            if indexPath.row == 0 {
                 //Only run if there is no subscription
                 if storeManager.isSubscriptionValid == false {
-                    storeManager.isRestoringPurchases = true
-                    storeManager.presentable = self
-                    storeManager.restorePurchases()
-                    showLoader(animate: true)
+                    NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
+//                    storeManager.isRestoringPurchases = true
+//                    storeManager.presentable = self
+//                    storeManager.restorePurchases()
+//                    showLoader(animate: true)
                 } else {
                     presentSubscriptionActive(restored: false, source: cell ?? self.view)
                 }
             } else if #available(iOS 13.0, *) {
-                    NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
-                    return
+                NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
+                return
             }
         case .notifications:
             if UIApplication.shared.isRegisteredForRemoteNotifications == true {
@@ -392,6 +410,8 @@ extension SettingsViewController: UITableViewDelegate {
             
             self.showLoader(animate: false)
             self.present(alertController, animated: true, completion: nil)
+            
+            self.tableView.reloadData()
         }
     }
     

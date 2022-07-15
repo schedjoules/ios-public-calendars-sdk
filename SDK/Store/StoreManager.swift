@@ -35,21 +35,21 @@ public protocol InteractableStoreManager: AnyObject {
 
 public class StoreManager: NSObject {
     
-    weak var presentable: InteractableStoreManager?
+    public weak var presentable: InteractableStoreManager?
     
     /// The Api client.
-    var apiClient: Api! {
+    public var apiClient: Api! {
         didSet {
             getStatusForSubscription()
         }
     }
     
-    var productsRequest = SKProductsRequest()
-    var iapProducts = [SKProduct]()
-    var subscriptionIAP: SubscriptionIAP?
-    var iapProduct: SKProduct?
-    var isRestoringPurchases = false
-    var restorePurchaseCompleted = false
+    public var productsRequest = SKProductsRequest()
+    public var iapProducts = [SKProduct]()
+    public var subscriptionIAP: SubscriptionIAP?
+    public var iapProduct: SKProduct?
+    public var isRestoringPurchases = false
+    public var restorePurchaseCompleted = false
     
     public var isSubscriptionValid: Bool {
         get {
@@ -87,7 +87,8 @@ public class StoreManager: NSObject {
             switch result {
             case let .success(resultInfo):
                 UserDefaults.standard.subscriptionId = resultInfo.subscriptionId
-                UserDefaults.standard.subscriptionExpirationDate = Date(timeIntervalSince1970: resultInfo.expirationDate)
+                UserDefaults.standard.subscriptionExpirationDate = Date(timeIntervalSince1970:
+                                                                            resultInfo.expirationDate)
             case let .failure(error):
                 sjPrint(error)
                 sjPrint(error.localizedDescription)
@@ -130,7 +131,7 @@ public class StoreManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
     
-    func restorePurchases() {
+    public func restorePurchases() {
         //1.
         //If needed get the list of products from the backend
         if self.iapProduct != nil {
@@ -148,7 +149,7 @@ public class StoreManager: NSObject {
     }
     
     //Receipt
-    func validateThroughApi(transaction: SKPaymentTransaction) {
+    func validateThroughApi(transaction: SKPaymentTransaction, _ completion: (() -> Void)?) {
         guard let validProduct = self.iapProduct else {
             SKPaymentQueue.default().finishTransaction(transaction)
             return
@@ -172,8 +173,9 @@ public class StoreManager: NSObject {
             case let .failure(error):
                 sjPrint(error)
                 sjPrint(error.localizedDescription)
-                break
             }
+            
+            completion?()
         })
     }
     
@@ -303,12 +305,13 @@ extension StoreManager: SKPaymentTransactionObserver {
     private func completeTransaction(transaction: SKPaymentTransaction) {
         sjPrint("completeTransaction...")
         
-        validateThroughApi(transaction: transaction)
+        validateThroughApi(transaction: transaction){}
         
         guard let productPurchased = iapProduct else { return }
         
         let expirationDate = self.expirationDate(for: productPurchased)
         UserDefaults.standard.subscriptionExpirationDate = expirationDate
+        UserDefaults.standard.originalTransaction = transaction.original?.transactionIdentifier ?? transaction.transactionIdentifier
         
         deliverPurchaseForIdentifier(identifier: transaction.payment.productIdentifier)
         
@@ -318,15 +321,17 @@ extension StoreManager: SKPaymentTransactionObserver {
     private func restoreTransaction(transaction: SKPaymentTransaction) {
         sjPrint("restoreTransaction...")
         
-        validateThroughApi(transaction: transaction)
         
-        guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
-        
-        sjPrint("restoreTransaction... \(productIdentifier)")
-        
-        deliverPurchaseForIdentifier(identifier: productIdentifier)
-        restorePurchaseCompleted = true
-        SKPaymentQueue.default().finishTransaction(transaction)
+        validateThroughApi(transaction: transaction) {
+        UserDefaults.standard.originalTransaction = transaction.original?.transactionIdentifier ?? transaction.transactionIdentifier
+            guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
+            
+            sjPrint("restoreTransaction... \(productIdentifier)")
+            
+            self.deliverPurchaseForIdentifier(identifier: productIdentifier)
+            self.restorePurchaseCompleted = true
+            SKPaymentQueue.default().finishTransaction(transaction)
+        }
     }
     
     private func failedTransaction(transaction: SKPaymentTransaction) {

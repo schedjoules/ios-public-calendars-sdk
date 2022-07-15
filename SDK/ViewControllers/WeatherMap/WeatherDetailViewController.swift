@@ -193,7 +193,7 @@ class WeatherDetailViewController: UIViewController {
             guard let settingsView = view as? WeatherSettingsView else { continue }
             
             if settingsView.setting.title == selectedSetting?.title,
-                let updatedSetting = selectedSetting {
+               let updatedSetting = selectedSetting {
                 settingsView.update(setting: updatedSetting)
                 break
             }
@@ -224,23 +224,28 @@ class WeatherDetailViewController: UIViewController {
         
         if StoreManager.shared.isSubscriptionValid == true {
             self.openCalendar(calendarId: calendarId, url: webcal)
-        } else if freeSubscriptionRecord.canGetFreeCalendar() == true {
-            let calendarName = self.title ?? "calendar"
-            let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
-                preferredStyle: .alert)
-            let acceptAction = UIAlertAction(title: "Ok",
-                                             style: .default) { (_) in
-                                                self.openCalendar(calendarId: self.calendarId, url: webcal)
+        } else if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
+                  appBundle == "com.schedjoules.calstore" {
+            if freeSubscriptionRecord.canGetFreeCalendar() == true {
+                let calendarName = self.title ?? "calendar"
+                let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                                                                    preferredStyle: .alert)
+                let acceptAction = UIAlertAction(title: "Ok",
+                                                 style: .default) { (_) in
+                    self.openCalendar(calendarId: self.calendarId, url: webcal)
+                }
+                let cancelAction = UIAlertAction(title: "Cancel",
+                                                 style: .cancel)
+                freeCalendarAlertController.addAction(acceptAction)
+                freeCalendarAlertController.addAction(cancelAction)
+                present(freeCalendarAlertController, animated: true)
+            } else {
+                let storeVC = StoreViewController(apiClient: self.apiClient)
+                self.present(storeVC, animated: true, completion: nil)
             }
-            let cancelAction = UIAlertAction(title: "Cancel",
-                                             style: .cancel)
-            freeCalendarAlertController.addAction(acceptAction)
-            freeCalendarAlertController.addAction(cancelAction)
-            present(freeCalendarAlertController, animated: true)
         } else {
-            let storeVC = StoreViewController(apiClient: self.apiClient)
-            self.present(storeVC, animated: true, completion: nil)
+            NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)
         }
     }
     
@@ -249,7 +254,7 @@ class WeatherDetailViewController: UIViewController {
         subscriber.subscribe(to: calendarId,
                              url: url,
                              screenName: self.title) { (error) in
-                                if error == nil {
+                                if error != nil {
                                     let freeCalendarAlertController = UIAlertController(title: "Error",
                                                                                         message: error?.localizedDescription,
                                                                                         preferredStyle: .alert)

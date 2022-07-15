@@ -50,7 +50,7 @@ extension UserDefaults {
         }
     }
     
-    var subscriptionId: String? {
+    public var subscriptionId: String? {
         get { return string(forKey: #function) }
         set { set(newValue, forKey: #function) }
     }
@@ -58,5 +58,15 @@ extension UserDefaults {
     var sjPurchaseModel: SJPurchaseModel {
         get { return SJPurchaseModel(rawValue: integer(forKey: #function)) ?? .freeTrial }
         set { set(newValue.rawValue, forKey: #function) }
+    }
+    
+    public var originalTransaction: String? {
+        get { return string(forKey: #function) }
+        set { set(newValue, forKey: #function) }
+    }
+    
+    public var isNoSubscriptionConfirmed: Bool {
+        get { return bool(forKey: #function) }
+        set { set(newValue, forKey: #function) }
     }
 }

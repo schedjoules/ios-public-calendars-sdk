@@ -161,7 +161,7 @@ class RecommendationsViewController<RecommendationsQuery: Query>: UIViewControll
         subscriber.subscribe(to: calendarId,
                              url: url,
                              screenName: self.title) { (error) in
-                                if error == nil {
+                                if error != nil {
                                     let freeCalendarAlertController = UIAlertController(title: "Error",
                                                                                         message: error?.localizedDescription,
                                                                                         preferredStyle: .alert)
