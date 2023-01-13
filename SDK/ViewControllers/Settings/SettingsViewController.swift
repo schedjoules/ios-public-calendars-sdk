@@ -387,6 +387,34 @@ extension SettingsViewController: UITableViewDelegate {
     }
     
     func deleteAccount() {
+        let alertController = UIAlertController(title: "Delete Info",
+                                                message: "SchedJoules doesn't store your personal information.\n\nSign In with Apple is used only to transfer your subscriptions into our main app. You can still choose we cancel the identifier saved.",
+                                                preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok",
+                                     style: .default) { _ in
+            print("delete")
+            
+            let deleteAccountQuery = DeleteAccountQuery(subscriptionId: nil, userIdentifier: "dd")
+            self.apiClient.execute(query: deleteAccountQuery) { result in
+                print("result: ", result)
+                switch result {
+                case .success(let algo):
+                    print("algo: ", algo)
+                case .failure(let error):
+                    print("error: ", error)
+                }
+            }
+            
+        }
+        alertController.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
+        
+        
+        
         print("UserDefaults.standard.subscriptionId: ", UserDefaults.standard.subscriptionId)
     //https://api.schedjoules.com/remove_account?sid=23121232 will trigger an email s
     }
