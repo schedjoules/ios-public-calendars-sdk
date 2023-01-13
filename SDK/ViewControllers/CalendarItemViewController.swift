@@ -149,7 +149,9 @@ final class CalendarItemViewController: UIViewController {
         if StoreManager.shared.isSubscriptionValid == true {
             self.openCalendar(calendarId: self.itemId, url: webcal)
         } else if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
-                  appBundle == "com.schedjoules.calstore" {
+                  appBundle == "com.schedjoules.calstore"
+        
+        {
             if freeSubscriptionRecord.canGetFreeCalendar() == true {
                 let calendarName = self.title ?? "calendar"
                 let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
@@ -168,6 +170,37 @@ final class CalendarItemViewController: UIViewController {
                 let storeVC = StoreViewController(apiClient: self.apiClient)
                 self.present(storeVC, animated: true, completion: nil)
                 return
+            }
+        } else if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
+                  appBundle == "api-test-user.schedjoules.com"
+        {
+            if freeSubscriptionRecord.canGetFreeCalendar() == true {
+                let calendarName = self.title ?? "calendar"
+                let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                                                                    preferredStyle: .alert)
+                let acceptAction = UIAlertAction(title: "Ok",
+                                                 style: .default) { (_) in
+                    self.openCalendar(calendarId: self.itemId, url: webcal)
+                }
+                let cancelAction = UIAlertAction(title: "Cancel",
+                                                 style: .cancel)
+                freeCalendarAlertController.addAction(acceptAction)
+                freeCalendarAlertController.addAction(cancelAction)
+                present(freeCalendarAlertController, animated: true)
+            } else {
+                switch UserDefaults.standard.sjPurchaseModel {
+                case .freeTrial:
+                    let storeVC = StoreViewController(apiClient: self.apiClient)
+                    self.present(storeVC, animated: true, completion: nil)
+                    return
+                case .freeCalendar:
+                    let storeVC = StoreViewController(apiClient: self.apiClient)
+                    self.present(storeVC, animated: true, completion: nil)
+                    return
+                case .openLicense:
+                    self.openCalendar(calendarId: self.itemId, url: webcal)
+                }
             }
         } else {
             NotificationCenter.default.post(name: .SJLaunchSignUp, object: self)

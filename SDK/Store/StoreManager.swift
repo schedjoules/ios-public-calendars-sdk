@@ -13,6 +13,7 @@ import StoreKit
 @objc public enum SJPurchaseModel: Int {
     case freeTrial
     case freeCalendar
+    case openLicense
     
     var trackingValue: String {
         get {
@@ -21,6 +22,8 @@ import StoreKit
                 return "free_trial"
             case .freeCalendar:
                 return "free_calendar"
+            case .openLicense:
+                return "open_license"
             }
         }
     }

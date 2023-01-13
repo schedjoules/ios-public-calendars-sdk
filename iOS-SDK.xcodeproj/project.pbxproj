@@ -42,6 +42,8 @@
 		46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5222608B5D0005EAB6 /* StoreViewController.swift */; };
 		46F45C5522608B5D0005EAB6 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5322608B5D0005EAB6 /* StoreManager.swift */; };
 		46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F45C5622608BA00005EAB6 /* UIColorExtension.swift */; };
+		8485270F2886C2620092AB2B /* DeleteAccountQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8485270E2886C2620092AB2B /* DeleteAccountQuery.swift */; };
+		848527102886C2620092AB2B /* DeleteAccountQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8485270E2886C2620092AB2B /* DeleteAccountQuery.swift */; };
 		84E917A7284A16AE0027810F /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* RecommendationsViewController.swift */; };
 		84E917A8284A16AE0027810F /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A6284A16AE0027810F /* RecommendationsViewController.swift */; };
 		84E917AA284A24430027810F /* RecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E917A9284A24430027810F /* RecommendationsCollectionViewCell.swift */; };
@@ -111,6 +113,7 @@
 		46F45C5322608B5D0005EAB6 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		46F45C5622608BA00005EAB6 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		6F2E4C6B691ADEF03E85DF26 /* Pods-iOS-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-SDK.debug.xcconfig"; path = "Target Support Files/Pods-iOS-SDK/Pods-iOS-SDK.debug.xcconfig"; sourceTree = "<group>"; };
+		8485270E2886C2620092AB2B /* DeleteAccountQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountQuery.swift; sourceTree = "<group>"; };
 		84E917A6284A16AE0027810F /* RecommendationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewController.swift; sourceTree = "<group>"; };
 		84E917A9284A24430027810F /* RecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		B625A60120C038D000586F5E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -352,6 +355,7 @@
 				B6EF1C3C20780879003E0095 /* SettingsViewController.swift */,
 				B6EF1C3A20780879003E0095 /* SettingsDetailViewController.swift */,
 				B6EF1C3B20780879003E0095 /* SettingsWebViewController.swift */,
+				8485270E2886C2620092AB2B /* DeleteAccountQuery.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -566,6 +570,7 @@
 				46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */,
 				469AA7A023215C830092CBA1 /* WeatherUnitCollectionViewCell.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
+				8485270F2886C2620092AB2B /* DeleteAccountQuery.swift in Sources */,
 				46214AA3222913DE00A92F39 /* UIApplicationExtension.swift in Sources */,
 				4657B81322BA106C003A2AE4 /* UITapGestureRecognizer.swift in Sources */,
 				B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */,
@@ -595,6 +600,7 @@
 				46A78442252DC3640038CC3A /* SJAnalyticsObject.swift in Sources */,
 				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				848527102886C2620092AB2B /* DeleteAccountQuery.swift in Sources */,
 				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
 				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,

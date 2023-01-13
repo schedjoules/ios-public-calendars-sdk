@@ -17,11 +17,14 @@ public class FreeSubscriptionRecord {
     public init() {}
     
     func canGetFreeCalendar() -> Bool {
-        guard UserDefaults.standard.sjPurchaseModel == .freeCalendar else {
+        switch UserDefaults.standard.sjPurchaseModel {
+        case .freeTrial:
+            return false
+        case .freeCalendar:
+            return freeCalendar() == nil
+        case .openLicense:
             return false
         }
-        
-        return freeCalendar() == nil
     }
     
     func freeCalendar() -> String? {

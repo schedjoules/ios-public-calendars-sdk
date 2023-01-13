@@ -77,7 +77,8 @@ public final class CalendarStoreViewController: UITabBarController {
                 pageIdentifier: String?,
                 title: String?,
                 showCloseButton: Bool = true,
-                purchaseModel: SJPurchaseModel = .freeTrial) {
+                purchaseModel: SJPurchaseModel = .freeTrial,
+                userId: String? = nil) {
         // Initialization
         self.apiClient = SchedJoulesApi(accessToken: apiKey, userId: Config.uuid)
         self.pageIdentifier = pageIdentifier
@@ -85,8 +86,29 @@ public final class CalendarStoreViewController: UITabBarController {
         self.tintColor = ColorPalette.red
         homePageTitle = title
         self.showCloseButton = showCloseButton
-        UserDefaults.standard.sjPurchaseModel = purchaseModel
         
+        var confirmedPurchaseModel = purchaseModel
+        //If the Partner selects an open license but doesn't pass the user's identifier, the purchase model defaults to freeTrial
+        if purchaseModel == .openLicense && userId == nil {
+            confirmedPurchaseModel = .freeTrial
+        }
+        
+        UserDefaults.standard.sjPurchaseModel = confirmedPurchaseModel
+        
+        // The purchase model also requires a validation from the backend
+        if let userId = userId {
+            let licenseQuery = LicenseQuery(userId: userId,
+                                            expirationDate: Date())
+            apiClient.execute(query: licenseQuery) { result in
+                switch result {
+                case let .success(page):
+                    print(page)
+                case let .failure(error):
+                    print(error)
+                }
+            }
+            
+        }
         
         
         super.init(nibName: nil, bundle: nil)

@@ -26,7 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                      pageIdentifier: nil,
                                                      title: "Featured",
                                                      showCloseButton: false,
-                                                     purchaseModel: .freeCalendar)
+                                                     purchaseModel: .openLicense,
+                                                     userId: UUID().uuidString)
         calendarVC.calendarStoreDelegate = self
         calendarVC.view.backgroundColor = .sjBackground
         
