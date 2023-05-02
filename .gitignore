@@ -1,3 +1,5 @@
 Pods/
 iOS-SDK.xcworkspace/xcuserdata/
 .DS_Store
+*.xcuserstate
+.DS_Store
