@@ -412,11 +412,7 @@ extension SettingsViewController: UITableViewDelegate {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true)
-        
-        
-        
-        print("UserDefaults.standard.subscriptionId: ", UserDefaults.standard.subscriptionId)
-    //https://api.schedjoules.com/remove_account?sid=23121232 will trigger an email s
+    //https://api.schedjoules.com/remove_account?sid=23121232 will trigger an email
     }
     
     private func presentSubscriptionActive(restored: Bool, source: UIView) {

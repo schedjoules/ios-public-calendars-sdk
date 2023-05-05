@@ -102,7 +102,7 @@ class AnalyticsTracker: NSObject {
                 Keys.Hits.system : self.systemDictionary(),
                 Keys.Hits.timestamp : Config.dateForAnalytics,
                 Keys.Hits.uuid : Config.uuid
-                ] as [String : AnyObject]
+            ] as [String : Any] as [String : AnyObject]
             
             guard let url = URL(string: self.urlString) else {
                 sjPrint("url isn't valid")
@@ -176,7 +176,7 @@ class AnalyticsTracker: NSObject {
         var hitInfo = [
             Keys.Hits.type : Keys.HitType.screen,
             Keys.Hits.timestamp : Config.dateForAnalytics
-            ] as [String : AnyObject]
+        ] as [String : Any] as [String : AnyObject]
         
         let name: String? = page?.name ?? name
         if let validName = name {

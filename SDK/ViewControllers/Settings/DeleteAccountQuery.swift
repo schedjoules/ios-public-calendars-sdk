@@ -6,6 +6,7 @@
 //  Copyright © 2022 SchedJoules. All rights reserved.
 //
 
+import UIKit
 import SchedJoulesApiClient
 
 public final class DeleteAccountQuery: Query {
@@ -33,13 +34,6 @@ public final class DeleteAccountQuery: Query {
         }
         
         self.parameters = dictionary as [String : AnyObject]
-        print(url)
-        print("delete parameters: ", self.parameters)
-        print("")
-        
-        
-        
-        
     }
     
     public func handleResult(with data: Data) -> String? {
@@ -48,7 +42,7 @@ public final class DeleteAccountQuery: Query {
             let rawjson = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
             print("rawjson: ", rawjson)
             let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: AnyObject]
-            print("json: ", json)
+            print("json: ", json as Any)
             return "json valid"
         } catch {
             print("error: ", error)
