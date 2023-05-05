@@ -3,7 +3,7 @@
     {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
         "revision" : "20df851f2ae27efbaeeff73e9babdf4fd839a144",
         "version" : "5.15.6"
@@ -12,7 +12,7 @@
     {
       "identity" : "swift-api-client",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/schedjoules/swift-api-client",
+      "location" : "https://github.com/schedjoules/swift-api-client.git",
       "state" : {
         "branch" : "SwiftPackage",
         "revision" : "849224cfc2057fed3a109b070f8ba20d42f6bec6"

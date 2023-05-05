@@ -1,5 +1,5 @@
 //
-//  iOS_SDKTests.swift
+//  SchedJoulesSDKTests.swift
 //  iOS-SDKTests
 //
 //  Created by Balazs Vincze on 2018. 03. 05..
@@ -8,9 +8,9 @@
 
 import XCTest
 
-@testable import iOS_SDK
+@testable import SchedJoulesSDK
 
-class iOS_SDKTests: XCTestCase {
+class SchedJoulesSDKTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
