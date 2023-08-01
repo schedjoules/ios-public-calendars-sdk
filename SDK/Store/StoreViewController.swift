@@ -398,6 +398,7 @@ class StoreViewController: UIViewController {
         
         guard let validProduct = self.product else {
             showNoProductsAlert()
+            return
         }
         
         storeManager.buyProduct(product: validProduct)
@@ -462,7 +463,7 @@ extension StoreViewController: InteractableStoreManager {
     
     private func showNoProductsAlert() {
         DispatchQueue.main.async {
-            let message = errorDescription ?? "We couldn't found products available"
+            let message = "We couldn't found products available"
             
             let alertController = UIAlertController(title: "Error",
                                                     message: message,
