@@ -397,7 +397,7 @@ class StoreViewController: UIViewController {
         showIndicator(true)
         
         guard let validProduct = self.product else {
-            fatalError("no product loaded")
+            showNoProductsAlert()
         }
         
         storeManager.buyProduct(product: validProduct)
@@ -444,6 +444,9 @@ extension StoreViewController: InteractableStoreManager {
             let priceString = subscription.localizedPriceInfo.replacingOccurrences(of: "%{price}",
                                                                                    with: "\(currencySymbol) \(product.price)")
             
+            
+            
+            
             self.subTitleLabel.text = priceString
             
             self.purchaseButton.setTitle(subscription.localizedUpgradeButtonText, for: .normal)
@@ -458,7 +461,27 @@ extension StoreViewController: InteractableStoreManager {
     }
     
     private func showNoProductsAlert() {
-        
+        DispatchQueue.main.async {
+            let message = errorDescription ?? "We couldn't found products available"
+            
+            let alertController = UIAlertController(title: "Error",
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Dismiss",
+                                         style: .default) { (action) in
+                                            self.dismiss()
+                                            alertController.dismiss(animated: true, completion: {
+                                                self.tapCloseButton()
+                                            })
+            }
+            alertController.addAction(okAction)
+            
+            alertController.popoverPresentationController?.sourceView = self.view
+            alertController.popoverPresentationController?.sourceRect = CGRect(origin: self.view.center,
+                                                                               size: CGSize(width: 1, height: 1))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     internal func purchaseFinished() {

@@ -69,4 +69,9 @@ extension UserDefaults {
         get { return bool(forKey: #function) }
         set { set(newValue, forKey: #function) }
     }
+    
+    public var temporalSubscriptionId: String? {
+        get { return string(forKey: #function) }
+        set { set(newValue, forKey: #function) }
+    }
 }
