@@ -17,6 +17,8 @@ class ItemCollectionViewCell: UITableViewCell {
     
     weak var delegate: ItemCollectionViewCellDelegate?
     var pageItem: PageItem?
+    var itemLabelLeadingContraint: NSLayoutConstraint?
+    var itemImageViewLeadingContraint: NSLayoutConstraint?
     
     private let itemLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -44,14 +46,18 @@ class ItemCollectionViewCell: UITableViewCell {
             itemImageView.widthAnchor.constraint(equalToConstant: 44),
             itemImageView.heightAnchor.constraint(equalToConstant: 44),
             itemImageView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            itemImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             itemImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -6),
             
             itemLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            itemLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 74),
             itemLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -44),
             itemLabel.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -6),
         ])
+        
+        itemImageViewLeadingContraint = itemImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
+        itemImageViewLeadingContraint?.isActive = true
+        
+        itemLabelLeadingContraint = itemLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 74)
+        itemLabelLeadingContraint?.isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -68,11 +74,17 @@ class ItemCollectionViewCell: UITableViewCell {
         
         // Set icon (if any)
         itemImageView.image = nil
-        if pageItem.icon != nil {
+        
+        if pageItem.icon != nil && !pageItem.icon!.absoluteString.contains("/assets/.png") {
             itemImageView.sd_setImage(with: pageItem.icon!,
                                       placeholderImage: UIImage(named: "Icon_Placeholder",
                                                                 in: Bundle.resourceBundle,
-                                                                compatibleWith: nil))
+                                                                compatibleWith: nil),
+                                      completed: { (image, error, cacheType, url) in
+                                        
+                                    })
+        } else {
+            removeItemLeadingSpace()
         }
         
         // Add subscribe button if item is a calendar item
@@ -90,6 +102,16 @@ class ItemCollectionViewCell: UITableViewCell {
             accessoryType = .disclosureIndicator
             accessoryView = nil
         }
+    }
+    
+    public func removeItemLeadingSpace(){
+        itemLabelLeadingContraint?.isActive = false
+        itemLabelLeadingContraint = itemLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+        itemLabelLeadingContraint?.isActive = true
+        
+        itemImageViewLeadingContraint?.isActive = false
+        itemImageViewLeadingContraint = itemImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -80)
+        itemImageViewLeadingContraint?.isActive = true
     }
     
     @objc private func subscribe() {
