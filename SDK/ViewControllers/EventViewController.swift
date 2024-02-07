@@ -45,8 +45,19 @@ final class EventViewController: UIViewController {
         super.viewDidLoad()
     
         // Set navbar title
-        navigationItem.title = event.summary
-        navigationItem.largeTitleDisplayMode = .never
+        let wrapperView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * 0.75, height: 44))
+        label.backgroundColor = .clear
+        label.numberOfLines = 2
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.text = event.summary
+        wrapperView.addSubview(label)
+        self.navigationItem.titleView = wrapperView
+        
+//        navigationItem.title = event.summary
+//        navigationItem.largeTitleDisplayMode = .never
         
         // Set the colors
         textView.tintColor = navigationController?.navigationBar.tintColor
