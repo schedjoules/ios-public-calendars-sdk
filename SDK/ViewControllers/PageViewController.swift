@@ -180,6 +180,7 @@ class PageViewController<PageQuery: Query>: UIViewController,
             definesPresentationContext = true
             searchController.searchBar.delegate = self
             searchController.searchBar.tintColor = navigationController?.navigationBar.tintColor
+            navigationItem.hidesSearchBarWhenScrolling = false
             navigationItem.searchController = searchController
             
             navigationController?.view.setNeedsLayout()
@@ -222,7 +223,6 @@ class PageViewController<PageQuery: Query>: UIViewController,
                         }
                     }
                 }
-                self.navigationItem.title = page.name
             case .failure:
                 // Remove the previous pages
                 self.page = nil
@@ -431,6 +431,14 @@ class PageViewController<PageQuery: Query>: UIViewController,
         } else {
             let item = pageSection.items[indexPath.row]
             open(item: item)
+        }
+    }
+    
+    // - MARK: Scroll View Delegate Methods
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if (!navigationItem.hidesSearchBarWhenScrolling) {
+            navigationItem.hidesSearchBarWhenScrolling = true
         }
     }
     
