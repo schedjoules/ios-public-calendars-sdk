@@ -75,13 +75,18 @@ class ItemCollectionViewCell: UITableViewCell {
         // Set icon (if any)
         itemImageView.image = nil
         
+        print(pageItem.name)
+        print(pageItem.icon)
+        
         if pageItem.icon != nil && !pageItem.icon!.absoluteString.contains("/assets/.png") {
             itemImageView.sd_setImage(with: pageItem.icon!,
                                       placeholderImage: UIImage(named: "Icon_Placeholder",
                                                                 in: Bundle.resourceBundle,
                                                                 compatibleWith: nil),
                                       completed: { (image, error, cacheType, url) in
-                                        
+                                        if let code = (error as? NSError)?.userInfo["SDWebImageErrorDownloadStatusCodeKey"] as? Int, code == 403{
+                                            self.removeItemLeadingSpace()
+                                        }
                                     })
         } else {
             removeItemLeadingSpace()
