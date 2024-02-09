@@ -75,17 +75,17 @@ class ItemCollectionViewCell: UITableViewCell {
         // Set icon (if any)
         itemImageView.image = nil
         
-        print(pageItem.name)
-        print(pageItem.icon)
-        
+        self.setItemLeadingSpace()
         if pageItem.icon != nil && !pageItem.icon!.absoluteString.contains("/assets/.png") {
             itemImageView.sd_setImage(with: pageItem.icon!,
                                       placeholderImage: UIImage(named: "Icon_Placeholder",
                                                                 in: Bundle.resourceBundle,
                                                                 compatibleWith: nil),
                                       completed: { (image, error, cacheType, url) in
-                                        if let code = (error as? NSError)?.userInfo["SDWebImageErrorDownloadStatusCodeKey"] as? Int, code == 403{
-                                            self.removeItemLeadingSpace()
+                                        if let error = error as? NSError {
+                                            if error.code == -999 || error.userInfo["SDWebImageErrorDownloadStatusCodeKey"] as? Int == 403 {
+                                                self.removeItemLeadingSpace()
+                                            }
                                         }
                                     })
         } else {
@@ -107,6 +107,16 @@ class ItemCollectionViewCell: UITableViewCell {
             accessoryType = .disclosureIndicator
             accessoryView = nil
         }
+    }
+    
+    public func setItemLeadingSpace(){
+        itemLabelLeadingContraint?.isActive = false
+        itemLabelLeadingContraint = itemLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 74)
+        itemLabelLeadingContraint?.isActive = true
+        
+        itemImageViewLeadingContraint?.isActive = false
+        itemImageViewLeadingContraint = itemImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
+        itemImageViewLeadingContraint?.isActive = true
     }
     
     public func removeItemLeadingSpace(){
