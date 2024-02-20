@@ -38,6 +38,10 @@ public extension Notification.Name {
         return .init("CalendarStore.register.for.APNS")
     }
     
+    static var SJOpenSettingsForCalendarPermission: Notification.Name {
+        return .init("CalendarStore.open.settings.for.calendar.permission")
+    }
+    
     static var SJDidBecomeActive: Notification.Name {
         return .init("CalendarStore.did.become.active")
     }

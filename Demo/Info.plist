@@ -50,5 +50,7 @@
 	<string>support@schedjoules.com</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>We need access to manage the calendars you add through Schedjoules</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>We need access to add calendars through Schedjoules</string>
 </dict>
 </plist>

@@ -463,7 +463,7 @@ extension StoreViewController: InteractableStoreManager {
     
     private func showNoProductsAlert() {
         DispatchQueue.main.async {
-            let message = "We couldn't found products available"
+            let message = "We couldn't find products available"
             
             let alertController = UIAlertController(title: "Error",
                                                     message: message,
