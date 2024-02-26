@@ -289,7 +289,7 @@ class PageViewController<PageQuery: Query>: UIViewController,
                              screenName: self.title) { (error) in
             if error != nil {
                 if let error = error as? SJDeviceCalendarSubscriber.SubscriberError, error == SJDeviceCalendarSubscriber.SubscriberError.unauthorized {
-                    NotificationCenter.default.post(name: .SJOpenSettingsForCalendarPermission, object: nil)
+                    NotificationCenter.default.post(name: .SJAskCalendarPermission, object: nil)
                 } else {
                     let freeCalendarAlertController = UIAlertController(title: "Error",
                                                                         message: error?.localizedDescription,
