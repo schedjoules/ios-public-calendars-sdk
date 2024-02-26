@@ -100,8 +100,8 @@ open class SJDeviceCalendarSubscriber {
         case .fullAccess:
             completion(true)
             return
-        case .writeOnly:
-            completion(true)
+        case .writeOnly: //full access is required to detect added calendars
+            completion(false)
             return
         @unknown default:
             print("wrong Authorization status")
@@ -110,7 +110,7 @@ open class SJDeviceCalendarSubscriber {
         
         let eventStore = EKEventStore()
         if #available(iOS 17.0, *) {
-            eventStore.requestWriteOnlyAccessToEvents(completion: { (success, error) in
+            eventStore.requestFullAccessToEvents(completion: { (success, error) in
                 DispatchQueue.main.async {
                     completion(success)
                 }
