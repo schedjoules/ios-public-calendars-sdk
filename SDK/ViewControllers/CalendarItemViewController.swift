@@ -107,8 +107,11 @@ final class CalendarItemViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                     self.scrollToNextEvent(in: calendar)
                 }
+
             case .failure:
                 DispatchQueue.main.async {
                     self.showLoadErrorView()
@@ -129,7 +132,10 @@ final class CalendarItemViewController: UIViewController {
                                             toGranularity: .second) == .orderedDescending
         })
         
-        self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
+        let numberOfRows = self.tableView.numberOfRows(inSection: 0)
+        if numberOfRows > 0 {
+            self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
+        }
     }
     
     // Subscribe button pressed
