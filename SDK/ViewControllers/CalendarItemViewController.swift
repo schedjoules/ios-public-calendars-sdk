@@ -46,10 +46,14 @@ final class CalendarItemViewController: UIViewController {
     ///The id of the parent page
     var pageId: Int = 0
     
+    var rowCount = 0
+    
     // - MARK: Private Properties
     
     /// The parsed events.
     private var calendar: ICalendar?
+    private var dateEventMap: [String:[Event]]?
+    private var sectionDateTitles: [String]?
     
     // Acitivity indicator reference
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
@@ -61,7 +65,6 @@ final class CalendarItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set subscribe button image
         subscribeButton.setImage(UIImage(named: "Add_White", in: Bundle.resourceBundle, compatibleWith: nil), for: .normal)
         
@@ -104,7 +107,7 @@ final class CalendarItemViewController: UIViewController {
                 self.calendar = calendar
                 
                 AnalyticsTracker.shared().trackScreen(name: self.title, page: nil, url: self.icsURL)
-                
+                self.createDateEventMap()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -123,6 +126,27 @@ final class CalendarItemViewController: UIViewController {
         })
     }
     
+    func createDateEventMap(){
+        if let events = calendar?.events {
+            dateEventMap = [:]
+            sectionDateTitles = []
+            for event in events {
+                let dateString = getFormattedDate(startDate: event.startDate)
+                if dateEventMap?[dateString] == nil {
+                    dateEventMap?[dateString] = []
+                    sectionDateTitles?.append(dateString)
+                }
+                dateEventMap?[dateString]?.append(event)
+            }
+        }
+    }
+    
+    private func getFormattedDate(startDate: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        return dateFormatter.string(from: startDate)
+    }
+    
     //Scroll to the next upcoming Event
     private func scrollToNextEvent(in calendar: ICalendar?) {
         let indexOfUpcomingEvent = calendar?.events.firstIndex(where: { (event) -> Bool in
@@ -132,10 +156,14 @@ final class CalendarItemViewController: UIViewController {
                                             toGranularity: .second) == .orderedDescending
         })
         
-        let numberOfRows = self.tableView.numberOfRows(inSection: 0)
-        if numberOfRows > 0 {
-            self.tableView.scrollToRow(at: IndexPath(row: indexOfUpcomingEvent ?? 0, section: 0), at: .top, animated: true)
+        if let sectionDateTitles = sectionDateTitles, let indexOfUpcomingEvent = indexOfUpcomingEvent, let event = calendar?.events[indexOfUpcomingEvent] {
+            let sectionOfUpcomingEvent = sectionDateTitles.firstIndex(of: getFormattedDate(startDate: event.startDate)) ?? 0
+            let numberOfRows = self.tableView.numberOfRows(inSection: 0)
+            if numberOfRows > 0 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: sectionOfUpcomingEvent), at: .top, animated: true)
+            }
         }
+        
     }
     
     // Subscribe button pressed
@@ -159,7 +187,7 @@ final class CalendarItemViewController: UIViewController {
             if freeSubscriptionRecord.canGetFreeCalendar() == true {
                 let calendarName = self.title ?? "calendar"
                 let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).",
                                                                     preferredStyle: .alert)
                 let acceptAction = UIAlertAction(title: "Ok",
                                                  style: .default) { (_) in
@@ -261,53 +289,51 @@ final class CalendarItemViewController: UIViewController {
 
 extension CalendarItemViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sectionDateTitles?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return calendar?.events.count ?? 0
+        if let dateEventMap = dateEventMap {
+            return dateEventMap[sectionDateTitles![section]]?.count ?? 0
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        
+        let label = UILabel()
+        label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height)
+        label.text = sectionDateTitles?[section] ?? ""
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        
+        headerView.addSubview(label)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Dequeue the table cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CalendarItemCell
         
         // Get event at the row index
-        let event = calendar?.events[indexPath.row]
-        
-        // Set cell title to the event summary
-        cell.textLabel?.text = event?.summary
-        
-        // Format the time of the event
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH:mm"
-        var timeString: String!
-        
-        // Set it to "All day" if event is all day
-        if event!.isAllDay{
-            timeString = "All day"
-        } else if event!.endDate != nil {
-            timeString = timeFormatter.string(from: event!.startDate) + " - " + timeFormatter.string(from: event!.endDate!)
-        } else{
-            timeString = timeFormatter.string(from: event!.startDate)
+        var event: Event?
+        if let sectionDateTitles = sectionDateTitles {
+            event = dateEventMap?[sectionDateTitles[indexPath.section]]?[indexPath.row]
         }
         
-        // Make time string bold
-        let boldAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
-        let boldTimeString = NSMutableAttributedString(string:timeString, attributes:boldAttributes)
-        
-        // Format the date of the event
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-        let sizeAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]
-        let dateString = NSMutableAttributedString(string:" " + dateFormatter.string(from: event!.startDate), attributes: sizeAttributes)
-        
-        // Append the date string to the time
-        boldTimeString.append(dateString)
-        
-        // Set the cell's detail label to the constructed time and date string
-        cell.detailTextLabel?.attributedText = boldTimeString
-        
+        cell.setContent(event: event)
+        cell.colorView.backgroundColor = UIColor.randomColors[rowCount % UIColor.randomColors.count]
+        rowCount += 1
         return cell
     }
     
@@ -321,7 +347,11 @@ extension CalendarItemViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // Show the event detail view with the selected event
-        performSegue(withIdentifier: "showEvent", sender: calendar?.events[indexPath.row])
+        var event: Event?
+        if let sectionDateTitles = sectionDateTitles {
+            event = dateEventMap?[sectionDateTitles[indexPath.section]]?[indexPath.row]
+        }
+        performSegue(withIdentifier: "showEvent", sender: event)
     }
 }
 

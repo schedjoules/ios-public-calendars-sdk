@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  UILabelExtension.swift
 //  iOS-SDK
 //
 //  Created by Irmak Ozonay on 3.03.2024.
@@ -7,3 +7,16 @@
 //
 
 import Foundation
+import UIKit
+
+extension UILabel {
+    
+    func colorString(text: String?, coloredText: String?, color: UIColor? = .red) {
+        
+        let attributedString = NSMutableAttributedString(string: text!)
+        let range = (text! as NSString).range(of: coloredText!)
+        attributedString.setAttributes([NSAttributedString.Key.foregroundColor: color!],
+                                       range: range)
+        self.attributedText = attributedString
+    }
+}

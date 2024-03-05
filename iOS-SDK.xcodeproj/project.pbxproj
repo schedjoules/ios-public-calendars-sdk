@@ -66,6 +66,14 @@
 		B6EF1C6320780879003E0095 /* CalendarItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */; };
 		B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF1C4220780879003E0095 /* LoadErrorView.swift */; };
 		B6EF1C6620780879003E0095 /* LoadErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6EF1C4320780879003E0095 /* LoadErrorView.xib */; };
+		FDB32A992B938BEC00142703 /* OldCalendarItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A982B938BEC00142703 /* OldCalendarItemViewController.swift */; };
+		FDB32A9A2B938BED00142703 /* OldCalendarItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A982B938BEC00142703 /* OldCalendarItemViewController.swift */; };
+		FDB32A9C2B947E9600142703 /* CalendarItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A9B2B947E9500142703 /* CalendarItemCell.swift */; };
+		FDB32A9D2B947E9600142703 /* CalendarItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A9B2B947E9500142703 /* CalendarItemCell.swift */; };
+		FDB32A9F2B94ABAC00142703 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A9E2B94ABAC00142703 /* UILabelExtension.swift */; };
+		FDB32AA02B94ABAC00142703 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32A9E2B94ABAC00142703 /* UILabelExtension.swift */; };
+		FDB32AA22B971AB900142703 /* TopAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32AA12B971AB900142703 /* TopAlignedLabel.swift */; };
+		FDB32AA32B971AB900142703 /* TopAlignedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB32AA12B971AB900142703 /* TopAlignedLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +146,10 @@
 		B6EF1C4220780879003E0095 /* LoadErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadErrorView.swift; sourceTree = "<group>"; };
 		B6EF1C4320780879003E0095 /* LoadErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadErrorView.xib; sourceTree = "<group>"; };
 		BEF73D9BBB270B7D19445C64 /* Pods_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDB32A982B938BEC00142703 /* OldCalendarItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldCalendarItemViewController.swift; sourceTree = "<group>"; };
+		FDB32A9B2B947E9500142703 /* CalendarItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItemCell.swift; sourceTree = "<group>"; };
+		FDB32A9E2B94ABAC00142703 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		FDB32AA12B971AB900142703 /* TopAlignedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlignedLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +214,7 @@
 				46F45C5622608BA00005EAB6 /* UIColorExtension.swift */,
 				4657B81222BA106C003A2AE4 /* UITapGestureRecognizer.swift */,
 				4600154B2208987300C6E9F2 /* URLRequest+Headers.swift */,
+				FDB32A9E2B94ABAC00142703 /* UILabelExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -336,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				B69268862089F32A003456FB /* PageViewController.swift */,
+				FDB32A982B938BEC00142703 /* OldCalendarItemViewController.swift */,
 				B6EF1C3F20780879003E0095 /* CalendarItemViewController.swift */,
 				B6EF1C3E20780879003E0095 /* EventViewController.swift */,
 				84E917A6284A16AE0027810F /* RecommendationsViewController.swift */,
@@ -343,6 +357,7 @@
 				469AA79A23215C830092CBA1 /* WeatherMap */,
 				467C70EE248A475300674885 /* ItemCollectionViewCell.swift */,
 				84E917A9284A24430027810F /* RecommendationsCollectionViewCell.swift */,
+				FDB32A9B2B947E9500142703 /* CalendarItemCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -364,6 +379,7 @@
 			children = (
 				B6EF1C4220780879003E0095 /* LoadErrorView.swift */,
 				B6EF1C4320780879003E0095 /* LoadErrorView.xib */,
+				FDB32AA12B971AB900142703 /* TopAlignedLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -552,6 +568,7 @@
 				4629919423435B8000CA8292 /* NotificationName.swift in Sources */,
 				46F45C5422608B5D0005EAB6 /* StoreViewController.swift in Sources */,
 				B625A60D20C038D000586F5E /* AppDelegate.swift in Sources */,
+				FDB32AA22B971AB900142703 /* TopAlignedLabel.swift in Sources */,
 				469AA7A223215C830092CBA1 /* WeatherSettingsView.swift in Sources */,
 				469AA7A823215C830092CBA1 /* WeatherMapViewController.swift in Sources */,
 				460015532208987300C6E9F2 /* Config.swift in Sources */,
@@ -567,6 +584,7 @@
 				460015542208987300C6E9F2 /* SettingsObject.swift in Sources */,
 				46F45C5722608BA00005EAB6 /* UIColorExtension.swift in Sources */,
 				84E917A7284A16AE0027810F /* RecommendationsViewController.swift in Sources */,
+				FDB32A9F2B94ABAC00142703 /* UILabelExtension.swift in Sources */,
 				46F45C5122607E800005EAB6 /* Bundle+ResourceBundle.swift in Sources */,
 				469AA7A023215C830092CBA1 /* WeatherUnitCollectionViewCell.swift in Sources */,
 				B6EF1C6520780879003E0095 /* LoadErrorView.swift in Sources */,
@@ -577,7 +595,9 @@
 				460A55522452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
 				460A554F2452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				460015572208987300C6E9F2 /* URLRequest+Headers.swift in Sources */,
+				FDB32A9C2B947E9600142703 /* CalendarItemCell.swift in Sources */,
 				4610CD16228DD54800CE25C2 /* Reach.swift in Sources */,
+				FDB32A992B938BEC00142703 /* OldCalendarItemViewController.swift in Sources */,
 				460015582208987300C6E9F2 /* AnalyticsTracker.swift in Sources */,
 				B67696AA20C16BE200D57347 /* CalendarStoreSinglePageViewController.swift in Sources */,
 				B69268872089F32A003456FB /* PageViewController.swift in Sources */,
@@ -600,9 +620,13 @@
 				46A78442252DC3640038CC3A /* SJAnalyticsObject.swift in Sources */,
 				467C70F0248A475300674885 /* ItemCollectionViewCell.swift in Sources */,
 				B6D3E050204D97570044C800 /* iOS_SDKTests.swift in Sources */,
+				FDB32A9D2B947E9600142703 /* CalendarItemCell.swift in Sources */,
 				460A55502452EFF20075355D /* KeychainPasswordItem.swift in Sources */,
 				46800B6F245959470095B244 /* WebKitViewController.swift in Sources */,
+				FDB32AA32B971AB900142703 /* TopAlignedLabel.swift in Sources */,
+				FDB32A9A2B938BED00142703 /* OldCalendarItemViewController.swift in Sources */,
 				460A55532452F13C0075355D /* FreeSubscriptionRecord.swift in Sources */,
+				FDB32AA02B94ABAC00142703 /* UILabelExtension.swift in Sources */,
 				84E917A8284A16AE0027810F /* RecommendationsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,7 +787,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H4FCPLHYSF;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "api-test-user.schedjoules.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -782,7 +806,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H4FCPLHYSF;
 				INFOPLIST_FILE = "$(SRCROOT)/Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "api-test-user.schedjoules.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";

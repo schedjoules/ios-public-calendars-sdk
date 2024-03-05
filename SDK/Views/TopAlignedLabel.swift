@@ -7,3 +7,16 @@
 //
 
 import Foundation
+import UIKit
+
+final class TopAlignedLabel: UILabel {
+  override func drawText(in rect: CGRect) {
+    super.drawText(in: .init(
+      origin: .zero,
+      size: textRect(
+        forBounds: rect,
+        limitedToNumberOfLines: numberOfLines
+      ).size
+    ))
+  }
+}

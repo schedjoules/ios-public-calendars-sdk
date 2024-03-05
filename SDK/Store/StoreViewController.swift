@@ -364,6 +364,8 @@ class StoreViewController: UIViewController {
             
             purchaseButton.heightAnchor.constraint(equalToConstant: 44),
             
+            tosLabel.heightAnchor.constraint(equalToConstant: 80),
+            
             mainActivityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             mainActivityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])

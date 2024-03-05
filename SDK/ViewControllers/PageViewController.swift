@@ -28,7 +28,6 @@ import SchedJoulesApiClient
 import SafariServices
 import WebKit
 
-
 class PageViewController<PageQuery: Query>: UIViewController,
                                             UITableViewDataSource,
                                             UITableViewDelegate,
@@ -90,6 +89,16 @@ class PageViewController<PageQuery: Query>: UIViewController,
         fatalError("PageViewController must only be initialized programatically.")
     }
     
+    override func viewWillLayoutSubviews() {
+        let transparentAppearance = UINavigationBarAppearance()
+        transparentAppearance.configureWithTransparentBackground()
+        transparentAppearance.backgroundColor = UIColor.sjBackground
+        transparentAppearance.shadowColor = .clear
+        self.navigationController?.navigationBar.standardAppearance = transparentAppearance
+        self.navigationController?.navigationBar.compactAppearance = transparentAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = transparentAppearance
+    }
+    
     /**
      Initialize with a Page query and an Api.
      - parameter apiClient: The API Key (access token) for the **SchedJoules API**.
@@ -122,7 +131,7 @@ class PageViewController<PageQuery: Query>: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Fetch the pages from the API
         fetchPages()
         
@@ -512,7 +521,7 @@ extension PageViewController: ItemCollectionViewCellDelegate {
                   appBundle == "com.schedjoules.calstore" {
             if freeSubscriptionRecord.canGetFreeCalendar() == true {
                 let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).\n\nYou can't undo this step",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(pageItem.name).",
                                                                     preferredStyle: .alert)
                 let acceptAction = UIAlertAction(title: "Ok",
                                                  style: .default) { (_) in

@@ -229,7 +229,7 @@ class WeatherDetailViewController: UIViewController {
             if freeSubscriptionRecord.canGetFreeCalendar() == true {
                 let calendarName = self.title ?? "calendar"
                 let freeCalendarAlertController = UIAlertController(title: "First Calendar for Free",
-                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).\n\nYou can't undo this step",
+                                                                    message: "Do you want to use your Free Calendar to subscribe to: \(calendarName).",
                                                                     preferredStyle: .alert)
                 let acceptAction = UIAlertAction(title: "Ok",
                                                  style: .default) { (_) in
