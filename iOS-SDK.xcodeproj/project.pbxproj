@@ -241,8 +241,8 @@
 			isa = PBXGroup;
 			children = (
 				46F45C5322608B5D0005EAB6 /* StoreManager.swift */,
-				46F45C5222608B5D0005EAB6 /* StoreViewController.swift */,
 				46A78447252DC4030038CC3A /* SJDeviceCalendarSubscriber.swift */,
+				46F45C5222608B5D0005EAB6 /* StoreViewController.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";

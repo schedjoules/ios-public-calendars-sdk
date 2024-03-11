@@ -271,13 +271,15 @@ final class CalendarItemViewController: UIViewController {
                              url: url,
                              screenName: self.title) { (error) in
             if error != nil {
-                let freeCalendarAlertController = UIAlertController(title: "Error",
-                                                                    message: error?.localizedDescription,
-                                                                    preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Ok",
-                                                 style: .cancel)
-                freeCalendarAlertController.addAction(cancelAction)
-                self.present(freeCalendarAlertController, animated: true)
+                DispatchQueue.main.async {
+                    let freeCalendarAlertController = UIAlertController(title: "Error",
+                                                                        message: error?.localizedDescription,
+                                                                        preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok",
+                                                     style: .cancel)
+                    freeCalendarAlertController.addAction(cancelAction)
+                    self.present(freeCalendarAlertController, animated: true)
+                }
             }
         }
     }
