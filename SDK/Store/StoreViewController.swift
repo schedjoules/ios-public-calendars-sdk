@@ -17,10 +17,14 @@ class StoreViewController: UIViewController {
     var storeManager = StoreManager.shared
     var subscriptionIAP: SubscriptionIAP?
     var product: SKProduct?
-    var benefits = ["Unlimited access to thousands of interesting calendars & events",
-                    "(School) holidays, sports, TV-shows, weather and more",
-                    "(Live) sports updates in your calendar",
-                    "No ads"]
+    var benefits = ["Get unlimited access to all interesting calendars that matter most to you",
+                    "Major sport events",
+                    "National holidays",
+                    "31 sports worldwide with 600+ competitions",
+                    "TV listings",
+                    "14-day weather forecasts",
+                    "Religion and lifestyle",
+    ]
     
     //MARK: Properties
     enum TosLinks {
@@ -165,6 +169,7 @@ class StoreViewController: UIViewController {
         label.textAlignment = .justified
         label.alpha = 1.0
         label.textColor = .white
+        label.isHidden = true
         return label
     }()
     
@@ -323,7 +328,7 @@ class StoreViewController: UIViewController {
             benefitStackView.addArrangedSubview(label)
             
             stackView.addArrangedSubview(benefitStackView)
-            stackView.setCustomSpacing(16, after: benefitStackView)
+            stackView.setCustomSpacing(4, after: benefitStackView)
         }
         
         stackView.addArrangedSubview(purchaseButton)
