@@ -123,7 +123,6 @@ final class SettingsViewController: UIViewController {
                                 Item(title: "Website",
                                      details: "http://www.schedjoules.com",
                                      data: URL(string:"http://www.schedjoules.com"))]
-    private let accountItems = [Item(title: "Delete your account")]
     
     //Sections
     private var sections: [Section] {
@@ -131,8 +130,7 @@ final class SettingsViewController: UIViewController {
             var sections = [Section(kind: .about, items: aboutItems),
                             Section(kind: .localization, items: countryLanguageItems),
                             Section(kind: .notifications, items: notificationsItems),
-                            Section(kind: .contact, items: contactItems),
-                            Section(kind: .account, items: accountItems)]
+                            Section(kind: .contact, items: contactItems)]
             
             if let appBundle = Bundle.main.infoDictionary?[kCFBundleIdentifierKey as String] as? String,
                appBundle != "com.schedjoules.calstore" {
